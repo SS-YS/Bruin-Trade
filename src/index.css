@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700,800');
+
+* {
+  box-sizing: border-box;
+}
+body {
+  background: #a0e9ff !important;
+  min-height: 100vh;
+  display: flex;
+  font-weight: 400;
+  font-family: 'Fira Sans', sans-serif;
+  justify-content: center;
+}
+
+h1,h2,h3,h4,h5,h6,label,span {
+    font-weight: 500;
+    font-family: 'Fira Sans', sans-serif;
+  }
+
+.container {
+    background-color: white;
+    box-sizing: border-box;
+    border-radius: 5px;
+    padding: 20px;
+    width: 500px;
+}
+
+input {
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
