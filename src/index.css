@@ -20,16 +20,62 @@ h1,h2,h3,h4,h5,h6,label,span {
 .container {
     background-color: white;
     box-sizing: border-box;
-    border-radius: 5px;
+    border-radius: 10px;
     padding: 20px;
-    width: 500px;
+    min-width: 300px;
+    margin-top: 30px;
+}
+
+form {
+  margin: 20px;
 }
 
 input {
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=text] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+}
+
+input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+}
+
+input[type=submit] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+}
+
+input[type=button] {
+  width: 130px;
+  justify-self: stretch;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  margin-top: 5px;
+  margin-bottom: 5px; 
+}
+
+input[id=signup] {
+  margin-right: 10px;
+  border: 1px solid rgba(44, 88, 233, 0.4);
+}
+
+input[id=login] {
+  margin-left: 10px;
+  border: 1px solid rgb(44, 88, 233, 0.4);
 }
