@@ -3,22 +3,20 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import WelcomePage from "./WelcomePage";
 import PageNotFound from "./404";
 import SignupPage from "./Signup";
-import './Signup.css'
+import "./Signup.css";
 
-class App extends Component{
-    render(){
-    return(
-    <Router>
-       <Routes>
-		      <Route exact path="/" element={<SignupPage/>}/>
-                <Route exact path="/404" element = {<PageNotFound/>}/>
-                <Route exact path="/WelcomePage" element = {<WelcomePage/>}/>
-                <Route element = {<PageNotFound/>}/>
-	    </Routes>
-    </Router>
+class App extends Component {
+  render() {
+    return (
+      <Router>
+        <Routes>
+          <Route exact path="/" element={<SignupPage />} />
+          <Route exact path="*" element={<PageNotFound />} />
+          <Route exact path="/WelcomePage" element={<WelcomePage />} />
+        </Routes>
+      </Router>
     );
+  }
 }
-}
-
 
 export default App;
