@@ -1,7 +1,6 @@
 const express = require("express")
 const router = express.Router()
 const signUpTemplateCopy = require('../models/SignUpModels')
-const bcrypt = require('bcrypt')
 const mongoose = require('mongoose')
 const mongoDB = "mongodb+srv://yqi_2002:Yuxuan02@cluster0.22647.mongodb.net/mytable?retryWrites=true&w=majority"
 mongoose.connect(mongoDB, { useNewUrlParser: true , useUnifiedTopology: true});
@@ -24,14 +23,11 @@ router.post('/usercheck', (request, response) => {
 });
 
 router.post('/signup', async (request, response) => {
-    const saltPassword = await bcrypt.genSalt(10)
-    const securePassword = await bcrypt.hash(request.body.password, saltPassword)
-
     const signedUpUser = new signUpTemplateCopy({
         fullName:request.body.fullName,
         userName:request.body.userName,
         email:request.body.email,
-        password:securePassword,
+        password:request.body.password,
     })
 
     signedUpUser.save()
