@@ -10,7 +10,7 @@ npm start
 ```
 
 ```
-cd Bruin-Trade/signup_back
+cd Bruin-Trade/signupback
 npm install
 npm start
 ```
