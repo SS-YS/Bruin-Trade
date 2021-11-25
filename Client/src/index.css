@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700,800');
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   background: #a0e9ff !important;
   display: flex;
