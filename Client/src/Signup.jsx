@@ -41,9 +41,7 @@ class SignupPage extends Component {
     onSubmit = (event) => {
         event.preventDefault()
         const registered = {
-            fullName: " ", // necessary placeholder for sign up & log in to work
             userName: this.state.userName,
-            email: " ", // necessary placeholder for sign up & log in to work
             password: this.state.password,
         }
         axios.post("http://localhost:4000/app/usercheck", registered)

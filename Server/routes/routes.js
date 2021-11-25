@@ -1,7 +1,9 @@
 const express = require("express")
 const router = express.Router()
 const signUpTemplateCopy = require('../models/SignUpModels')
+const orderTemplateCopy = require('../models/OrderModels')
 const mongoose = require('mongoose')
+const { response } = require("express")
 const mongoDB = "mongodb+srv://yqi_2002:Yuxuan02@cluster0.22647.mongodb.net/mytable?retryWrites=true&w=majority"
 mongoose.connect(mongoDB, { useNewUrlParser: true , useUnifiedTopology: true});
 const db = mongoose.connection
@@ -24,9 +26,7 @@ router.post('/usercheck', (request, response) => {
 
 router.post('/signup', async (request, response) => {
     const signedUpUser = new signUpTemplateCopy({
-        fullName:request.body.fullName,
         userName:request.body.userName,
-        email:request.body.email,
         password:request.body.password,
     })
 
@@ -38,6 +38,26 @@ router.post('/signup', async (request, response) => {
         response.json(error)
     })
 });
+
+router.post('/order', async (request, response) => {
+    const order = new orderTemplateCopy({
+        buyer: request.body.body,
+        seller: request.body.seller,
+        location: request.body.location,
+        price: request.body.price,
+        startPrice: request.body.startPrice,
+        endTime: request.body.endTime,
+    })
+
+    order.save()
+    .then(data => {
+        response.json(data)
+    })
+    .catch(error => {
+        response.json(error)
+    })
+}
+);
 
     /*
     router.get('/signup', (request, response) => {
