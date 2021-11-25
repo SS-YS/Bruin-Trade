@@ -7,8 +7,9 @@ class SignupPage extends Component {
         super()
         this.state = {
             userName: '',
+            phoneNumber: '',
             password: '',
-            message: 'Please sign up.',
+            message: 'Please sign up / log in.',
             is_signup: true,
             is_login: false,
             login_success: false,
@@ -21,6 +22,12 @@ class SignupPage extends Component {
         })
     }
 
+    changePhoneNumber = (event) => {
+        this.setState({
+            phoneNumber: event.target.value
+        })
+    }
+
     changePassword = (event) => {
         this.setState({
             password: event.target.value
@@ -29,11 +36,13 @@ class SignupPage extends Component {
 
     onClick_signup = (event) => {
         event.preventDefault()
+        document.getElementById("phoneNumber").classList.remove("hidden");
         this.setState({ is_signup: true, is_login: false, message: "Please sign up." })
     }
 
     onClick_login = (event) => {
         event.preventDefault()
+        document.getElementById("phoneNumber").classList.add("hidden");
         this.setState({ is_signup: false, is_login: true, message: "Please log in." })
     }
 
@@ -42,6 +51,7 @@ class SignupPage extends Component {
         event.preventDefault()
         const registered = {
             userName: this.state.userName,
+            phoneNumber: this.state.phoneNumber,
             password: this.state.password,
         }
         axios.post("http://localhost:4000/app/usercheck", registered)
@@ -77,6 +87,7 @@ class SignupPage extends Component {
                 }
                 this.setState({
                     userName: '',
+                    phoneNumber: '', 
                     password: '',
                 })
             })
@@ -100,6 +111,14 @@ class SignupPage extends Component {
                                 value={this.state.userName}
                                 className='form-control form-group'
                             />
+                            <div id="phoneNumber">
+                                <input type='text'
+                                    placeholder='Phone Number'
+                                    onChange={this.changePhoneNumber}
+                                    value={this.state.phoneNumber}
+                                    className='form-control form-group'
+                                />
+                            </div>
                             <input type='password'
                                 placeholder='Password'
                                 onChange={this.changePassword}
