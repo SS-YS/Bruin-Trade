@@ -1,15 +1,17 @@
 @import url('https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700,800');
 
-* {
-  box-sizing: border-box;
-}
 body {
   background: #a0e9ff !important;
-  min-height: 100vh;
   display: flex;
-  font-weight: 400;
+  justify-content: center;
   font-family: 'Fira Sans', sans-serif;
-  justify-content: center
+  min-height: 100vh;
+  font-weight: 400;
+}
+
+.navbar {
+  background: #a0e9ff !important;
+  font-size: 25px;
 }
 
 h1,h2,h3,h4,h5,h6,label,span {
@@ -23,6 +25,10 @@ h1,h2,h3,h4,h5,h6,label,span {
     border-radius: 10px;
     padding: 20px;
     min-width: 300px;
+    margin-top: 30px;
+}
+
+.heading {
     margin-top: 30px;
 }
 
