@@ -16,17 +16,17 @@ const orderTemplate = new mongoose.Schema({
     },
 
     price:{
-        type: String,
+        type: Number,
         required: true
     },
 
     startTime:{
-        type: String,
+        type: Number,
         required: true
     },
 
     endTime:{
-        type: String,
+        type: Number,
         required: true
     },
 })

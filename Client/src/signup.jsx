@@ -8,7 +8,7 @@ class SignupPage extends Component {
         this.state = {
             userName: '',
             password: '',
-            message: 'Please sign up.',
+            message: 'Please sign up / log in.',
             is_signup: true,
             is_login: false,
             login_success: false,

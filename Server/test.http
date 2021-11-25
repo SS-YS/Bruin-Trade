@@ -2,10 +2,10 @@ POST http://localhost:4000/app/order
 Content-Type: application/json
 
 {
-    "buyer": "1",
-    "seller": "2",
-    "location": "3",
-    "price": "4",
-    "startTime": "5",
-    "endTime": "6"
+    "buyer": "eggert",
+    "seller": "eggert",
+    "location": "egg market",
+    "price": 12,
+    "startTime": 1200,
+    "endTime": 1300
 }
