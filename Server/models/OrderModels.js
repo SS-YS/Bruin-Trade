@@ -2,12 +2,12 @@ const mongoose = require("mongoose")
 const orderTemplate = new mongoose.Schema({
     buyer:{
         type: String,
-        required: false
+        required: true,
     },
 
     seller:{
         type: String,
-        require: false,
+        require: true,
     },
 
     location:{
@@ -16,19 +16,19 @@ const orderTemplate = new mongoose.Schema({
     },
 
     price:{
-        type: Number,
+        type: String,
         required: true
     },
 
     startTime:{
-        type: Number,
+        type: String,
         required: true
     },
 
     endTime:{
-        type: Number,
+        type: String,
         required: true
     },
 })
 
-module.exports = mongoose.model('myorder', orderTemplate)
+module.exports = mongoose.model('myorders', orderTemplate)

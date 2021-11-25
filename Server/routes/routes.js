@@ -41,12 +41,12 @@ router.post('/signup', async (request, response) => {
 
 router.post('/order', async (request, response) => {
     const order = new orderTemplateCopy({
-        buyer: request.body.body,
-        seller: request.body.seller,
-        location: request.body.location,
-        price: request.body.price,
-        startPrice: request.body.startPrice,
-        endTime: request.body.endTime,
+        buyer:request.body.buyer,
+        seller:request.body.seller,
+        location:request.body.location,
+        price:request.body.price,
+        startTime:request.body.startTime,
+        endTime:request.body.endTime,
     })
 
     order.save()
@@ -56,8 +56,7 @@ router.post('/order', async (request, response) => {
     .catch(error => {
         response.json(error)
     })
-}
-);
+});
 
     /*
     router.get('/signup', (request, response) => {

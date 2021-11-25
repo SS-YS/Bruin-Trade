@@ -14,4 +14,4 @@ const signUpTemplate = new mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model('myusername', signUpTemplate)
+module.exports = mongoose.model('myusernames', signUpTemplate)
