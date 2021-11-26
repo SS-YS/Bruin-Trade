@@ -16,12 +16,6 @@ class SignupPage extends Component {
         }
     }
 
-    redirect() {
-        if (this.state.username === null) {
-          window.location.href = "/";
-        }
-    }
-
     changeUserName = (event) => {
         this.setState({
             userName: event.target.value
@@ -100,7 +94,6 @@ class SignupPage extends Component {
     }
 
     render() {
-        this.redirect();
         var heading = this.state.is_signup ? 'Sign up' : 'Log in'
         return (
             <div>
