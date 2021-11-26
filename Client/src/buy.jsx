@@ -24,6 +24,43 @@ class BuyPage extends Component {
       this.handleSearch = this.handleSearch.bind(this);
     }
 
+    checkStartBeforeEnd() {
+      const startTime = Number(this.state.start_hour + this.state.start_minute);
+      const endTime = Number(this.state.end_hour + this.state.end_minute);
+
+      if (startTime > endTime){
+        return true;
+      }
+      return false;
+    }
+
+    checkTimeConflict() {
+      const startTime = Number(this.state.start_hour + this.state.start_minute);
+      const endTime = Number(this.state.end_hour + this.state.end_minute);
+  
+      switch (this.state.dinningHall) {
+        case "Epicuria":
+          if (endTime < 1100)
+            return true;
+          break;
+        case "De Neve":
+          if ((endTime > 1000 && endTime < 1100) || startTime > 1000 && startTime <1100)
+            return true;
+          break;
+        case "Bruin Plate":
+          if ((endTime > 1000 && endTime < 1100) || startTime > 1000 && startTime <1100)
+            return true;
+          break;
+        case "Feast":
+          if (startTime < 1700)
+            return true;
+          break;
+        default:
+          return false
+      }
+      return false;
+    }
+
     redirect() {
         if (sessionStorage.getItem("username") === null) {
           window.location.href = "/";
@@ -84,8 +121,13 @@ class BuyPage extends Component {
         } else if (this.state.end_price === "" || isNaN(this.state.end_price)) {
           alert("you need to enter a valid end price");
           event.preventDefault();
-        }
-        else {
+        } else if (this.checkStartBeforeEnd()){
+          alert("you need to enter a valid time interval");
+          event.preventDefault();
+        }else if (this.checkTimeConflict()){
+          alert(this.state.dinningHall + " is not open at this time interval, please change your selected time");
+          event.preventDefault();
+        } else {
           alert("You have selected the dinning hall: " + this.state.dinningHall +
             " from " + this.state.start_hour + " : " + this.state.start_minute + "to"
             + this.state.end_hour + " : " + this.state.end_minute);
