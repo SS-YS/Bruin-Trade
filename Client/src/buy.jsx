@@ -228,7 +228,7 @@ class BuyPage extends Component {
                 <option value="45">45</option>
               </select>
 
-              <label>&nbsp;to&nbsp;</label>
+              <label>&nbsp;&nbsp;to&nbsp;&nbsp;</label>
 
               <select value={this.state.end_hour} onChange={this.handleEndHourChange}>
                 <option value="--Hour--">--Hour--</option>
@@ -245,7 +245,7 @@ class BuyPage extends Component {
                 <option value="18">18</option>
                 <option value="19">19</option>
                 <option value="20">20</option>
-                <option value="20">21</option>
+                <option value="21">21</option>
               </select>
               <label>&nbsp;:&nbsp;</label>
               <select value={this.state.end_minute} onChange={this.handleEndMinuteChange}>
@@ -259,9 +259,9 @@ class BuyPage extends Component {
             <p />
             <label>
               Price Range：
-              <input type="text" value={this.state.start_price} onChange={this.handleStartPriceChange} />
-              <label>&nbsp;to&nbsp;</label>
-              <input type="text" value={this.state.end_price} onChange={this.handleEndPriceChange} />
+              <input class="px-1 py-1" type="text" value={this.state.start_price} onChange={this.handleStartPriceChange} />
+              <label>&nbsp;&nbsp;to&nbsp;&nbsp;</label>
+              <input class="px-1 py-1" type="text" value={this.state.end_price} onChange={this.handleEndPriceChange} />
             </label>
 
             <p />
