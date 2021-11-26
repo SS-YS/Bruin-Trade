@@ -34,6 +34,13 @@ class BuyPage extends Component {
       return false;
     }
 
+    checkPrice() {
+      if (this.state.end_price < this.state.start_price){
+        return true;
+      }
+      return false;
+    }
+
     checkTimeConflict() {
       const startTime = Number(this.state.start_hour + this.state.start_minute);
       const endTime = Number(this.state.end_hour + this.state.end_minute);
@@ -123,6 +130,9 @@ class BuyPage extends Component {
           event.preventDefault();
         } else if (this.checkStartBeforeEnd()){
           alert("you need to enter a valid time interval");
+          event.preventDefault();
+        }else if (this.checkPrice()){
+          alert("you need to enter a valid price interval");
           event.preventDefault();
         }else if (this.checkTimeConflict()){
           alert(this.state.dinningHall + " is not open at this time interval, please change your selected time");
