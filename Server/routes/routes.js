@@ -46,6 +46,7 @@ router.post('/order', async (request, response) => {
         location:request.body.location,
         price:request.body.price,
         time:request.body.time,
+        ordered: request.body.ordered
     })
 
     order.save()

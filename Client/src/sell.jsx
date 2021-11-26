@@ -68,13 +68,13 @@ class Selling_form extends Component {
 
   handleSubmit(event) {
     if (this.state.dinningHall === "--Please Select One Dinning Hall--") {
-      alert("you need to selected one dinning hall");
+      alert("you need to select one dinning hall");
       event.preventDefault();
     } else if (this.state.hour === "--Hour--") {
       event.preventDefault();
-      alert("you need to selected hour");
+      alert("you need to select hour");
     } else if (this.state.minute === "--Minute--") {
-      alert("you need to selected minute");
+      alert("you need to select minute");
       event.preventDefault();
     } else if (this.state.price === "" || isNaN(this.state.price)) {
       alert("you need to enter a valid price");
@@ -87,7 +87,6 @@ class Selling_form extends Component {
       event.preventDefault();
 
       const orderInfo = {
-        buyer: "null",
         seller: this.state.seller,
         location: this.state.dinningHall,
         price: this.state.price,

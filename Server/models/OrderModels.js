@@ -2,12 +2,12 @@ const mongoose = require("mongoose")
 const orderTemplate = new mongoose.Schema({
     buyer:{
         type: String,
-        required: true,
+        required: false,
     },
 
     seller:{
         type: String,
-        require: true,
+        require: false,
     },
 
     location:{
@@ -24,6 +24,11 @@ const orderTemplate = new mongoose.Schema({
         type: Number,
         required: true
     },
+
+    ordered:{
+        type: Boolean,
+        required: false
+    }
 })
 
 module.exports = mongoose.model('myorders', orderTemplate)
