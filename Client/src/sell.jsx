@@ -19,6 +19,12 @@ class Selling_form extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  redirect() {
+    if (this.state.seller === null) {
+      window.location.href = "/";
+    }
+  }
+
   checkTimeConflict(){
     const time = Number(this.state.hour + this.state.minute)
 
@@ -102,6 +108,7 @@ class Selling_form extends Component {
   }
 
   render() {
+    this.redirect();
     return (
       <div>
 
