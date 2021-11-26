@@ -20,6 +20,7 @@ body {
 .navbar {
   background: #a0e9ff !important;
   font-size: 25px;
+  justify-content: center;
 }
 
 h1,h2,h3,h4,h5,h6,label,span {

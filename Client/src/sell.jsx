@@ -47,69 +47,89 @@ class Selling_form extends Component {
     } else if (this.state.minute === "--Minute--") {
       alert("you need to selected minute");
       event.preventDefault();
-    } else if (this.state.price === "" || isNaN(this.state.price)){
+    } else if (this.state.price === "" || isNaN(this.state.price)) {
       alert("you need to enter a valid price");
       event.preventDefault();
     } else {
       alert("You have selected the dinning hall: " + this.state.dinningHall +
-      " at the time time: " + this.state.hour +  " : " + this.state.minute);
+        " at the time time: " + this.state.hour + " : " + this.state.minute);
       event.preventDefault();
     }
   }
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          Please Select One Dinning Hall：
-          <select
-            value={this.state.dinningHall}
-            onChange={this.handleDinningChange}
-          >
-            <option value="--Please Select One Dinning Hall--">
-              --Please Select One Dinning Hall--
-            </option>
-            <option value="De neve">De Neve</option>
-            <option value="Epic">Epic</option>
-            <option value="Bruin Plate">Bruin Plate</option>
-            <option value="Feast">Feast</option>
-          </select>
-        </label>
+      <div>
 
-        <p />
-        <label>
-          Please Select One Time：
-          <select value={this.state.hour} onChange={this.handleHourChange}>
-            <option value="--Hour--">--Hour--</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-            <option id="11" value="11">11</option>
-            <option value="12">12</option>
-            <option value="13">13</option>
-            <option value="14">14</option>
-            <option value="17">17</option>
-            <option value="18">18</option>
-            <option value="19">19</option>
-            <option value="20">20</option>
-          </select>
-          <label>:</label>
-          <select value={this.state.minute} onChange={this.handleMinuteChange}>
-            <option value="--Minute--">--Minute--</option>
-            <option value="00">00</option>
-            <option value="30">30</option>
-            <option value="45">45</option>
-          </select>
-        </label>
+        <div className="navbar">
+          <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <span>Bruin Trade/Sell Page</span>
+            <div class="collapse navbar-collapse" id="navbarText">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                  <a class="nav-link" href="home"> Home </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="buy"> Buy </a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        </div>
 
-        <p/>
-        <label>
-          Price:
-          <input type="text" value={this.state.price} onChange={this.handlePriceChange} />
-        </label>
+        <form onSubmit={this.handleSubmit}>
+          <label>
+            Please Select One Dinning Hall：
+            <select
+              value={this.state.dinningHall}
+              onChange={this.handleDinningChange}
+            >
+              <option value="--Please Select One Dinning Hall--">
+                --Please Select One Dinning Hall--
+              </option>
+              <option value="De neve">De Neve</option>
+              <option value="Epic">Epic</option>
+              <option value="Bruin Plate">Bruin Plate</option>
+              <option value="Feast">Feast</option>
+            </select>
+          </label>
 
-        <input type="submit" value="Submit" />
-      </form>
+          <p />
+          <label>
+            Please Select One Time：
+            <select value={this.state.hour} onChange={this.handleHourChange}>
+              <option value="--Hour--">--Hour--</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+              <option id="11" value="11">11</option>
+              <option value="12">12</option>
+              <option value="13">13</option>
+              <option value="14">14</option>
+              <option value="17">17</option>
+              <option value="18">18</option>
+              <option value="19">19</option>
+              <option value="20">20</option>
+            </select>
+            <label>:</label>
+            <select value={this.state.minute} onChange={this.handleMinuteChange}>
+              <option value="--Minute--">--Minute--</option>
+              <option value="00">00</option>
+              <option value="30">30</option>
+              <option value="45">45</option>
+            </select>
+          </label>
+
+          <p />
+          <label>
+            Price:
+            <input type="text" value={this.state.price} onChange={this.handlePriceChange} />
+          </label>
+
+          <input type="submit" value="Submit" />
+        </form>
+
+      </div>
     );
   }
 }
