@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css"
 
 class BuyPage extends Component {
@@ -14,7 +15,18 @@ class BuyPage extends Component {
       start_price: "",
       end_price: "",
     };
+
+    this.handleDinningChange = this.handleDinningChange.bind(this);
+    this.handleStartHourChange = this.handleStartHourChange.bind(this);
+    this.handleStartMinuteChange = this.handleStartMinuteChange.bind(this);
+    this.handleStartPriceChange = this.handleStartPriceChange.bind(this);
+    this.handleEndHourChange = this.handleEndHourChange.bind(this);
+    this.handleEndMinuteChange = this.handleEndMinuteChange.bind(this);
+    this.handleEndPriceChange = this.handleEndPriceChange.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
   }
+
+
 
   checkStartBeforeEnd() {
     const startTime = Number(this.state.start_hour + this.state.start_minute);
@@ -134,6 +146,17 @@ class BuyPage extends Component {
         " from " + this.state.start_hour + " : " + this.state.start_minute + "to"
         + this.state.end_hour + " : " + this.state.end_minute);
       event.preventDefault();
+
+      const interval = {
+        dinningHall: this.state.dinningHall,
+        startTime: Number(this.state.start_hour + this.state.start_minute),
+        endTime: Number(this.state.end_hour + this.state.end_minute),
+        startPrice: this.state.start_price,
+        endPrice: this.state.end_price
+      }
+      axios.post("http://localhost:4000/app/serachOrder", interval)
+      .then(response => console.log(response.data));
+
     }
   }
 

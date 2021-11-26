@@ -58,6 +58,21 @@ router.post('/order', async (request, response) => {
     })
 });
 
+router.post('/serachOrder', (request, response) => {
+    const dinningHall = request.body.dinningHall
+    const startTime = request.body.startTime;
+    const endTime = request.body.endTime;
+    const startPrice = request.body.startPrice;
+    const endPrice = request.body.endPrice;
+    orderTemplateCopy.find({ location: dinningHall, time: { $gte: startTime, $lte: endTime }, price: {$gte: startPrice, $lte: endPrice}})
+    .then(data => {
+        response.json(data)
+    })
+    .catch(error => {
+        response.json(error)
+    })
+});
+
     /*
     router.get('/signup', (request, response) => {
         const userName_get = request.body.userName;
