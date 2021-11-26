@@ -178,6 +178,7 @@ class Selling_form extends Component {
               <select value={this.state.minute} onChange={this.handleMinuteChange}>
                 <option value="--Minute--">--Minute--</option>
                 <option value="00">00</option>
+                <option value="15">15</option>
                 <option value="30">30</option>
                 <option value="45">45</option>
               </select>
