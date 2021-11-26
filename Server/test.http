@@ -6,6 +6,5 @@ Content-Type: application/json
     "seller": "eggert",
     "location": "egg market",
     "price": 12,
-    "startTime": 1200,
-    "endTime": 1300
+    "time": 1200
 }
