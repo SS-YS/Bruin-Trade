@@ -20,12 +20,7 @@ const orderTemplate = new mongoose.Schema({
         required: true
     },
 
-    startTime:{
-        type: Number,
-        required: true
-    },
-
-    endTime:{
+    time:{
         type: Number,
         required: true
     },
