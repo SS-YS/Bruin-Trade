@@ -16,6 +16,12 @@ class SignupPage extends Component {
         }
     }
 
+    redirect() {
+        if (this.state.username === null) {
+          window.location.href = "/";
+        }
+    }
+
     changeUserName = (event) => {
         this.setState({
             userName: event.target.value
@@ -94,8 +100,8 @@ class SignupPage extends Component {
     }
 
     render() {
+        this.redirect();
         var heading = this.state.is_signup ? 'Sign up' : 'Log in'
-
         return (
             <div>
                 <p className='h2 heading text-center'> Bruin Trade </p>
@@ -105,18 +111,20 @@ class SignupPage extends Component {
                         <form onSubmit={this.onSubmit}>
                             <input type='button' id='signup' onClick={this.onClick_signup} className='btn btn-block' value='Sign up' />
                             <input type='button' id='login' onClick={this.onClick_login} className='btn btn-block' value='Log in' />
+                            <div>
                             <input type='text'
                                 placeholder='Username'
                                 onChange={this.changeUserName}
                                 value={this.state.userName}
-                                className='form-control form-group'
+                                className='form-control form-group signupInputText'
                             />
+                            </div>
                             <div id="phoneNumber">
                                 <input type='text'
                                     placeholder='Phone Number'
                                     onChange={this.changePhoneNumber}
                                     value={this.state.phoneNumber}
-                                    className='form-control form-group'
+                                    className='form-control form-group signupInputText'
                                 />
                             </div>
                             <input type='password'

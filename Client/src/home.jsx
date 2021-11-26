@@ -10,9 +10,13 @@ class HomePage extends Component {
   }
 
   redirect() {
-    if (this.state.username === null) {
+    if (sessionStorage.getItem("username") === null) {
       window.location.href = "/";
     }
+  }
+
+  logout() {
+    sessionStorage.removeItem("username")
   }
 
   render() {
@@ -20,7 +24,7 @@ class HomePage extends Component {
     return (
       <div className="navbar">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-          <span>Bruin Trade/Home Page</span>
+          <span>Bruin Trade/Home Page&nbsp;&nbsp;</span>
           <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav mr-auto">
               <li class="nav-item active">
@@ -29,6 +33,9 @@ class HomePage extends Component {
               <li class="nav-item">
                 <a class="nav-link" href="sell"> Sell </a>
               </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="/" onClick={this.logout}> Logout </a>
+                </li>
             </ul>
           </div>
         </nav>
