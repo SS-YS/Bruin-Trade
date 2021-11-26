@@ -59,7 +59,7 @@ router.post('/order', async (request, response) => {
     })
 });
 
-router.post('/serachOrder', (request, response) => {
+router.post('/searchOrder', (request, response) => {
     const dinningHall = request.body.dinningHall
     const startTime = request.body.startTime;
     const endTime = request.body.endTime;

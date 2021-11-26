@@ -154,7 +154,7 @@ class BuyPage extends Component {
         startPrice: this.state.start_price,
         endPrice: this.state.end_price
       }
-      axios.post("http://localhost:4000/app/serachOrder", interval)
+      axios.post("http://localhost:4000/app/searchOrder", interval)
       .then(response => console.log(response.data));
 
     }
@@ -218,7 +218,7 @@ class BuyPage extends Component {
                 <option value="18">18</option>
                 <option value="19">19</option>
                 <option value="20">20</option>
-                <option value="20">21</option>
+                <option value="21">21</option>
               </select>
               <label>&nbsp;:&nbsp;</label>
               <select value={this.state.start_minute} onChange={this.handleStartMinuteChange}>
