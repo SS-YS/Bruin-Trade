@@ -28,6 +28,7 @@ router.post('/signup', async (request, response) => {
     const signedUpUser = new signUpTemplateCopy({
         userName:request.body.userName,
         password:request.body.password,
+        phoneNumber: request.body.phoneNumber
     })
 
     signedUpUser.save()
