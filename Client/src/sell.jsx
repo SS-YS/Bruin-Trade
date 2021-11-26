@@ -12,12 +12,6 @@ class Selling_form extends Component {
       minute: "--Minute--",
       price: ""
     };
-
-    this.handleDinningChange = this.handleDinningChange.bind(this);
-    this.handleHourChange = this.handleHourChange.bind(this);
-    this.handleMinuteChange = this.handleMinuteChange.bind(this);
-    this.handlePriceChange = this.handlePriceChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   redirect() {
