@@ -12,6 +12,14 @@ const signUpTemplate = new mongoose.Schema({
         type: String,
         required: true
     }, 
+    finished_order_number: {
+        type: Number,
+        required: true
+    },
+    rating: {
+        type: Number,
+        required: true
+    },
     date:{
         type: Date,
         default: Date.now

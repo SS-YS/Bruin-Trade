@@ -28,7 +28,9 @@ router.post('/signup', async (request, response) => {
     const signedUpUser = new signUpTemplateCopy({
         userName:request.body.userName,
         password:request.body.password,
-        phoneNumber: request.body.phoneNumber
+        phoneNumber: request.body.phoneNumber,
+        finished_order_number: request.body.finished_order_number,
+        rating: request.body.rating
     })
 
     signedUpUser.save()
@@ -69,7 +71,7 @@ router.post('/searchOrder', (request, response) => {
     const endPrice = request.body.endPrice;
     const order_seller = request.body.seller;
 
-    orderTemplateCopy.find({ location: dinningHall, time: { $gte: startTime, $lte: endTime }, price: {$gte: startPrice, $lte: endPrice}, seller: {$ne: order_seller}})
+    orderTemplateCopy.find({ location: dinningHall, time: { $gte: startTime, $lte: endTime }, price: {$gte: startPrice, $lte: endPrice}, seller: {$ne: order_seller}, inProgress: {$ne: true}})
     .then(data => {
         response.json(data)
     })
@@ -92,24 +94,17 @@ router.post('/update', (request, response) => {
     })
 });
 
-    /*
-    router.get('/signup', (request, response) => {
-        const userName_get = request.body.userName;
-        mytable.findOne({userName: userName_get}, (err, user) => {
-            if (!user) {
-                signedUpUser.save()
-                .then(data => {
-                    response.json(data)
-                })
-                .catch(error => {
-                    response.json(error)
-                })
-            }
-            else {
-                response.json("Username already registered");
-            }
-        })
+router.post('/getRating', (request, response) => {
+    const userName_get = request.body.userName;
+    signUpTemplateCopy.findOne({userName: userName_get})
+    .then(data => {
+        response.json(data)
     })
-    */
+    .catch(error => {
+        response.json(error)
+    })
+});
+
+
 
 module.exports = router

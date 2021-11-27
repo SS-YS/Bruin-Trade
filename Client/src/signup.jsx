@@ -76,7 +76,14 @@ class SignupPage extends Component {
                     }
                     else {
                         if (this.state.is_signup) {
-                            axios.post("http://localhost:4000/app/signup", registered)
+                            const new_user = {
+                                userName: this.state.userName,
+                                phoneNumber: this.state.phoneNumber,
+                                password: this.state.password,
+                                rating: 5,
+                                finished_order_number: 0,
+                            }
+                            axios.post("http://localhost:4000/app/signup", new_user)
                                 .then(response => console.log(response.data))
                             this.setState({ message: "Sign up successful. Please log in." })
                         }
