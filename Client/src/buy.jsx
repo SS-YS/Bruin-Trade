@@ -182,9 +182,6 @@ class BuyPage extends Component {
       alert(this.state.dinningHall + " is not open at this time interval, please change your selected time");
       event.preventDefault();
     } else {
-      alert("You have selected the dinning hall: " + this.state.dinningHall +
-        " from " + this.state.start_hour + " : " + this.state.start_minute + "to"
-        + this.state.end_hour + " : " + this.state.end_minute);
       event.preventDefault();
 
       const interval = {
