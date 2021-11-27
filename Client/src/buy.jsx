@@ -10,12 +10,12 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 
 const columns = [
-  { field: 'id', headerName: "No.", width: 80 },
-  { field: 'seller', headerName: 'Seller', width: 120 },
+  { field: 'id', headerName: "No.", width: 60 },
+  { field: 'seller', headerName: 'Seller', width: 100 },
   { field: 'rating', headerName: 'Rating', width: 80 },
   { field: 'diningHall', headerName: 'Dining Hall', width: 120 },
-  { field: 'time', headerName: 'Time', width: 120 },
-  { field: 'price', headerName: 'Price', width: 120 },
+  { field: 'time', headerName: 'Time', width: 100 },
+  { field: 'price', headerName: 'Price', width: 80 },
   {
     field: 'buy',
     headerName: 'Buy Swipe',
@@ -50,7 +50,6 @@ const columns = [
   { field: 'obj_id', hide: true }
 ]
 
-
 class BuyPage extends Component {
   constructor(props) {
     super(props);
@@ -75,10 +74,6 @@ class BuyPage extends Component {
     this.handleEndPriceChange = this.handleEndPriceChange.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
   }
-
-
-
-
 
   generateRows = function (data) {
     var temp = this.state.rows;

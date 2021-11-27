@@ -56,7 +56,7 @@ h1,h2,h3,h4,h5,h6,label,span {
   background-color: white;
   box-sizing: border-box;
   border-radius: 10px;
-  min-width: 680px;
+  min-width: 660px;
   margin-top: 30px;
   float: left;
 }
