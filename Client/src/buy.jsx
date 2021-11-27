@@ -1,22 +1,55 @@
 import React, { Component } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css"
-
 import { DataGrid } from '@mui/x-data-grid';
+import { Button } from '@mui/material';
 
 const columns = [
-  { field: 'id', headerName: "No.", width: 80 },
-  { field: 'seller', headerName: 'Seller', width: 150 },
-  { field: 'diningHall', headerName: 'Dining Hall', width: 150 },
-  { field: 'time', headerName: 'Time', width: 150 },
-  { field: 'price', headerName: 'Price', width: 150 },
+  { field: 'id', headerName: "No.", width: 80},
+  { field: 'seller', headerName: 'Seller', width: 120 },
+  { field: 'diningHall', headerName: 'Dining Hall', width: 120 },
+  { field: 'time', headerName: 'Time', width: 120 },
+  { field: 'price', headerName: 'Price', width: 120 },
+  { 
+    field: 'buy', 
+    headerName: 'Buy Swipe', 
+    width: 120, 
+    renderCell(params){
+      const handleBuy = () => {
+        const obj_id = params.getValue(params.id, "obj_id");
+        
+        const updateInfo = {
+          _id: obj_id,
+          inProgress: true,
+          code: Math.floor(100000 + Math.random() * 900000),
+          buyer: sessionStorage.getItem("username"),
+        };
+        axios.post("http://localhost:4000/app/update", updateInfo)
+        .then(response => console.log(response.data))
+
+      }
+      return (
+        <Button
+          variant="contained"
+          color="primary"
+          size="small"
+          style={{margin: 16, width:100, height:40, borderRadius: 5}}
+          onClick={handleBuy}
+        >
+          Buy
+        </Button>
+      )
+    }
+  },
+  { field: 'obj_id', hide: true}
 ]
+
 
 class BuyPage extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      seller: sessionStorage.getItem("username"),
+      buyer: sessionStorage.getItem("username"),
       dinningHall: "--Please Select One Dinning Hall--",
       start_hour: "--Hour--",
       end_hour: "--Hour--",
@@ -47,11 +80,12 @@ class BuyPage extends Component {
       for (let i = 0; i < data.length; i++) {
         temp.push(
           {
-            id: i + 1,
-            seller: data[i].seller,
-            diningHall: data[i].location,
-            price: data[i].price,
-            time: data[i].time
+            id : i+1,
+            seller : data[i].seller,
+            diningHall : data[i].location,
+            price : data[i].price,
+            time : data[i].time,
+            obj_id: data[i]._id,
           }
         );
 
@@ -176,12 +210,10 @@ class BuyPage extends Component {
       alert(this.state.dinningHall + " is not open at this time interval, please change your selected time");
       event.preventDefault();
     } else {
-      alert("You have selected the dinning hall: " + this.state.dinningHall +
-        " from " + this.state.start_hour + " : " + this.state.start_minute + "to"
-        + this.state.end_hour + " : " + this.state.end_minute);
       event.preventDefault();
 
       const interval = {
+        seller: this.state.buyer,
         dinningHall: this.state.dinningHall,
         startTime: Number(this.state.start_hour + this.state.start_minute),
         endTime: Number(this.state.end_hour + this.state.end_minute),
