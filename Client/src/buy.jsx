@@ -1,6 +1,18 @@
 import React, { Component } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css"
+import { DataGrid } from '@mui/x-data-grid';
+
+
+const columns = [
+  { field: 'id', headerName: "No.", width: 80},
+  { field: 'seller', headerName: 'Seller', width: 150 },
+  { field: 'diningHall', headerName: 'Dining Hall', width: 150 },
+  { field: 'time', headerName: 'Time', width: 150 },
+  { field: 'price', headerName: 'Price', width: 150 },
+]
+
+
 
 class BuyPage extends Component {
   constructor(props) {
@@ -14,6 +26,7 @@ class BuyPage extends Component {
       end_minute: "--Minute--",
       start_price: "",
       end_price: "",
+      rows: []
     };
 
     this.handleDinningChange = this.handleDinningChange.bind(this);
@@ -26,7 +39,30 @@ class BuyPage extends Component {
     this.handleSearch = this.handleSearch.bind(this);
   }
 
+  generateRows = function(data) {
+    var temp = this.state.rows;
+    temp = Object.assign([], temp)
+    temp = [];
+    if (data.length === 0){
+      temp = [];
+    } else {
+      for (let i = 0; i < data.length; i++){
+        temp.push(
+          {
+            id : i+1,
+            seller : data[i].seller,
+            diningHall : data[i].location,
+            price : data[i].price,
+            time : data[i].time
+          }
+        );
 
+      }
+    }
+    this.setState({ rows : temp })
+    console.log(data);
+    console.log(this.state.rows);
+  }
 
   checkStartBeforeEnd() {
     const startTime = Number(this.state.start_hour + this.state.start_minute);
@@ -55,11 +91,11 @@ class BuyPage extends Component {
           return true;
         break;
       case "De Neve":
-        if ((endTime > 1000 && endTime < 1100) || startTime > 1000 && startTime < 1100)
+        if ((endTime > 1000 && endTime < 1100) || (startTime > 1000 && startTime < 1100))
           return true;
         break;
       case "Bruin Plate":
-        if ((endTime > 1000 && endTime < 1100) || startTime > 1000 && startTime < 1100)
+        if ((endTime > 1000 && endTime < 1100) || (startTime > 1000 && startTime < 1100))
           return true;
         break;
       case "Feast":
@@ -72,11 +108,15 @@ class BuyPage extends Component {
     return false;
   }
 
+
+
+
   redirect() {
     if (sessionStorage.getItem("username") === null) {
       window.location.href = "/";
     }
   }
+
 
   logout() {
     sessionStorage.removeItem("username")
@@ -155,10 +195,11 @@ class BuyPage extends Component {
         endPrice: this.state.end_price
       }
       axios.post("http://localhost:4000/app/searchOrder", interval)
-      .then(response => console.log(response.data));
+      .then(response => this.generateRows(response.data));
 
     }
   }
+
 
   render() {
     this.redirect();
@@ -267,6 +308,15 @@ class BuyPage extends Component {
             <p />
             <button type="submit" class="btn btn-primary">Search</button>
           </form>
+
+          <div style={{ height: 400, width: '100%' }}>
+            <DataGrid
+              rows={this.state.rows}
+              columns={columns}
+              pageSize={5}
+              rowsPerPageOptions={[5]}
+            />
+          </div>
         </div>
 
       </div>
