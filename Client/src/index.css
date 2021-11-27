@@ -63,7 +63,7 @@ h1,h2,h3,h4,h5,h6,label,span {
 
 @font-face {
   font-family: 'Customized-Font';
-  src: URL('./CustomizedFont.ttf') format('truetype')
+  src: URL('CustomizedFont.ttf') format('truetype')
 }
 
 .navHeading {
