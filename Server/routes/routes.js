@@ -3,7 +3,7 @@ const router = express.Router()
 const signUpTemplateCopy = require('../models/SignUpModels')
 const orderTemplateCopy = require('../models/OrderModels')
 const mongoose = require('mongoose')
-const { response } = require("express")
+const { response, request } = require("express")
 const mongoDB = "mongodb+srv://yqi_2002:Yuxuan02@cluster0.22647.mongodb.net/mytable?retryWrites=true&w=majority"
 mongoose.connect(mongoDB, { useNewUrlParser: true , useUnifiedTopology: true});
 const db = mongoose.connection
@@ -62,12 +62,25 @@ router.post('/order', async (request, response) => {
 });
 
 router.post('/searchOrder', (request, response) => {
-    const dinningHall = request.body.dinningHall
+    const dinningHall = request.body.dinningHall;
     const startTime = request.body.startTime;
     const endTime = request.body.endTime;
     const startPrice = request.body.startPrice;
     const endPrice = request.body.endPrice;
     orderTemplateCopy.find({ location: dinningHall, time: { $gte: startTime, $lte: endTime }, price: {$gte: startPrice, $lte: endPrice}})
+    .then(data => {
+        response.json(data)
+    })
+    .catch(error => {
+        response.json(error)
+    })
+});
+
+router.post('/update', (request, response) => {
+    const _id = request.body._id;
+    const in_progress_status = request.body.inProgress;
+    const buyer_status = request.body.buyer;
+    orderTemplateCopy.findByIdAndUpdate(_id, {inProgress: in_progress_status, buyer: buyer_status})
     .then(data => {
         response.json(data)
     })
