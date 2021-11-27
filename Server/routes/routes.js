@@ -82,7 +82,8 @@ router.post('/update', (request, response) => {
     const _id = request.body._id;
     const in_progress_status = request.body.inProgress;
     const buyer_status = request.body.buyer;
-    orderTemplateCopy.findByIdAndUpdate(_id, {inProgress: in_progress_status,buyer: buyer_status})
+    const confirm_code = request.body.code;
+    orderTemplateCopy.findByIdAndUpdate(_id, {inProgress: in_progress_status, buyer: buyer_status, code: confirm_code})
     .then(data => {
         response.json(data)
     })

@@ -4,7 +4,6 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import { DataGrid } from '@mui/x-data-grid';
 import { Button } from '@mui/material';
 
-
 const columns = [
   { field: 'id', headerName: "No.", width: 80},
   { field: 'seller', headerName: 'Seller', width: 120 },
@@ -36,7 +35,6 @@ const columns = [
 ]
 
 
-
 class BuyPage extends Component {
   constructor(props) {
     super(props)
@@ -60,6 +58,10 @@ class BuyPage extends Component {
     this.handleEndMinuteChange = this.handleEndMinuteChange.bind(this);
     this.handleEndPriceChange = this.handleEndPriceChange.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+  }
+
+  generate_code(){
+    return Math.floor(100000 + Math.random() * 900000);
   }
 
   generateRows = function(data) {
@@ -131,8 +133,6 @@ class BuyPage extends Component {
     }
     return false;
   }
-
-
 
 
   redirect() {
