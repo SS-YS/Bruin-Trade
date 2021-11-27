@@ -1,24 +1,27 @@
 import axios from "axios";
-import "bootstrap/dist/css/bootstrap.min.css"
 import React, { Component } from "react";
+import "bootstrap/dist/css/bootstrap.min.css"
+
+import BasicTimePicker from "./components/BasicTimePicker"
+import SelectDiningHall from "./components/SelectDiningHall"
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 
 class Selling_form extends Component {
   constructor(props) {
     super(props);
     this.state = {
       seller: sessionStorage.getItem("username"),
-      dinningHall: "--Please Select One Dinning Hall--",
-      hour: "--Hour--",
-      minute: "--Minute--",
-      price: ""
+      dinningHall: null,
+      time: null,
+      hour: null,
+      minute: null,
+      price: null
     };
-
     this.handleDinningChange = this.handleDinningChange.bind(this);
-    this.handleHourChange = this.handleHourChange.bind(this);
-    this.handleMinuteChange = this.handleMinuteChange.bind(this);
+    this.handleTimeChange = this.handleTimeChange.bind(this);
     this.handlePriceChange = this.handlePriceChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-
   }
 
   redirect() {
@@ -33,18 +36,16 @@ class Selling_form extends Component {
 
   checkTimeConflict() {
     const time = Number(this.state.hour + this.state.minute)
+    if (
+      (time < 700 || time > 2100) ||
+      (time > 1000 && time < 1100) || 
+      (time > 1500 && time < 1700)
+    )
+      return true; 
 
     switch (this.state.dinningHall) {
       case "Epicuria":
         if (time < 1100)
-          return true;
-        break;
-      case "De Neve":
-        if (time > 1000 && time < 1100)
-          return true;
-        break;
-      case "Bruin Plate":
-        if (time > 1000 && time < 1100)
           return true;
         break;
       case "Feast":
@@ -52,7 +53,7 @@ class Selling_form extends Component {
           return true;
         break;
       default:
-        return false
+        break; 
     }
     return false;
   }
@@ -61,12 +62,21 @@ class Selling_form extends Component {
     this.setState({ dinningHall: event.target.value });
   }
 
-  handleHourChange(event) {
-    this.setState({ hour: event.target.value });
-  }
-
-  handleMinuteChange(event) {
-    this.setState({ minute: event.target.value });
+  handleTimeChange(time) {
+    if (time === null) {
+      this.setState({ 
+        time: null, 
+        hour: null,
+        minute: null
+      })
+    }
+    else {
+      this.setState({ 
+        time: time, 
+        hour: ('0' + time.getHours()).slice(-2),
+        minute: ('0' + time.getMinutes()).slice(-2)
+      })
+    }
   }
 
   handlePriceChange(event) {
@@ -74,23 +84,20 @@ class Selling_form extends Component {
   }
 
   handleSubmit(event) {
-    if (this.state.dinningHall === "--Please Select One Dinning Hall--") {
-      alert("you need to select one dinning hall");
+    if (this.state.dinningHall === null) {
+      alert("Please select a dinning hall.");
       event.preventDefault();
-    } else if (this.state.hour === "--Hour--") {
+    } else if (this.state.time === null) {
+      alert("Please choose a time.");
       event.preventDefault();
-      alert("you need to select hour");
-    } else if (this.state.minute === "--Minute--") {
-      alert("you need to select minute");
-      event.preventDefault();
-    } else if (this.state.price === "" || isNaN(this.state.price)) {
-      alert("you need to enter a valid price");
+    } else if (this.state.price === null || isNaN(this.state.price)) {
+      alert("Please enter a valid price.");
       event.preventDefault();
     } else if (this.checkTimeConflict()) {
-      alert(this.state.dinningHall + " is not open at " + this.state.hour + " : " + this.state.minute + ", please change your selected time");
+      alert(this.state.dinningHall + " is not open at " + this.state.hour + ":" + this.state.minute + ". Please change your chosen time.");
+      event.preventDefault();
     } else {
-      alert("You have selected the dinning hall: " + this.state.dinningHall +
-        " at the time time: " + this.state.hour + " : " + this.state.minute);
+      alert("You have successfully posted a request to sell a swipe at the dinning hall " + this.state.dinningHall + " at time " + this.state.hour + ":" + this.state.minute + " for " + this.state.price + " dollars.");
       event.preventDefault();
 
       const orderInfo = {
@@ -101,14 +108,6 @@ class Selling_form extends Component {
       }
       axios.post("http://localhost:4000/app/order", orderInfo)
         .then(response => console.log(response.data))
-
-      this.setState({
-        seller: sessionStorage.getItem("username"),
-        dinningHall: "--Please Select One Dinning Hall--",
-        hour: "--Hour--",
-        minute: "--Minute--",
-        price: ""
-      });
     }
   }
 
@@ -116,7 +115,7 @@ class Selling_form extends Component {
     this.redirect();
     return (
       <div>
-        
+
         <div className="navbar">
           <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <span>Bruin Trade/Sell Page&nbsp;&nbsp;</span>
@@ -138,63 +137,24 @@ class Selling_form extends Component {
 
         <div className="container">
           <form onSubmit={this.handleSubmit}>
-            <label>
-              Please Select One Dinning Hall：
-              <select
-                value={this.state.dinningHall}
-                onChange={this.handleDinningChange}
-              >
-                <option value="--Please Select One Dinning Hall--">
-                  --Please Select One Dinning Hall--
-                </option>
-                <option value="De Neve">De Neve</option>
-                <option value="Epicuria">Epicuria</option>
-                <option value="Bruin Plate">Bruin Plate</option>
-                <option value="Feast">Feast</option>
-              </select>
-            </label>
+            <label> Please select a dining hall： </label>
+            <p />
+            <SelectDiningHall value={this.state.dinningHall} onChange={this.handleDinningChange}/>
 
             <p />
-            <label>
-              Please Select One Time：
-              <select value={this.state.hour} onChange={this.handleHourChange}>
-                <option value="--Hour--">--Hour--</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-                <option value="13">13</option>
-                <option value="14">14</option>
-                <option value="15">15</option>
-                <option value="17">17</option>
-                <option value="18">18</option>
-                <option value="19">19</option>
-                <option value="20">20</option>
-                <option value="20">21</option>
-              </select>
-              <label>&nbsp;:&nbsp;</label>
-              <select value={this.state.minute} onChange={this.handleMinuteChange}>
-                <option value="--Minute--">--Minute--</option>
-                <option value="00">00</option>
-                <option value="15">15</option>
-                <option value="30">30</option>
-                <option value="45">45</option>
-              </select>
-            </label>
+            <label> Please choose a time：</label>
+            <p />
+            <BasicTimePicker message="Choose a time" value={this.state.time} onChange={this.handleTimeChange} />
 
             <p />
-            <label>
-              Price：
-              <input class="px-1 py-1" type="text" value={this.state.price} onChange={this.handlePriceChange} />
-            </label>
+            <label> Please enter a price：</label>
+            <p />
+            <TextField label="Enter a price" variant="outlined" value={this.state.price} onChange={this.handlePriceChange} />
 
             <p />
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <Button type="submit" sx={{ marginTop: 1, height: 40 }} variant="contained">Submit</Button>
           </form>
         </div>
-
       </div>
     );
   }

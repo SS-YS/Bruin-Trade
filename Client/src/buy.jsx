@@ -1,18 +1,16 @@
 import React, { Component } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css"
+
 import { DataGrid } from '@mui/x-data-grid';
 
-
 const columns = [
-  { field: 'id', headerName: "No.", width: 80},
+  { field: 'id', headerName: "No.", width: 80 },
   { field: 'seller', headerName: 'Seller', width: 150 },
   { field: 'diningHall', headerName: 'Dining Hall', width: 150 },
   { field: 'time', headerName: 'Time', width: 150 },
   { field: 'price', headerName: 'Price', width: 150 },
 ]
-
-
 
 class BuyPage extends Component {
   constructor(props) {
@@ -39,27 +37,27 @@ class BuyPage extends Component {
     this.handleSearch = this.handleSearch.bind(this);
   }
 
-  generateRows = function(data) {
+  generateRows = function (data) {
     var temp = this.state.rows;
     temp = Object.assign([], temp)
     temp = [];
-    if (data.length === 0){
+    if (data.length === 0) {
       temp = [];
     } else {
-      for (let i = 0; i < data.length; i++){
+      for (let i = 0; i < data.length; i++) {
         temp.push(
           {
-            id : i+1,
-            seller : data[i].seller,
-            diningHall : data[i].location,
-            price : data[i].price,
-            time : data[i].time
+            id: i + 1,
+            seller: data[i].seller,
+            diningHall: data[i].location,
+            price: data[i].price,
+            time: data[i].time
           }
         );
 
       }
     }
-    this.setState({ rows : temp })
+    this.setState({ rows: temp })
     console.log(data);
     console.log(this.state.rows);
   }
@@ -108,15 +106,11 @@ class BuyPage extends Component {
     return false;
   }
 
-
-
-
   redirect() {
     if (sessionStorage.getItem("username") === null) {
       window.location.href = "/";
     }
   }
-
 
   logout() {
     sessionStorage.removeItem("username")
@@ -195,11 +189,10 @@ class BuyPage extends Component {
         endPrice: this.state.end_price
       }
       axios.post("http://localhost:4000/app/searchOrder", interval)
-      .then(response => this.generateRows(response.data));
+        .then(response => this.generateRows(response.data));
 
     }
   }
-
 
   render() {
     this.redirect();
