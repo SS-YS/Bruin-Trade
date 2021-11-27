@@ -94,7 +94,7 @@ class Selling_form extends Component {
       alert(this.state.dinningHall + " is not open at " + this.state.hour + ":" + this.state.minute + ". Please change your chosen time.");
       event.preventDefault();
     } else {
-      alert("You have successfully posted a request to sell a swipe at the dinning hall " + this.state.dinningHall + " at time " + this.state.hour + ":" + this.state.minute + " for " + this.state.price + " dollars.");
+      //alert("You have successfully posted a request to sell a swipe at the dinning hall " + this.state.dinningHall + " at time " + this.state.hour + ":" + this.state.minute + " for " + this.state.price + " dollars.");
       const orderInfo = {
         seller: this.state.seller,
         location: this.state.dinningHall,
@@ -102,7 +102,10 @@ class Selling_form extends Component {
         time: Number(this.state.hour + this.state.minute)
       }
       axios.post("http://localhost:4000/app/order", orderInfo)
-        .then(response => console.log(response.data))
+        .then(response => {
+          console.log(response.data)
+          window.location.href = "buy"
+        })
     }
   }
 

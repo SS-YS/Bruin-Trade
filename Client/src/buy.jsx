@@ -32,7 +32,7 @@ const columns = [
         };
         axios.post("http://localhost:4000/app/update", updateInfo)
           .then(response => console.log(response.data))
-
+        window.location.href = "home"
       }
       return (
         <Button
