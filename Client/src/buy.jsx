@@ -12,6 +12,9 @@ const renderBuy = () => {
       size="small"
       style={{margin: 16, width:100, height:40, borderRadius: 5}}
       onClick={() => {
+        const row_num = params.id;
+        
+
         alert("Purchase Success!")
 
         // update = {
@@ -39,7 +42,6 @@ const columns = [
 ]
 
 
-
 class BuyPage extends Component {
   constructor(props) {
     super(props)
@@ -63,6 +65,10 @@ class BuyPage extends Component {
     this.handleEndMinuteChange = this.handleEndMinuteChange.bind(this);
     this.handleEndPriceChange = this.handleEndPriceChange.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+  }
+
+  generate_code(){
+    return Math.floor(100000 + Math.random() * 900000);
   }
 
   generateRows = function(data) {
@@ -134,8 +140,6 @@ class BuyPage extends Component {
     }
     return false;
   }
-
-
 
 
   redirect() {
