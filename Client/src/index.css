@@ -17,6 +17,10 @@ body {
   font-weight: 400;
 }
 
+.buyTimeRangeLabel {
+  margin-top: 17px;
+}
+
 .navbar {
   background: #a0e9ff !important;
   font-size: 23px;
@@ -34,11 +38,44 @@ h1,h2,h3,h4,h5,h6,label,span {
     border-radius: 10px;
     padding: 20px;
     min-width: 300px;
+    max-width: 361px;
+    margin-top: 30px;
+}
+
+.buyPageSearchContainer {
+  background-color: white;
+  box-sizing: border-box;
+  border-radius: 10px;
+  min-width: 300px;
+  margin-top: 30px;
+  margin-right: 50px;
+  float: left;
+}
+
+.buyPageOrdersContainer {
+  background-color: white;
+  box-sizing: border-box;
+  border-radius: 10px;
+  min-width: 660px;
+  margin-top: 30px;
+  float: left;
+}
+
+@font-face {
+  font-family: 'Customized-Font';
+  src: URL('./CustomizedFont.ttf') format('truetype')
+}
+
+.navHeading {
+    font-family: Customized-Font;
     margin-top: 25px;
+    margin-right: 50px;
+    float: left;
 }
 
 .heading {
-    margin-top: 30px;
+  font-family: Customized-Font;
+  margin-top: 25px;
 }
 
 form {
