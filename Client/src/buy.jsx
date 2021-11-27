@@ -16,19 +16,23 @@ const columns = [
     headerName: 'Buy Swipe', 
     width: 120, 
     renderCell(params){
+      const handleBuy = () => {
+        console.log(params.getValue(params.id, "obj_id"))
+      }
       return (
         <Button
           variant="contained"
           color="primary"
           size="small"
           style={{margin: 16, width:100, height:40, borderRadius: 5}}
-          onClick={() => {console.log(params.id)}}
+          onClick={handleBuy}
         >
           Buy
         </Button>
       )
     }
   },
+  { field: 'obj_id', hide: true}
 ]
 
 
