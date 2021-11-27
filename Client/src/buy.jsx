@@ -20,7 +20,7 @@ const columns = [
         
         const updateInfo = {
           _id: obj_id,
-          inProgess: true,
+          inProgress: true,
           code: Math.floor(100000 + Math.random() * 900000),
           buyer: sessionStorage.getItem("username"),
         };
