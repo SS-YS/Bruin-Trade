@@ -4,30 +4,6 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import { DataGrid } from '@mui/x-data-grid';
 import { Button } from '@mui/material';
 
-const renderBuy = () => {
-  return (
-    <Button
-      variant="contained"
-      color="primary"
-      size="small"
-      style={{margin: 16, width:100, height:40, borderRadius: 5}}
-      onClick={() => {
-        alert("Purchase Success!")
-
-        // update = {
-        //   _id: null
-        // };
-
-        // axios.post("http://localhost:4000/app/searchOrder", interval)
-        // .then(response => this.generateRows(response.data));
-
-
-      }}
-    >
-      Buy
-    </Button>
-  )
-}
 
 const columns = [
   { field: 'id', headerName: "No.", width: 80},
@@ -35,7 +11,24 @@ const columns = [
   { field: 'diningHall', headerName: 'Dining Hall', width: 120 },
   { field: 'time', headerName: 'Time', width: 120 },
   { field: 'price', headerName: 'Price', width: 120 },
-  { field: 'buy', headerName: 'Buy Swipe', width: 120, renderCell: renderBuy},
+  { 
+    field: 'buy', 
+    headerName: 'Buy Swipe', 
+    width: 120, 
+    renderCell(params){
+      return (
+        <Button
+          variant="contained"
+          color="primary"
+          size="small"
+          style={{margin: 16, width:100, height:40, borderRadius: 5}}
+          onClick={() => {console.log(params.id)}}
+        >
+          Buy
+        </Button>
+      )
+    }
+  },
 ]
 
 
