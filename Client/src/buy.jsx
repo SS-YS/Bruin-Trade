@@ -1,19 +1,24 @@
 import React, { Component } from "react";
 import axios from "axios";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { DataGrid } from "@mui/x-data-grid";
-import { Button } from "@mui/material";
+import "bootstrap/dist/css/bootstrap.min.css"
+
+import { DataGrid } from '@mui/x-data-grid';
+import BasicTimePicker from "./components/BasicTimePicker"
+import NavigationBar from "./components/NavigationBar"
+import SelectDiningHall from "./components/SelectDiningHall"
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 
 const columns = [
-  { field: "id", headerName: "No.", width: 40 },
-  { field: "seller", headerName: "Seller", width: 120 },
-  { field: "rating", headerName: "Rating", width: 80 },
-  { field: "diningHall", headerName: "Dining Hall", width: 120 },
-  { field: "time", headerName: "Time", width: 80 },
-  { field: "price", headerName: "Price", width: 120 },
+  { field: 'id', headerName: "No.", width: 80 },
+  { field: 'seller', headerName: 'Seller', width: 120 },
+  { field: 'rating', headerName: 'Rating', width: 80 },
+  { field: 'diningHall', headerName: 'Dining Hall', width: 120 },
+  { field: 'time', headerName: 'Time', width: 120 },
+  { field: 'price', headerName: 'Price', width: 120 },
   {
-    field: "buy",
-    headerName: "Buy Swipe",
+    field: 'buy',
+    headerName: 'Buy Swipe',
     width: 120,
     renderCell(params) {
       const handleBuy = () => {
@@ -25,10 +30,10 @@ const columns = [
           code: Math.floor(100000 + Math.random() * 900000),
           buyer: sessionStorage.getItem("username"),
         };
-        axios
-          .post("http://localhost:4000/app/update", updateInfo)
-          .then((response) => console.log(response.data));
-      };
+        axios.post("http://localhost:4000/app/update", updateInfo)
+          .then(response => console.log(response.data))
+
+      }
       return (
         <Button
           variant="contained"
@@ -42,30 +47,31 @@ const columns = [
       );
     },
   },
-  { field: "obj_id", hide: true },
-];
+  { field: 'obj_id', hide: true }
+]
+
 
 class BuyPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
       buyer: sessionStorage.getItem("username"),
-      dinningHall: "--Please Select One Dinning Hall--",
-      start_hour: "--Hour--",
-      end_hour: "--Hour--",
-      start_minute: "--Minute--",
-      end_minute: "--Minute--",
-      start_price: "",
-      end_price: "",
-      rows: [],
+      dinningHall: null,
+      start_time: null,
+      start_hour: null,
+      end_time: null,
+      end_hour: null,
+      start_minute: null,
+      end_minute: null,
+      start_price: null,
+      end_price: null,
+      rows: []
     };
 
     this.handleDinningChange = this.handleDinningChange.bind(this);
-    this.handleStartHourChange = this.handleStartHourChange.bind(this);
-    this.handleStartMinuteChange = this.handleStartMinuteChange.bind(this);
+    this.handleStartTimeChange = this.handleStartTimeChange.bind(this);
+    this.handleEndTimeChange = this.handleEndTimeChange.bind(this);
     this.handleStartPriceChange = this.handleStartPriceChange.bind(this);
-    this.handleEndHourChange = this.handleEndHourChange.bind(this);
-    this.handleEndMinuteChange = this.handleEndMinuteChange.bind(this);
     this.handleEndPriceChange = this.handleEndPriceChange.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
   }
@@ -122,65 +128,48 @@ class BuyPage extends Component {
     return false;
   }
 
-  checkTimeConflict() {
-    const startTime = Number(this.state.start_hour + this.state.start_minute);
-    const endTime = Number(this.state.end_hour + this.state.end_minute);
-
-    switch (this.state.dinningHall) {
-      case "Epicuria":
-        if (endTime < 1100) return true;
-        break;
-      case "De Neve":
-        if (
-          (endTime > 1000 && endTime < 1100) ||
-          (startTime > 1000 && startTime < 1100)
-        )
-          return true;
-        break;
-      case "Bruin Plate":
-        if (
-          (endTime > 1000 && endTime < 1100) ||
-          (startTime > 1000 && startTime < 1100)
-        )
-          return true;
-        break;
-      case "Feast":
-        if (startTime < 1700) return true;
-        break;
-      default:
-        return false;
-    }
-    return false;
-  }
-
   redirect() {
     if (sessionStorage.getItem("username") === null) {
       window.location.href = "/";
     }
   }
 
-  logout() {
-    sessionStorage.removeItem("username");
-  }
-
   handleDinningChange(event) {
     this.setState({ dinningHall: event.target.value });
   }
 
-  handleStartHourChange(event) {
-    this.setState({ start_hour: event.target.value });
+  handleStartTimeChange(time) {
+    if (time === null) {
+      this.setState({
+        start_time: null,
+        start_hour: null,
+        start_minute: null
+      })
+    }
+    else {
+      this.setState({
+        start_time: time,
+        start_hour: ('0' + time.getHours()).slice(-2),
+        start_minute: ('0' + time.getMinutes()).slice(-2)
+      })
+    }
   }
 
-  handleEndHourChange(event) {
-    this.setState({ end_hour: event.target.value });
-  }
-
-  handleStartMinuteChange(event) {
-    this.setState({ start_minute: event.target.value });
-  }
-
-  handleEndMinuteChange(event) {
-    this.setState({ end_minute: event.target.value });
+  handleEndTimeChange(time) {
+    if (time === null) {
+      this.setState({
+        end_time: null,
+        end_hour: null,
+        end_minute: null
+      })
+    }
+    else {
+      this.setState({
+        end_time: time,
+        end_hour: ('0' + time.getHours()).slice(-2),
+        end_minute: ('0' + time.getMinutes()).slice(-2)
+      })
+    }
   }
 
   handleStartPriceChange(event) {
@@ -192,38 +181,26 @@ class BuyPage extends Component {
   }
 
   handleSearch(event) {
-    if (this.state.dinningHall === "--Please Select One Dinning Hall--") {
-      alert("you need to selected one dinning hall");
+    if (this.state.dinningHall === null) {
+      alert("Please select a dinning hall.");
       event.preventDefault();
-    } else if (this.state.start_hour === "--Hour--") {
+    } else if (this.state.start_time === null) {
+      alert("Please choose a start time.");
       event.preventDefault();
-      alert("you need to select a start hour");
-    } else if (this.state.end_hour === "--Hour--") {
+    } else if (this.state.end_time === null) {
+      alert("Please choose an end time.");
       event.preventDefault();
-      alert("you need to select an end hour");
-    } else if (this.state.start_minute === "--Minute--") {
-      alert("you need to select a start minute");
+    } else if (this.state.start_price === null || isNaN(this.state.start_price)) {
+      alert("Please enter a valid start price.");
       event.preventDefault();
-    } else if (this.state.end_minute === "--Minute--") {
-      alert("you need to select an end minute");
-      event.preventDefault();
-    } else if (this.state.start_price === "" || isNaN(this.state.start_price)) {
-      alert("you need to enter a valid start price");
-      event.preventDefault();
-    } else if (this.state.end_price === "" || isNaN(this.state.end_price)) {
-      alert("you need to enter a valid end price");
+    } else if (this.state.end_price === null || isNaN(this.state.end_price)) {
+      alert("Please enter a valid end price.");
       event.preventDefault();
     } else if (this.checkStartBeforeEnd()) {
-      alert("you need to enter a valid time interval");
+      alert("Please enter a valid time interval.");
       event.preventDefault();
     } else if (this.checkPrice()) {
-      alert("you need to enter a valid price interval");
-      event.preventDefault();
-    } else if (this.checkTimeConflict()) {
-      alert(
-        this.state.dinningHall +
-          " is not open at this time interval, please change your selected time"
-      );
+      alert("Please enter a valid price interval.");
       event.preventDefault();
     } else {
       event.preventDefault();
@@ -247,152 +224,45 @@ class BuyPage extends Component {
     this.redirect();
     return (
       <div>
-        <div className="navbar">
-          <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <span>Bruin Trade/Buy Page&nbsp;&nbsp;</span>
-            <div class="collapse navbar-collapse" id="navbarText">
-              <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                  <a class="nav-link" href="home">
-                    {" "}
-                    Home{" "}
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="sell">
-                    {" "}
-                    Sell{" "}
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/" onClick={this.logout}>
-                    {" "}
-                    Logout{" "}
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </nav>
-        </div>
-        <div className="container">
+        <NavigationBar />
+
+        <div className="buyPageSearchContainer">
           <form onSubmit={this.handleSearch}>
-            <label>
-              Please Select One Dinning Hall：
-              <select
-                value={this.state.dinningHall}
-                onChange={this.handleDinningChange}
-              >
-                <option value="--Please Select One Dinning Hall--">
-                  --Please Select One Dinning Hall--
-                </option>
-                <option value="De Neve">De Neve</option>
-                <option value="Epicuria">Epicuria</option>
-                <option value="Bruin Plate">Bruin Plate</option>
-                <option value="Feast">Feast</option>
-              </select>
-            </label>
+            <label> Please select a dining hall： </label>
+            <p />
+            <SelectDiningHall value={this.state.dinningHall} onChange={this.handleDinningChange} />
 
             <p />
-            <label>
-              Please Select a Time Range：
-              <select
-                value={this.state.start_hour}
-                onChange={this.handleStartHourChange}
-              >
-                <option value="--Hour--">--Hour--</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-                <option value="13">13</option>
-                <option value="14">14</option>
-                <option value="15">15</option>
-                <option value="17">17</option>
-                <option value="18">18</option>
-                <option value="19">19</option>
-                <option value="20">20</option>
-                <option value="21">21</option>
-              </select>
-              <label>&nbsp;:&nbsp;</label>
-              <select
-                value={this.state.start_minute}
-                onChange={this.handleStartMinuteChange}
-              >
-                <option value="--Minute--">--Minute--</option>
-                <option value="00">00</option>
-                <option value="00">15</option>
-                <option value="30">30</option>
-                <option value="45">45</option>
-              </select>
-              <label>&nbsp;&nbsp;to&nbsp;&nbsp;</label>
-              <select
-                value={this.state.end_hour}
-                onChange={this.handleEndHourChange}
-              >
-                <option value="--Hour--">--Hour--</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-                <option value="13">13</option>
-                <option value="14">14</option>
-                <option value="15">15</option>
-                <option value="17">17</option>
-                <option value="18">18</option>
-                <option value="19">19</option>
-                <option value="20">20</option>
-                <option value="21">21</option>
-              </select>
-              <label>&nbsp;:&nbsp;</label>
-              <select
-                value={this.state.end_minute}
-                onChange={this.handleEndMinuteChange}
-              >
-                <option value="--Minute--">--Minute--</option>
-                <option value="00">00</option>
-                <option value="30">30</option>
-                <option value="45">45</option>
-              </select>
-            </label>
+            <label> Please choose a time interval</label>
+            <p />
+            <BasicTimePicker message="Choose a start time" value={this.state.start_time} onChange={this.handleStartTimeChange} />
+            <label class="buyTimeRangeLabel">&nbsp;&nbsp;to&nbsp;&nbsp;</label>
+            <BasicTimePicker message="Choose an end time" value={this.state.end_time} onChange={this.handleEndTimeChange} />
 
             <p />
-            <label>
-              Price Range：
-              <input
-                class="px-1 py-1"
-                type="text"
-                value={this.state.start_price}
-                onChange={this.handleStartPriceChange}
-              />
-              <label>&nbsp;&nbsp;to&nbsp;&nbsp;</label>
-              <input
-                class="px-1 py-1"
-                type="text"
-                value={this.state.end_price}
-                onChange={this.handleEndPriceChange}
-              />
-            </label>
+            <label> Please enter a price range：</label>
+            <p />
+            <TextField label="Enter a start price" variant="outlined" value={this.state.start_price} onChange={this.handleStartPriceChange} />
+            <label class="buyTimeRangeLabel">&nbsp;&nbsp;to&nbsp;&nbsp;</label>
+            <TextField label="Enter a end price" variant="outlined" value={this.state.end_price} onChange={this.handleEndPriceChange} />
 
             <p />
-            <button type="submit" class="btn btn-primary">
-              Search
-            </button>
+            <Button type="submit" sx={{ marginTop: 1, height: 40 }} variant="contained">Search</Button>
           </form>
+        </div>
 
-          <div style={{ height: 400, width: "100%" }}>
+        <div className="buyPageOrdersContainer">
+          <div style={{ height: 425 }}>
             <DataGrid
               rows={this.state.rows}
               columns={columns}
-              pageSize={5}
-              rowsPerPageOptions={[5]}
+              pageSize={6}
+              rowsPerPageOptions={[6]}
             />
           </div>
         </div>
       </div>
+
     );
   }
 }
