@@ -16,7 +16,17 @@ const columns = [
     width: 120, 
     renderCell(params){
       const handleBuy = () => {
-        console.log(params.getValue(params.id, "obj_id"))
+        const obj_id = params.getValue(params.id, "obj_id");
+        
+        const updateInfo = {
+          _id: obj_id,
+          inProgress: true,
+          code: Math.floor(100000 + Math.random() * 900000),
+          buyer: sessionStorage.getItem("username"),
+        };
+        axios.post("http://localhost:4000/app/update", updateInfo)
+        .then(response => console.log(response.data))
+
       }
       return (
         <Button
@@ -34,12 +44,11 @@ const columns = [
   { field: 'obj_id', hide: true}
 ]
 
-
 class BuyPage extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      seller: sessionStorage.getItem("username"),
+      buyer: sessionStorage.getItem("username"),
       dinningHall: "--Please Select One Dinning Hall--",
       start_hour: "--Hour--",
       end_hour: "--Hour--",
@@ -208,7 +217,7 @@ class BuyPage extends Component {
       event.preventDefault();
 
       const interval = {
-        seller: this.state.seller,
+        seller: this.state.buyer,
         dinningHall: this.state.dinningHall,
         startTime: Number(this.state.start_hour + this.state.start_minute),
         endTime: Number(this.state.end_hour + this.state.end_minute),
