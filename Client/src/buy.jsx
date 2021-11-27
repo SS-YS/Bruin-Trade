@@ -2,14 +2,31 @@ import React, { Component } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css"
 import { DataGrid } from '@mui/x-data-grid';
+import { Button } from '@mui/material';
 
+const renderBuy = () => {
+  return (
+    <Button
+      variant="contained"
+      color="primary"
+      size="small"
+      style={{margin: 16, width:100, height:40, borderRadius: 5}}
+      onClick={() => {
+        alert("Buy success!")
+      }}
+    >
+      Buy
+    </Button>
+  )
+}
 
 const columns = [
   { field: 'id', headerName: "No.", width: 80},
-  { field: 'seller', headerName: 'Seller', width: 150 },
-  { field: 'diningHall', headerName: 'Dining Hall', width: 150 },
-  { field: 'time', headerName: 'Time', width: 150 },
-  { field: 'price', headerName: 'Price', width: 150 },
+  { field: 'seller', headerName: 'Seller', width: 120 },
+  { field: 'diningHall', headerName: 'Dining Hall', width: 120 },
+  { field: 'time', headerName: 'Time', width: 120 },
+  { field: 'price', headerName: 'Price', width: 120 },
+  { field: 'buy', headerName: 'Buy Swipe', width: 120, renderCell: renderBuy},
 ]
 
 
