@@ -15,7 +15,7 @@ const halls = [
 export default function SelectDiningHall(props) {
   return (
     <div>
-      <FormControl sx={{ width: 250 }}>
+      <FormControl sx={{ width: 230 }}>
         <InputLabel>Select a dining hall</InputLabel>
         <Select
           value={props.value}

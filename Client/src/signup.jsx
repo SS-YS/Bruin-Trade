@@ -87,7 +87,7 @@ class SignupPage extends Component {
                 }
                 this.setState({
                     userName: '',
-                    phoneNumber: '', 
+                    phoneNumber: '',
                     password: '',
                 })
             })
@@ -97,7 +97,10 @@ class SignupPage extends Component {
         var heading = this.state.is_signup ? 'Sign up' : 'Log in'
         return (
             <div>
-                <p className='h2 heading text-center'> Bruin Trade </p>
+                <div className="heading">
+                    <p className='h1 text-center'> Bruin Trade </p>
+                    <p className='h5 text-center'> Make the most out of your meal plan! </p>
+                </div>
                 <div className='container'>
                     <p className='h4 text-center'>{heading}</p>
                     <div className='form-div'>
@@ -105,12 +108,12 @@ class SignupPage extends Component {
                             <input type='button' id='signup' onClick={this.onClick_signup} className='btn btn-block' value='Sign up' />
                             <input type='button' id='login' onClick={this.onClick_login} className='btn btn-block' value='Log in' />
                             <div>
-                            <input type='text'
-                                placeholder='Username'
-                                onChange={this.changeUserName}
-                                value={this.state.userName}
-                                className='form-control form-group signupInputText'
-                            />
+                                <input type='text'
+                                    placeholder='Username'
+                                    onChange={this.changeUserName}
+                                    value={this.state.userName}
+                                    className='form-control form-group signupInputText'
+                                />
                             </div>
                             <div id="phoneNumber">
                                 <input type='text'
@@ -126,7 +129,7 @@ class SignupPage extends Component {
                                 value={this.state.password}
                                 className='form-control form-group'
                             />
-                            <input type='submit' className='btn btn-danger btn-block' value='Submit' />
+                            <input type='submit' className='btn btn-primary btn-block' value='Submit' />
                         </form>
                     </div>
                     <p className='h4 text-center' type='text'>

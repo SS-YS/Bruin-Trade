@@ -7,7 +7,7 @@ const orderTemplate = new mongoose.Schema({
 
     seller:{
         type: String,
-        require: false,
+        required: false,
     },
 
     location:{

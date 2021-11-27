@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css"
 
 import BasicTimePicker from "./components/BasicTimePicker"
 import SelectDiningHall from "./components/SelectDiningHall"
+import NavigationBar from "./components/NavigationBar"
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 
@@ -30,18 +31,14 @@ class Selling_form extends Component {
     }
   }
 
-  logout() {
-    sessionStorage.removeItem("username")
-  }
-
   checkTimeConflict() {
     const time = Number(this.state.hour + this.state.minute)
     if (
       (time < 700 || time > 2100) ||
-      (time > 1000 && time < 1100) || 
+      (time > 1000 && time < 1100) ||
       (time > 1500 && time < 1700)
     )
-      return true; 
+      return true;
 
     switch (this.state.dinningHall) {
       case "Epicuria":
@@ -53,7 +50,7 @@ class Selling_form extends Component {
           return true;
         break;
       default:
-        break; 
+        break;
     }
     return false;
   }
@@ -64,15 +61,15 @@ class Selling_form extends Component {
 
   handleTimeChange(time) {
     if (time === null) {
-      this.setState({ 
-        time: null, 
+      this.setState({
+        time: null,
         hour: null,
         minute: null
       })
     }
     else {
-      this.setState({ 
-        time: time, 
+      this.setState({
+        time: time,
         hour: ('0' + time.getHours()).slice(-2),
         minute: ('0' + time.getMinutes()).slice(-2)
       })
@@ -98,8 +95,6 @@ class Selling_form extends Component {
       event.preventDefault();
     } else {
       alert("You have successfully posted a request to sell a swipe at the dinning hall " + this.state.dinningHall + " at time " + this.state.hour + ":" + this.state.minute + " for " + this.state.price + " dollars.");
-      event.preventDefault();
-
       const orderInfo = {
         seller: this.state.seller,
         location: this.state.dinningHall,
@@ -115,31 +110,12 @@ class Selling_form extends Component {
     this.redirect();
     return (
       <div>
-
-        <div className="navbar">
-          <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <span>Bruin Trade/Sell Page&nbsp;&nbsp;</span>
-            <div class="collapse navbar-collapse" id="navbarText">
-              <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                  <a class="nav-link" href="home"> Home </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="buy"> Buy </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/" onClick={this.logout}> Logout </a>
-                </li>
-              </ul>
-            </div>
-          </nav>
-        </div>
-
+        <NavigationBar />
         <div className="container">
           <form onSubmit={this.handleSubmit}>
             <label> Please select a dining hall： </label>
             <p />
-            <SelectDiningHall value={this.state.dinningHall} onChange={this.handleDinningChange}/>
+            <SelectDiningHall value={this.state.dinningHall} onChange={this.handleDinningChange} />
 
             <p />
             <label> Please choose a time：</label>
