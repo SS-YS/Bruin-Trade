@@ -10,10 +10,10 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 
 const columns = [
-  { field: 'id', headerName: "No.", width: 60 },
-  { field: 'seller', headerName: 'Seller', width: 100 },
-  { field: 'rating', headerName: 'Rating', width: 80 },
-  { field: 'diningHall', headerName: 'Dining Hall', width: 120 },
+  { field: 'id', headerName: "No.", width: 60, hide: true },
+  { field: 'seller', headerName: 'Seller', width: 120 },
+  { field: 'rating', headerName: 'Rating', width: 100 },
+  { field: 'diningHall', headerName: 'Dining Hall', width: 140 },
   { field: 'time', headerName: 'Time', width: 100 },
   { field: 'price', headerName: 'Price', width: 80 },
   {
@@ -97,7 +97,7 @@ class BuyPage extends Component {
               rating: rating,
               diningHall: data[i].location,
               price: data[i].price,
-              time: data[i].time,
+              time: String(data[i].time).slice(0,2) + ":"+ String(data[i].time).slice(2,4),
               obj_id: data[i]._id,
             });
             this.setState({ rows: temp });
