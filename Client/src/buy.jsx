@@ -10,15 +10,17 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 
 const columns = [
-  { field: 'id', headerName: "No.", width: 60, hide: true },
-  { field: 'seller', headerName: 'Seller', width: 120 },
-  { field: 'rating', headerName: 'Rating', width: 100 },
-  { field: 'diningHall', headerName: 'Dining Hall', width: 140 },
-  { field: 'time', headerName: 'Time', width: 100 },
-  { field: 'price', headerName: 'Price', width: 80 },
+  { field: 'id', headerName: "No.", width: 60, hide: true, disableColumnMenu: true },
+  { field: 'seller', headerName: 'Seller', width: 120, disableColumnMenu: true },
+  { field: 'rating', headerName: 'Rating', width: 100, disableColumnMenu: true },
+  { field: 'diningHall', headerName: 'Dining Hall', width: 140, disableColumnMenu: true },
+  { field: 'time', headerName: 'Time', width: 100, disableColumnMenu: true },
+  { field: 'price', headerName: 'Price', width: 80, disableColumnMenu: true },
   {
     field: 'buy',
     headerName: 'Buy Swipe',
+    sortable: false,
+    disableColumnMenu: true,
     width: 120,
     renderCell(params) {
       const handleBuy = () => {
@@ -91,13 +93,22 @@ class BuyPage extends Component {
           .then((response) => {
             let rating = response.data.rating;
             temp = Object.assign([], temp);
+
+            let time_str = "";
+            if(data[i].time>=1000){
+              time_str = String(data[i].time).slice(0,2) + ":"+ String(data[i].time).slice(2,4)
+            }
+            else{
+              time_str = "0"+String(data[i].time).slice(0,1) + ":"+ String(data[i].time).slice(1,3)
+            }
+  
             temp.push({
               id: i + 1,
               seller: data[i].seller,
               rating: rating,
               diningHall: data[i].location,
               price: data[i].price,
-              time: String(data[i].time).slice(0,2) + ":"+ String(data[i].time).slice(2,4),
+              time: time_str,
               obj_id: data[i]._id,
             });
             this.setState({ rows: temp });
