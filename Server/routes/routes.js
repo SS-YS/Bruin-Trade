@@ -67,7 +67,9 @@ router.post('/searchOrder', (request, response) => {
     const endTime = request.body.endTime;
     const startPrice = request.body.startPrice;
     const endPrice = request.body.endPrice;
-    orderTemplateCopy.find({ location: dinningHall, time: { $gte: startTime, $lte: endTime }, price: {$gte: startPrice, $lte: endPrice}})
+    const order_seller = request.body.seller;
+
+    orderTemplateCopy.find({ location: dinningHall, time: { $gte: startTime, $lte: endTime }, price: {$gte: startPrice, $lte: endPrice}, seller: {$ne: order_seller}})
     .then(data => {
         response.json(data)
     })
@@ -80,7 +82,7 @@ router.post('/update', (request, response) => {
     const _id = request.body._id;
     const in_progress_status = request.body.inProgress;
     const buyer_status = request.body.buyer;
-    orderTemplateCopy.findByIdAndUpdate(_id, {inProgress: in_progress_status, buyer: buyer_status})
+    orderTemplateCopy.findByIdAndUpdate(_id, {inProgress: in_progress_status,buyer: buyer_status})
     .then(data => {
         response.json(data)
     })

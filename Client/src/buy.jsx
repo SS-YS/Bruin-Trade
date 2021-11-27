@@ -12,7 +12,16 @@ const renderBuy = () => {
       size="small"
       style={{margin: 16, width:100, height:40, borderRadius: 5}}
       onClick={() => {
-        alert("Buy success!")
+        alert("Purchase Success!")
+
+        // update = {
+        //   _id: null
+        // };
+
+        // axios.post("http://localhost:4000/app/searchOrder", interval)
+        // .then(response => this.generateRows(response.data));
+
+
       }}
     >
       Buy
@@ -70,7 +79,8 @@ class BuyPage extends Component {
             seller : data[i].seller,
             diningHall : data[i].location,
             price : data[i].price,
-            time : data[i].time
+            time : data[i].time,
+            obj_id: data[i]._id,
           }
         );
 
@@ -202,6 +212,7 @@ class BuyPage extends Component {
       event.preventDefault();
 
       const interval = {
+        seller: this.state.seller,
         dinningHall: this.state.dinningHall,
         startTime: Number(this.state.start_hour + this.state.start_minute),
         endTime: Number(this.state.end_hour + this.state.end_minute),
