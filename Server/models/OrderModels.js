@@ -25,8 +25,18 @@ const orderTemplate = new mongoose.Schema({
         required: true
     },
 
-    ordered:{
+    inProgress:{
         type: Boolean,
+        required: false
+    },
+
+    finished:{
+        type: Boolean,
+        required: false
+    },
+
+    code: {
+        type: Number,
         required: false
     }
 })

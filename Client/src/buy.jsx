@@ -265,6 +265,7 @@ class BuyPage extends Component {
               <select value={this.state.start_minute} onChange={this.handleStartMinuteChange}>
                 <option value="--Minute--">--Minute--</option>
                 <option value="00">00</option>
+                <option value="00">15</option>
                 <option value="30">30</option>
                 <option value="45">45</option>
               </select>
