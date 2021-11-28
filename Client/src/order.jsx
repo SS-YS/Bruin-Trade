@@ -17,6 +17,7 @@ class OrderPage extends Component {
       input_verification: "",
       verified: false,
       rating: 0,
+      hasRated: false,
     };
 
     this.getOrderInfo();
@@ -72,6 +73,7 @@ class OrderPage extends Component {
     }
 
     alert("You have entered the rating for " + name);
+    this.setState({hasRated: true});
     const updateRating = {
       rating: this.state.rating,
       user: name
@@ -184,7 +186,7 @@ class OrderPage extends Component {
       verification = <this.enter_verification />;
     }
     let rating;
-    if (this.state.verified) {
+    if ((this.state.verified || this.state.order_status === "finished") && !this.state.hasRated) {
       rating = <this.enter_rating />;
     } else {
       rating = null;
