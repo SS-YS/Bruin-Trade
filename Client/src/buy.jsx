@@ -275,7 +275,7 @@ class BuyPage extends Component {
             <SelectDiningHall value={this.state.dinningHall} onChange={this.handleDinningChange} />
 
             <p />
-            <label> Please choose a time interval</label>
+            <label> Please choose a time interval：</label>
             <p />
             <BasicTimePicker message="Choose a start time" value={this.state.start_time} onChange={this.handleStartTimeChange} />
             <label class="buyTimeRangeLabel">&nbsp;&nbsp;to&nbsp;&nbsp;</label>

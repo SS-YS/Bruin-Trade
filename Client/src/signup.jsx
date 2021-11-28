@@ -51,6 +51,13 @@ class SignupPage extends Component {
 
     onSubmit = (event) => {
         event.preventDefault()
+        if (
+            (this.state.is_signup && (this.state.userName === '' || this.state.phoneNumber === '' || this.state.password === ''))
+            || (this.state.is_login && (this.state.userName === '' || this.state.password === ''))
+        ) {
+            this.setState({ message: "Please fill out all fields." })
+            return
+        }
         const registered = {
             userName: this.state.userName,
             phoneNumber: this.state.phoneNumber,
@@ -140,11 +147,11 @@ class SignupPage extends Component {
                             />
                             <input type='submit' className='btn btn-block' value='Submit' />
                             <input type='change_password' id="changePassword" onClick={
-                                (event)=>{
-                                        event.preventDefault()
-                                        window.location.href="change_password"
-                                    }
-                                } className='btn btn-block hidden' value='Change Password' />
+                                (event) => {
+                                    event.preventDefault()
+                                    window.location.href = "change_password"
+                                }
+                            } className='btn btn-block hidden' value='Change Password' />
                         </form>
                     </div>
                     <p className='h4 text-center' type='text'>
