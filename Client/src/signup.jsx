@@ -37,12 +37,14 @@ class SignupPage extends Component {
     onClick_signup = (event) => {
         event.preventDefault()
         document.getElementById("phoneNumber").classList.remove("hidden");
+        document.getElementById("changePassword").classList.add("hidden");
         this.setState({ is_signup: true, is_login: false, message: "Please sign up." })
     }
 
     onClick_login = (event) => {
         event.preventDefault()
         document.getElementById("phoneNumber").classList.add("hidden");
+        document.getElementById("changePassword").classList.remove("hidden");
         this.setState({ is_signup: false, is_login: true, message: "Please log in." })
     }
 
@@ -137,12 +139,12 @@ class SignupPage extends Component {
                                 className='form-control form-group'
                             />
                             <input type='submit' className='btn btn-block' value='Submit' />
-                            <input type='change_password' onClick={
+                            <input type='change_password' id="changePassword" onClick={
                                 (event)=>{
                                         event.preventDefault()
                                         window.location.href="change_password"
                                     }
-                                } className='btn btn-block' value='Change Password' />
+                                } className='btn btn-block hidden' value='Change Password' />
                         </form>
                     </div>
                     <p className='h4 text-center' type='text'>
