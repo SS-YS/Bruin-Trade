@@ -152,6 +152,18 @@ router.post('/getOrder', (request, response) => {
     })
 });
 
+router.post('/change_password', (request, response) => {
+    const userName = request.body.userName;
+    const password = request.body.password;
+    signUpTemplateCopy.findOneAndUpdate({userName:userName}, {password:password})
+    .then(data => {
+        response.json(data)
+    })
+    .catch(error => {
+        response.json(error)
+    })
+});
+
 router.post('/updateRating', (request, response) =>{
     const incoming_rating = request.body.rating;
     const user = request.body.user;

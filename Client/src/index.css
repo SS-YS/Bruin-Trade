@@ -217,3 +217,10 @@ input[id=login]:active {
   border: 1px solid rgb(192, 180, 157);
   color: black;
 }
+
+input[type=change_password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+}

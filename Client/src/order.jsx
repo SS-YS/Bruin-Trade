@@ -116,6 +116,15 @@ class OrderPage extends Component {
       alert("You have entered the wrong varification code");
     }
     event.preventDefault();
+
+    const finish = {
+      _id:this.state.order
+    };
+
+    axios
+    .post("http://localhost:4000/app/finished", finish)
+    .then((response) => console.log(response.data));
+
   }
 
   getOrderInfo() {
