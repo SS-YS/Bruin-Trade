@@ -17,7 +17,8 @@ class OrderPage extends Component {
       input_verification: "",
       verified: false,
       rating: 0,
-      hasRated: false,
+      sellerHasRated: false,
+      buyerHasRated: false,
     };
 
     this.getOrderInfo();
@@ -192,7 +193,7 @@ class OrderPage extends Component {
       verification = <this.enter_verification />;
     }
     let rating;
-    if ((this.state.verified || this.state.order_status === "finished") && !this.state.hasRated) {
+    if ((this.state.verified || this.state.order_status === "finished") && (!this.state.sellerHasRated || !this.state.buyerHasRated)) {
       rating = <this.enter_rating />;
     } else {
       rating = null;
