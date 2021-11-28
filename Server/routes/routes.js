@@ -165,14 +165,15 @@ router.post('/change_password', (request, response) => {
 });
 
 router.post('/updateRating', (request, response) =>{
-    const incoming_rating = request.body.rating;
+    const incoming_rating = Number(request.body.rating);
     const user = request.body.user;
     signUpTemplateCopy.findOne({userName: user}).then(data =>{
-        const old_rating = data.rating;
-        const num = data.finished_order_number;
-        const new_rating = (old_rating * num + incoming_rating)/(num+1)
+        const old_rating = Number(data.rating);
+        const num = Number(data.finished_order_number);
+        const newNum = Number(num+1);
+        const new_rating = Number((old_rating * num + incoming_rating)/(newNum))
         const query = {userName: user};
-        signUpTemplateCopy.findOneAndUpdate(query, {rating: new_rating, finished_order_number: num+1})
+        signUpTemplateCopy.findOneAndUpdate(query, {rating: new_rating, finished_order_number: newNum})
         .then(data => {
             response.json(data)
         })
