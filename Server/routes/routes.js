@@ -106,9 +106,8 @@ router.post('/getRating', (request, response) => {
 });
 
 router.post('/getOnGoing', (request, response) =>{
-    const buyer_get = request.body.buyer;
-    const seller_get = request.body.seller;
-    orderTemplateCopy.find({$or:[{buyer: buyer_get}, {seller: seller_get}]})
+    const user_get = request.body.user;
+    orderTemplateCopy.find({$or:[{buyer: user_get}, {seller: user_get}]})
     .then(data => {
         response.json(data)
     })
