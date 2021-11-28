@@ -10,7 +10,7 @@ const columns = [
   { field: 'diningHall', headerName: 'Dining Hall', width: 140, disableColumnMenu: true },
   { field: 'time', headerName: 'Time', width: 100, disableColumnMenu: true },
   { field: 'price', headerName: 'Price', width: 80, disableColumnMenu: true },
-  { field: 'status', headerName: 'Status', width: 80, disableColumnMenu: true },
+  { field: 'status', headerName: 'Status', width: 150, disableColumnMenu: true },
   {
     field: 'detail',
     headerName: 'Detail',
@@ -69,6 +69,13 @@ class HomePage extends Component {
     temp = [];
     for (let i = 0; i < data.length; i++){
       console.log(data[i])
+      let time_str = "";
+            if(data[i].time>=1000){
+              time_str = String(data[i].time).slice(0,2) + ":"+ String(data[i].time).slice(2,4)
+            }
+            else{
+              time_str = "0"+String(data[i].time).slice(0,1) + ":"+ String(data[i].time).slice(1,3)
+            }
       var status = "onSale"
       if (data[i].inProgress){
         status = "inprogress";
@@ -82,6 +89,7 @@ class HomePage extends Component {
           id : i + 1,
           diningHall: data[i].location,
           price : data[i].price,
+          time : time_str,
           status : status,
           obj_id: data[i]._id,
         }
@@ -97,6 +105,11 @@ class HomePage extends Component {
     return (
       <div>
         <NavigationBar />
+        <div>
+          <h1>
+            My Orders
+          </h1>
+        </div>
         <div className="buyPageOrdersContainer">
           <div style={{ height: 425 }}>
             <DataGrid
