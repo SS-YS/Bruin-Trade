@@ -23,12 +23,17 @@ class Selling_form extends Component {
     this.handleTimeChange = this.handleTimeChange.bind(this);
     this.handlePriceChange = this.handlePriceChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.onClick = this.onClick.bind(this);
   }
 
   redirect() {
     if (sessionStorage.getItem("username") === null) {
       window.location.href = "/";
     }
+  }
+
+  onClick() {
+    window.location.href = "home"
   }
 
   checkTimeConflict() {
@@ -94,7 +99,7 @@ class Selling_form extends Component {
       alert(this.state.dinningHall + " is not open at " + this.state.hour + ":" + this.state.minute + ". Please change your chosen time.");
       event.preventDefault();
     } else {
-      //alert("You have successfully posted a request to sell a swipe at the dinning hall " + this.state.dinningHall + " at time " + this.state.hour + ":" + this.state.minute + " for " + this.state.price + " dollars.");
+      alert("You have successfully posted a request to sell a swipe at the dinning hall " + this.state.dinningHall + " at time " + this.state.hour + ":" + this.state.minute + " for " + this.state.price + " dollars.");
       const orderInfo = {
         seller: this.state.seller,
         location: this.state.dinningHall,
@@ -104,7 +109,7 @@ class Selling_form extends Component {
       axios.post("http://localhost:4000/app/order", orderInfo)
         .then(response => {
           console.log(response.data)
-          window.location.href = "buy"
+          window.location.href="home"
         })
     }
   }
@@ -115,7 +120,7 @@ class Selling_form extends Component {
       <div>
         <NavigationBar />
         <div className="container">
-          <form onSubmit={this.handleSubmit}>
+          <form>
             <label> Please select a dining hall： </label>
             <p />
             <SelectDiningHall value={this.state.dinningHall} onChange={this.handleDinningChange} />
@@ -129,10 +134,10 @@ class Selling_form extends Component {
             <label> Please enter a price：</label>
             <p />
             <TextField label="Enter a price" variant="outlined" value={this.state.price} onChange={this.handlePriceChange} />
-
-            <p />
-            <Button type="submit" sx={{ marginTop: 1, height: 40 }} variant="contained">Submit</Button>
           </form>
+
+          <p />
+            <Button type="submit" onClick={this.handleSubmit} sx={{ marginTop: 1, height: 40 }} variant="contained">Submit</Button>
         </div>
       </div>
     );
