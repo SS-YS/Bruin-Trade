@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from 'react-router-dom';
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css"
 
@@ -12,7 +13,21 @@ import "./index.css"
 
 const columns = [
   { field: 'id', headerName: "No.", width: 60, hide: true, disableColumnMenu: true },
-  { field: 'seller', headerName: 'Seller', width: 120, disableColumnMenu: true },
+  { field: 'seller', 
+    headerName: 'Seller', 
+    width: 120, 
+    disableColumnMenu: true,
+    renderCell(params){
+      const findSeller = () => {
+        sessionStorage.setItem("userDisplayed", params.getValue(params.id, "seller"));
+      }
+      return(
+        <Link to="/user_info" onClick={findSeller}>
+          {params.getValue(params.id, "seller")}
+        </Link>
+      )
+    }
+  },
   { field: 'rating', headerName: 'Rating', width: 100, disableColumnMenu: true },
   { field: 'diningHall', headerName: 'Dining Hall', width: 140, disableColumnMenu: true },
   { field: 'time', headerName: 'Time', width: 100, disableColumnMenu: true },

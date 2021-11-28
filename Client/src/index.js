@@ -9,6 +9,7 @@ import SellPage from "./sell"
 import BuyPage from "./buy"
 import ChangingPassword from "./change-password";
 import OrderPage from "./order"
+import UserInfo from "./user"
 import "./index.css";
 
 class App extends Component {
@@ -23,6 +24,7 @@ class App extends Component {
           <Route exact path="/buy" element={<BuyPage />} />
           <Route exact path="/change_password" element={<ChangingPassword/>} />
           <Route exact path="/order" element={<OrderPage />} />
+          <Route exact path="/user_info" element={<UserInfo />} />
         </Routes>
       </Router>
     );
