@@ -8,6 +8,7 @@ import NavigationBar from "./components/NavigationBar"
 import SelectDiningHall from "./components/SelectDiningHall"
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import "./index.css"
 
 const columns = [
   { field: 'id', headerName: "No.", width: 60, hide: true, disableColumnMenu: true },
@@ -36,11 +37,30 @@ const columns = [
           .then(response => console.log(response.data))
         window.location.href = "home"
       }
+
+      const styles = {
+        "&.MuiButton-root": {
+          border: "2px #8a8169 solid"
+        },
+        "&.MuiButton-text": {
+          color: "white",
+        },
+        "&.MuiButton-contained": {
+          backgroundColor: "#8a8169",
+          color: "white"
+        },
+        "&.MuiButton-outlined": {
+          color: "white"
+        }
+      }
+
       return (
         <Button
+          className="buy_but"
           variant="contained"
           color="primary"
           size="small"
+          sx={styles}
           style={{ margin: 16, width: 100, height: 40, borderRadius: 5 }}
           onClick={handleBuy}
         >
@@ -228,6 +248,7 @@ class BuyPage extends Component {
 
   render() {
     this.redirect();
+
     return (
       <div>
         <NavigationBar />

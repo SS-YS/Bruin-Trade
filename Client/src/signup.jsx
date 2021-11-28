@@ -136,7 +136,7 @@ class SignupPage extends Component {
                                 value={this.state.password}
                                 className='form-control form-group'
                             />
-                            <input type='submit' className='btn btn-primary btn-block' value='Submit' />
+                            <input type='submit' className='btn btn-block' value='Submit' />
                             <input type='change_password' onClick={
                                 (event)=>{
                                         event.preventDefault()
