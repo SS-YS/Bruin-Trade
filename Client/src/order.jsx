@@ -30,12 +30,33 @@ class OrderPage extends Component {
     this.handle_enter_rating = this.handle_enter_rating.bind(this);
     this.handle_rating_submit = this.handle_rating_submit.bind(this);
     this.enter_rating = this.enter_rating.bind(this);
+    this.cancel = this.cancel.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
   }
 
   redirect() {
     if (sessionStorage.getItem("username") === null) {
       window.location.href = "/";
     }
+  }
+
+  cancel(){
+    return(
+      <button onClick={this.handleCancel}>
+        Cancel Order
+      </button>
+    );
+  }
+
+  handleCancel(){
+    alert("You will cancel this order");
+    const cancel = {
+      _id: this.state.order,
+    }
+    axios
+        .post("http://localhost:4000/app/cancel", cancel)
+        .then((response) => console.log(response.data));
+    window.location.href = "home"
   }
 
   enter_rating() {
@@ -65,7 +86,6 @@ class OrderPage extends Component {
   }
 
   handle_rating_submit(event) {
-
     let name = "";
     if (this.state.username === this.state.buyer) {
       name = this.state.seller;
@@ -79,16 +99,17 @@ class OrderPage extends Component {
       user: name,
       _id: this.state.order,
     };
-    if(this.state.username == this.state.seller){
-      this.setState({sellerHasRated: true});
-    axios.post("http://localhost:4000/app/sellerUpdateRating", updateRating)
-      .then((response) => console.log(response.data));
-    }
-    else if(this.state.username == this.state.buyer){
-      this.setState({buyerHasRated: true});
-      axios.post("http://localhost:4000/app/buyerUpdateRating", updateRating)
+    if (this.state.username === this.state.seller) {
+      this.setState({ sellerHasRated: true });
+      axios
+        .post("http://localhost:4000/app/sellerUpdateRating", updateRating)
         .then((response) => console.log(response.data));
-      }
+    } else if (this.state.username === this.state.buyer) {
+      this.setState({ buyerHasRated: true });
+      axios
+        .post("http://localhost:4000/app/buyerUpdateRating", updateRating)
+        .then((response) => console.log(response.data));
+    }
 
     event.preventDefault();
   }
@@ -127,13 +148,12 @@ class OrderPage extends Component {
     event.preventDefault();
 
     const finish = {
-      _id:this.state.order
+      _id: this.state.order,
     };
 
     axios
-    .post("http://localhost:4000/app/finished", finish)
-    .then((response) => console.log(response.data));
-
+      .post("http://localhost:4000/app/finished", finish)
+      .then((response) => console.log(response.data));
   }
 
   getOrderInfo() {
@@ -183,7 +203,10 @@ class OrderPage extends Component {
   render() {
     this.redirect();
     let verification;
-    if (
+    if(this.state.order_status === "finished"){
+      verification = null;
+    }
+    else if (
       this.state.order_status === "inprogress" &&
       this.state.username === this.state.buyer
     ) {
@@ -194,11 +217,32 @@ class OrderPage extends Component {
     ) {
       verification = <this.enter_verification />;
     }
+
     let rating;
-    if ((this.state.verified || this.state.order_status === "finished") && (!this.state.sellerHasRated || !this.state.buyerHasRated)) {
-      rating = <this.enter_rating />;
+    if (this.state.verified || this.state.order_status === "finished") {
+      if (
+        this.state.seller === this.state.username &&
+        !this.state.sellerHasRated
+      ) {
+        rating = <this.enter_rating />;
+      } else if (
+        this.state.buyer === this.state.username &&
+        !this.state.buyerHasRated
+      ) {
+        rating = <this.enter_rating />;
+      } else {
+        rating = null;
+      }
     } else {
       rating = null;
+    }
+
+    let cancel_button;
+    if(this.state.order_status === "onSale"){
+      cancel_button = this.cancel();
+    }
+    else{
+      cancel_button = null;
     }
     return (
       <div>
@@ -216,6 +260,7 @@ class OrderPage extends Component {
         <p />
         {verification}
         {rating}
+        {cancel_button}
       </div>
     );
   }
