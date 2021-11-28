@@ -7,6 +7,7 @@ import PageNotFound from "./404";
 import SignupPage from "./signup";
 import SellPage from "./sell"
 import BuyPage from "./buy"
+import OrderPage from "./order"
 import "./index.css";
 
 class App extends Component {
@@ -18,6 +19,7 @@ class App extends Component {
           <Route exact path="*" element={<PageNotFound />} />
           <Route exact path="/home" element={<HomePage />} />
           <Route exact path="/sell" element={<SellPage />} />
+          <Route exact path="/order" element={<OrderPage />} />
           <Route exact path="/buy" element={<BuyPage />} />
         </Routes>
       </Router>
