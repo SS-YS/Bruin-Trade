@@ -10,7 +10,7 @@ const columns = [
   { field: 'diningHall', headerName: 'Dining Hall', width: 140, disableColumnMenu: true },
   { field: 'time', headerName: 'Time', width: 100, disableColumnMenu: true },
   { field: 'price', headerName: 'Price', width: 80, disableColumnMenu: true },
-  { field: 'status', headerName: 'Status', width: 150, disableColumnMenu: true },
+  { field: 'status', headerName: 'Status', width: 130, disableColumnMenu: true },
   {
     field: 'detail',
     headerName: 'Detail',
@@ -78,12 +78,12 @@ class HomePage extends Component {
             else{
               time_str = "0"+String(data[i].time).slice(0,1) + ":"+ String(data[i].time).slice(1,3)
             }
-      var status = "onSale"
+      var status = "On Sale"
       if (data[i].inProgress){
-        status = "inprogress";
+        status = "In Progress";
       }
       if (data[i].finished){
-        status = "finished";
+        status = "Completed";
       }
       temp = Object.assign([], temp);
       temp.push(
@@ -102,17 +102,15 @@ class HomePage extends Component {
 
   render() {
     this.redirect();
-
-
     return (
       <div>
         <NavigationBar />
         <div>
-          <h1>
+          <h5 className="buyPageTitle">
             My Orders
-          </h1>
+          </h5>
         </div>
-        <div className="buyPageOrdersContainer">
+        <div className="homePageOrdersContainer">
           <div style={{ height: 425 }}>
             <DataGrid
               rows={this.state.rows}

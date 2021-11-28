@@ -146,7 +146,7 @@ class SignupPage extends Component {
                                 className='form-control form-group'
                             />
                             <input type='submit' className='btn btn-block' value='Submit' />
-                            <input type='change_password' id="changePassword" onClick={
+                            <input type='submit' id="changePassword" onClick={
                                 (event) => {
                                     event.preventDefault()
                                     window.location.href = "change_password"
