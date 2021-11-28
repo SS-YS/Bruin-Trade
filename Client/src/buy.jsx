@@ -22,7 +22,7 @@ const columns = [
         sessionStorage.setItem("userDisplayed", params.getValue(params.id, "seller"));
       }
       return(
-        <Link to="/user_info" onClick={findSeller}>
+        <Link to="/user_info" onClick={findSeller} style={{ textDecoration: 'none' }}>
           {params.getValue(params.id, "seller")}
         </Link>
       )
