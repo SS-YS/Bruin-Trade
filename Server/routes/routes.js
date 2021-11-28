@@ -4,6 +4,7 @@ const signUpTemplateCopy = require('../models/SignUpModels')
 const orderTemplateCopy = require('../models/OrderModels')
 const mongoose = require('mongoose')
 const { response, request } = require("express")
+const SignUpModels = require("../models/SignUpModels")
 const mongoDB = "mongodb+srv://yqi_2002:Yuxuan02@cluster0.22647.mongodb.net/mytable?retryWrites=true&w=majority"
 mongoose.connect(mongoDB, { useNewUrlParser: true , useUnifiedTopology: true});
 const db = mongoose.connection
@@ -116,6 +117,8 @@ router.post('/getOnGoing', (request, response) =>{
     })
 });
 
+
+
 router.post('/cancel', (request, response) => {
     const _id = request.body._id;
     orderTemplateCopy.findByIdAndDelete(_id)
@@ -138,6 +141,33 @@ router.post('/finished', (request, response) => {
     })
 });
 
+router.post('/getOrder', (request, response) => {
+    const _id = request.body._id;
+    orderTemplateCopy.findById(_id)
+    .then(data => {
+        response.json(data)
+    })
+    .catch(error => {
+        response.json(error)
+    })
+});
 
+router.post('/updateRating', (request, response) =>{
+    const incoming_rating = request.body.rating;
+    const user = request.body.user;
+    signUpTemplateCopy.findOne({userName: user}).then(data =>{
+        const old_rating = data.rating;
+        const num = data.finished_order_number;
+        const new_rating = (old_rating * num + incoming_rating)/(num+1)
+        const query = {userName: user};
+        signUpTemplateCopy.findOneAndUpdate(query, {rating: new_rating, finished_order_number: num+1})
+        .then(data => {
+            response.json(data)
+        })
+        .catch(error => {
+            response.json(error)
+        })
+    })
+})
 
 module.exports = router
