@@ -9,7 +9,7 @@
 }
 
 body {
-  background: #a0e9ff !important;
+  background: rgb(247, 241, 229) !important;
   display: flex;
   justify-content: center;
   font-family: 'Fira Sans', sans-serif;
@@ -22,7 +22,7 @@ body {
 }
 
 .navbar {
-  background: #a0e9ff !important;
+  background: rgb(247, 241, 229) !important;
   font-size: 23px;
   justify-content: center;
 }
@@ -82,6 +82,28 @@ form {
   margin: 20px;
 }
 
+.normal_but {
+  border-color: rgb(117, 110, 95) !important;
+}
+
+.normal_but:hover {
+  border-color: rgb(117, 110, 95) !important;
+  background-color: #d4c8b0 !important;
+}
+
+.normal_but:focus {
+  border-color: rgb(117, 110, 95) !important;
+  background-color: #d4c8b0 !important;
+}
+
+.logout_but:hover {
+  background-color: #e9d8d4 !important;
+}
+
+.logout_but:focus {
+  background-color: #e9d8d4 !important;
+}
+
 input {
   padding: 12px 20px;
   margin: 8px 0;
@@ -89,6 +111,17 @@ input {
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
+}
+
+input:active {
+  border: 1px solid #ccc;
+  box-shadow: none;
+}
+
+input:focus {
+  border: 1px solid #ccc;
+  box-shadow: none;
+  border-color: rgb(165, 155, 137) !important;
 }
 
 .signupInputText {
@@ -110,9 +143,12 @@ input[type=submit] {
   padding: 12px 20px;
   margin: 8px 0;
   box-sizing: border-box;
+  color: rgb(247, 241, 229);
+  background-color: rgb(192, 180, 157);
+  border: 1px solid rgb(192, 180, 157);
 }
 
-input[type=button] {
+.btn-block {
   width: 130px;
   justify-self: stretch;
   padding: 12px 20px;
@@ -122,12 +158,62 @@ input[type=button] {
   margin-bottom: 5px; 
 }
 
+.btn-block:hover {
+  justify-self: stretch;
+  color: white;
+  background-color: rgb(160, 151, 133);
+  border: 1px solid rgb(165, 155, 137);
+  padding: 12px 20px;
+  box-sizing: border-box;
+}
+
+.btn-block:active {
+  justify-self: stretch;
+  color: white;
+  background-color: rgb(160, 151, 133);
+  border: 1px solid rgb(165, 155, 137);
+  padding: 12px 20px;
+  box-sizing: border-box;
+}
+
+.form-control:focus {
+  box-shadow: none;
+}
+
+.btn-block:focus {
+  box-shadow: none;
+}
+
 input[id=signup] {
   margin-right: 10px;
-  border: 1px solid rgba(44, 88, 233, 0.4);
+  border: 1px solid rgb(192, 180, 157);
+}
+
+input[id=signup]:hover {
+  background-color: rgb(233, 227, 216);
+  border: 1px solid rgb(192, 180, 157);
+  color: black;
+}
+
+input[id=signup]:active {
+  background-color: rgb(233, 227, 216);
+  border: 1px solid rgb(192, 180, 157);
+  color: black;
 }
 
 input[id=login] {
   margin-left: 10px;
-  border: 1px solid rgb(44, 88, 233, 0.4);
+  border: 1px solid rgb(192, 180, 157);
+}
+
+input[id=login]:hover {
+  background-color: rgb(233, 227, 216);
+  border: 1px solid rgb(192, 180, 157);
+  color: black;
+}
+
+input[id=login]:active {
+  background-color: rgb(233, 227, 216);
+  border: 1px solid rgb(192, 180, 157);
+  color: black;
 }
