@@ -76,7 +76,8 @@ class OrderPage extends Component {
     this.setState({hasRated: true});
     const updateRating = {
       rating: this.state.rating,
-      user: name
+      user: name,
+      _id: this.state.order,
     };
 
     axios
@@ -167,6 +168,7 @@ class OrderPage extends Component {
           time: time_str,
           price: response.data.price,
           code: String(response.data.code),
+          hasRated: response.data.hasRated
         });
       });
   }

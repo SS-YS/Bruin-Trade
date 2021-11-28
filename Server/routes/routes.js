@@ -86,7 +86,7 @@ router.post('/update', (request, response) => {
     const in_progress_status = request.body.inProgress;
     const buyer_status = request.body.buyer;
     const confirm_code = request.body.code;
-    orderTemplateCopy.findByIdAndUpdate(_id, {inProgress: in_progress_status, buyer: buyer_status, code: confirm_code})
+    orderTemplateCopy.findByIdAndUpdate(_id, {inProgress: in_progress_status, buyer: buyer_status, code: confirm_code, hasRated: false})
     .then(data => {
         response.json(data)
     })
@@ -167,6 +167,7 @@ router.post('/change_password', (request, response) => {
 router.post('/updateRating', (request, response) =>{
     const incoming_rating = Number(request.body.rating);
     const user = request.body.user;
+    const order_id = request.body._id;
     signUpTemplateCopy.findOne({userName: user}).then(data =>{
         const old_rating = Number(data.rating);
         const num = Number(data.finished_order_number);
@@ -175,12 +176,15 @@ router.post('/updateRating', (request, response) =>{
         const query = {userName: user};
         signUpTemplateCopy.findOneAndUpdate(query, {rating: new_rating, finished_order_number: newNum})
         .then(data => {
-            response.json(data)
+            orderTemplateCopy.findByIdAndUpdate(order_id, {hasRated: true})
+            .then(data => {
+                response.json(data)
+            })
+            .catch(error => {
+                response.json(error)
+            })
         })
-        .catch(error => {
-            response.json(error)
-        })
-    })
+    });
 })
 
 module.exports = router

@@ -38,6 +38,11 @@ const orderTemplate = new mongoose.Schema({
     code: {
         type: Number,
         required: false
+    },
+
+    hasRated:{
+        type: Boolean,
+        required: false
     }
 })
 
