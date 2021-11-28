@@ -137,6 +137,12 @@ class SignupPage extends Component {
                                 className='form-control form-group'
                             />
                             <input type='submit' className='btn btn-primary btn-block' value='Submit' />
+                            <input type='change_password' onClick={
+                                (event)=>{
+                                        event.preventDefault()
+                                        window.location.href="change_password"
+                                    }
+                                } className='btn btn-block' value='Change Password' />
                         </form>
                     </div>
                     <p className='h4 text-center' type='text'>

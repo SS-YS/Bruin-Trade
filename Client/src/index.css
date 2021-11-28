@@ -131,3 +131,10 @@ input[id=login] {
   margin-left: 10px;
   border: 1px solid rgb(44, 88, 233, 0.4);
 }
+
+input[type=change_password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+}
