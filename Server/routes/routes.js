@@ -105,6 +105,40 @@ router.post('/getRating', (request, response) => {
     })
 });
 
+router.post('/getOnGoing', (request, response) =>{
+    const buyer_get = request.body.buyer;
+    const seller_get = request.body.seller;
+    orderTemplateCopy.find({$or:[{buyer: buyer_get}, {seller: seller_get}]})
+    .then(data => {
+        response.json(data)
+    })
+    .catch(error => {
+        response.json(error)
+    })
+});
+
+router.post('/cancel', (request, response) => {
+    const _id = request.body._id;
+    orderTemplateCopy.findByIdAndDelete(_id)
+    .then(data => {
+        response.json(data)
+    })
+    .catch(error => {
+        response.json(error)
+    })
+});
+
+router.post('/finished', (request, response) => {
+    const _id = request.body._id;
+    orderTemplateCopy.findByIdAndUpdate(_id, {finished:true})
+    .then(data => {
+        response.json(data)
+    })
+    .catch(error => {
+        response.json(error)
+    })
+});
+
 
 
 module.exports = router
