@@ -39,16 +39,40 @@ class ChangingPassword extends Component {
     }
     onSubmit = (event) => {
         event.preventDefault()
-        const registered = {
+        const newpswd = {
             userName: this.state.userName,
             old_password: this.state.old_password,
             password: this.state.password,
         }
-        if (this.state.confirm_password === this.state.password){
+        const registered = {
+            userName: this.state.userName,
         }
-        else{
-            this.setState({ message: "Two passwords entered do not match." })
-        }
+        axios.post("http://localhost:4000/app/usercheck", registered)
+            .then(response => {
+                console.log("response.data: ", response.data)
+                if (response) {
+                    if (response.data && response.data.userName === registered.userName) {
+                        if (response.data.password === newpswd.old_password) {
+                            if (this.state.confirm_password === this.state.password){
+                                axios.post("http://localhost:4000/app/change_password", newpswd)
+                                    .then(res => console.log(res.data));
+                                alert("Password successfully changed.")
+                                window.location.href="home"
+                            }
+                            else{
+                                this.setState({ message: "Two passwords entered do not match." })
+                            }
+                        }
+                        else 
+                        {
+                            this.setState({ message: "Username or old password is incorrect" })
+                        }
+                    }
+                    else{
+                        this.setState({ message: "Username or old password is incorrect" })
+                    }
+                }
+            })
     }
 
     render() {

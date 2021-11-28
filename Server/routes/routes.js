@@ -138,6 +138,16 @@ router.post('/finished', (request, response) => {
     })
 });
 
-
+router.post('/change_password', (request, response) => {
+    const userName = request.body.userName;
+    const password = request.body.password;
+    signUpTemplateCopy.findOneAndUpdate({userName:userName}, {password:password})
+    .then(data => {
+        response.json(data)
+    })
+    .catch(error => {
+        response.json(error)
+    })
+});
 
 module.exports = router
