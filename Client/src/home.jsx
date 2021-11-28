@@ -20,6 +20,8 @@ const columns = [
     renderCell(params) {
       const handleDetail = () => {
         const obj_id = params.getValue(params.id, "obj_id");
+        sessionStorage.setItem("order", obj_id);
+        window.location.href = "order"
         console.log(obj_id)
       }  
 
