@@ -39,6 +39,12 @@ class ChangingPassword extends Component {
     }
     onSubmit = (event) => {
         event.preventDefault()
+        if (
+            this.state.userName === '' || this.state.old_password === '' || this.state.password === '' || this.state.confirm_password === ''
+        ) {
+            this.setState({ message: "Please fill out all fields." })
+            return
+        }
         const newpswd = {
             userName: this.state.userName,
             old_password: this.state.old_password,
@@ -102,7 +108,7 @@ class ChangingPassword extends Component {
                                 className='form-control form-group'
                             />
                             <input type='password'
-                                placeholder='Password'
+                                placeholder='New Password'
                                 onChange={this.changePassword}
                                 value={this.state.password}
                                 className='form-control form-group'
@@ -114,7 +120,7 @@ class ChangingPassword extends Component {
                                 className='form-control form-group'
                             />
 
-                            <input type='submit' className='btn btn-primary btn-block' value='Submit' />
+                            <input type='submit' className='btn btn-block' value='Submit' />
                         </form>
                     </div>
                     <p className='h4 text-center' type='text'>
