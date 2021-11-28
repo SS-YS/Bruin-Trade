@@ -40,7 +40,12 @@ const orderTemplate = new mongoose.Schema({
         required: false
     },
 
-    hasRated:{
+    sellerHasRated:{
+        type: Boolean,
+        required: false
+    },
+
+    buyerHasRated:{
         type: Boolean,
         required: false
     }

@@ -16,6 +16,7 @@ class UserInfo extends Component {
             window.location.href = "/";
         }
     }
+
     render() {
         this.redirect();
         return(

@@ -164,7 +164,7 @@ router.post('/change_password', (request, response) => {
     })
 });
 
-router.post('/updateRating', (request, response) =>{
+router.post('/buyerUpdateRating', (request, response) =>{
     const incoming_rating = Number(request.body.rating);
     const user = request.body.user;
     const order_id = request.body._id;
@@ -176,7 +176,30 @@ router.post('/updateRating', (request, response) =>{
         const query = {userName: user};
         signUpTemplateCopy.findOneAndUpdate(query, {rating: new_rating, finished_order_number: newNum})
         .then(data => {
-            orderTemplateCopy.findByIdAndUpdate(order_id, {hasRated: true})
+            orderTemplateCopy.findByIdAndUpdate(order_id, {buyerHasRated: true})
+            .then(data => {
+                response.json(data)
+            })
+            .catch(error => {
+                response.json(error)
+            })
+        })
+    });
+})
+
+router.post('/sellerUpdateRating', (request, response) =>{
+    const incoming_rating = Number(request.body.rating);
+    const user = request.body.user;
+    const order_id = request.body._id;
+    signUpTemplateCopy.findOne({userName: user}).then(data =>{
+        const old_rating = Number(data.rating);
+        const num = Number(data.finished_order_number);
+        const newNum = Number(num+1);
+        const new_rating = Number((old_rating * num + incoming_rating)/(newNum))
+        const query = {userName: user};
+        signUpTemplateCopy.findOneAndUpdate(query, {rating: new_rating, finished_order_number: newNum})
+        .then(data => {
+            orderTemplateCopy.findByIdAndUpdate(order_id, {sellerHasRated: true})
             .then(data => {
                 response.json(data)
             })

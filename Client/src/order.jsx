@@ -79,10 +79,14 @@ class OrderPage extends Component {
       user: name,
       _id: this.state.order,
     };
-
-    axios
-      .post("http://localhost:4000/app/updateRating", updateRating)
+    if(this.state.username == this.state.seller){
+    axios.post("http://localhost:4000/app/sellerUpdateRating", updateRating)
       .then((response) => console.log(response.data));
+    }
+    else if(this.state.username == this.state.buyer){
+      axios.post("http://localhost:4000/app/buyerUpdateRating", updateRating)
+        .then((response) => console.log(response.data));
+      }
 
     event.preventDefault();
   }
