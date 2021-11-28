@@ -74,17 +74,18 @@ class OrderPage extends Component {
     }
 
     alert("You have entered the rating for " + name);
-    this.setState({hasRated: true});
     const updateRating = {
       rating: this.state.rating,
       user: name,
       _id: this.state.order,
     };
     if(this.state.username == this.state.seller){
+      this.setState({sellerHasRated: true});
     axios.post("http://localhost:4000/app/sellerUpdateRating", updateRating)
       .then((response) => console.log(response.data));
     }
     else if(this.state.username == this.state.buyer){
+      this.setState({buyerHasRated: true});
       axios.post("http://localhost:4000/app/buyerUpdateRating", updateRating)
         .then((response) => console.log(response.data));
       }
@@ -173,7 +174,8 @@ class OrderPage extends Component {
           time: time_str,
           price: response.data.price,
           code: String(response.data.code),
-          hasRated: response.data.hasRated
+          sellerHasRated: response.data.sellerHasRated,
+          buyerHasRated: response.data.buyerHasRated,
         });
       });
   }
