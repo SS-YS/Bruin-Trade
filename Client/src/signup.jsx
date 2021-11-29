@@ -10,7 +10,6 @@ class SignupPage extends Component {
             userName: '',
             phoneNumber: '',
             password: '',
-            message: 'Please sign up / log in.',
             is_signup: true,
             is_login: false,
             login_success: false,
@@ -96,7 +95,11 @@ class SignupPage extends Component {
                                 window.location.href = "home"
                             }
                             else {
-                                this.setState({ message: "Password incorrect." })
+                                this.setState({ 
+                                    alert : true,
+                                    alertMessage : "Password incorrect.",
+                                    alertType : "error"
+                                });
                             }
                         }
                     }
@@ -187,11 +190,6 @@ class SignupPage extends Component {
                             } className='btn btn-block hidden' value='Change Password' />
                         </form>
                     </div>
-                    <p className='h4 text-center' type='text'>
-                        <small>
-                            {this.state.message}
-                        </small>
-                    </p>
                 </div>
 
             </div>
