@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import "bootstrap/dist/css/bootstrap.min.css"
 import axios from 'axios'
+import Notification from "./components/Notification";
 
 class ChangingPassword extends Component {
     constructor() {
@@ -11,7 +12,11 @@ class ChangingPassword extends Component {
             old_password:'',
             confirm_password:'',
             message: '',
+            alert : false,
+            alertMessage : null,
+            alertType : null,
         }
+        this.closeAlert = this.closeAlert.bind(this);
     }
 
     changeUserName = (event) => {
@@ -42,7 +47,11 @@ class ChangingPassword extends Component {
         if (
             this.state.userName === '' || this.state.old_password === '' || this.state.password === '' || this.state.confirm_password === ''
         ) {
-            this.setState({ message: "Please fill out all fields." })
+            this.setState({ 
+                alert : true,
+                alertMessage : "Please fill out all fields.",
+                alertType : "error"
+            });
             return
         }
         const newpswd = {
@@ -62,29 +71,53 @@ class ChangingPassword extends Component {
                             if (this.state.confirm_password === this.state.password){
                                 axios.post("http://localhost:4000/app/change_password", newpswd)
                                     .then(res => console.log(res.data));
-                                alert("Password successfully changed.")
+                                this.setState({ 
+                                    alert : true,
+                                    alertMessage : "Password successfully changed.",
+                                    alertType : "success"
+                                });
                                 window.location.href="home"
                             }
                             else{
-                                this.setState({ message: "Two passwords entered do not match." })
+                                this.setState({ 
+                                    alert : true,
+                                    alertMessage : "Two passwords entered do not match.",
+                                    alertType : "error"
+                                });
                             }
                         }
                         else 
                         {
-                            this.setState({ message: "Username or old password is incorrect" })
+                            this.setState({ 
+                                alert : true,
+                                alertMessage : "Username or old password is incorrect",
+                                alertType : "error"
+                            });
                         }
                     }
                     else{
-                        this.setState({ message: "Username or old password is incorrect" })
+                        this.setState({ 
+                            alert : true,
+                            alertMessage : "Username or old password is incorrect",
+                            alertType : "error"
+                        });
                     }
                 }
             })
+    }
+
+    closeAlert() {
+        this.setState({ alert : false });
     }
 
     render() {
         var heading = 'Change your password'
         return (
             <div>
+                <Notification alert={this.state.alert} 
+                    alertMessage={this.state.alertMessage} 
+                    alertType={this.state.alertType} 
+                    closeAlert={this.closeAlert} />
                 <div className="heading">
                     <p className='h1 text-center'> Bruin Trade </p>
                     <p className='h5 text-center'> Make the most out of your meal plan! </p>
