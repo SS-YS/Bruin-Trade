@@ -1,10 +1,8 @@
-POST http://localhost:4000/app/order
+POST http://localhost:4000/app/postComment
 Content-Type: application/json
 
 {
-    "buyer": "eggert",
-    "seller": "eggert",
-    "location": "egg market",
-    "price": 12,
-    "time": 1200
+    "user": "egg",
+    "rating": 4,
+    "comment": "second comment test"
 }
