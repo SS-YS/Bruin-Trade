@@ -109,7 +109,7 @@ class Selling_form extends Component {
       axios.post("http://localhost:4000/app/order", orderInfo)
         .then(response => {
           console.log(response.data)
-          window.location.href="home"
+          window.location.href = "home"
         })
     }
   }
@@ -134,10 +134,10 @@ class Selling_form extends Component {
             <label> Please enter a price：</label>
             <p />
             <TextField label="Enter a price" variant="outlined" value={this.state.price} onChange={this.handlePriceChange} />
-          </form>
 
-          <p />
+            <p />
             <Button type="submit" onClick={this.handleSubmit} sx={{ marginTop: 1, height: 40 }} variant="contained">Submit</Button>
+          </form>
         </div>
       </div>
     );

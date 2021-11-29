@@ -269,7 +269,7 @@ class BuyPage extends Component {
         <NavigationBar />
 
         <div className="buyPageSearchContainer">
-          <form onSubmit={this.handleSearch}>
+          <form className="marginForm" onSubmit={this.handleSearch}>
             <label> Please select a dining hall： </label>
             <p />
             <SelectDiningHall value={this.state.dinningHall} onChange={this.handleDinningChange} />

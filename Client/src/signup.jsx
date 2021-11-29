@@ -120,7 +120,7 @@ class SignupPage extends Component {
                 <div className='container'>
                     <p className='h4 text-center'>{heading}</p>
                     <div className='form-div'>
-                        <form onSubmit={this.onSubmit}>
+                        <form onSubmit={this.onSubmit} className="marginForm">
                             <input type='button' id='signup' onClick={this.onClick_signup} className='btn btn-block' value='Sign up' />
                             <input type='button' id='login' onClick={this.onClick_login} className='btn btn-block' value='Log in' />
                             <div>

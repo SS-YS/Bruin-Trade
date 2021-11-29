@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
+import Button from '@mui/material/Button';
+import NavigationBar from "./components/NavigationBar"
+import Rating from '@mui/material/Rating';
 
 class OrderPage extends Component {
   constructor() {
@@ -23,11 +26,9 @@ class OrderPage extends Component {
 
     this.getOrderInfo();
     this.handle_enter_verification = this.handle_enter_verification.bind(this);
-    this.handle_verification_submit =
-      this.handle_verification_submit.bind(this);
+    this.handle_verification_submit = this.handle_verification_submit.bind(this);
     this.enter_verification = this.enter_verification.bind(this);
     this.display_verification = this.display_verification.bind(this);
-    this.handle_enter_rating = this.handle_enter_rating.bind(this);
     this.handle_rating_submit = this.handle_rating_submit.bind(this);
     this.enter_rating = this.enter_rating.bind(this);
     this.cancel = this.cancel.bind(this);
@@ -40,22 +41,20 @@ class OrderPage extends Component {
     }
   }
 
-  cancel(){
-    return(
-      <button onClick={this.handleCancel}>
-        Cancel Order
-      </button>
+  cancel() {
+    return (
+      <Button type="submit" onClick={this.handleCancel} sx={{ height: 40 }} variant="contained">Cancel</Button>
     );
   }
 
-  handleCancel(){
-    alert("You will cancel this order");
+  handleCancel() {
+    alert("This order has been cancelled.");
     const cancel = {
       _id: this.state.order,
     }
     axios
-        .post("http://localhost:4000/app/cancel", cancel)
-        .then((response) => console.log(response.data));
+      .post("http://localhost:4000/app/cancel", cancel)
+      .then((response) => console.log(response.data));
     window.location.href = "home"
   }
 
@@ -67,22 +66,17 @@ class OrderPage extends Component {
       name = "buyer";
     }
     return (
-      <form onSubmit={this.handle_rating_submit}>
+      <form>
         <label>
-          Please enter your rating of {name}
-          <input
-            type="number"
-            value={this.state.rating}
-            onChange={this.handle_enter_rating}
-          />
+          Please rate the {name}: &nbsp;
         </label>
-        <input type="submit" value="Submit" />
+        <div>
+          <Rating sx={{ marginTop: 1, marginLeft: -0.3 }} size="medium" value={this.state.rating} onChange={(event, newValue) => { this.setState({ rating: newValue }); }} />
+        </div>
+        <p />
+        <Button type="submit" onClick={this.handle_rating_submit} sx={{ marginTop: -1, height: 40 }} variant="contained">Submit</Button>
       </form>
     );
-  }
-
-  handle_enter_rating(event) {
-    this.setState({ rating: event.target.value });
   }
 
   handle_rating_submit(event) {
@@ -116,16 +110,17 @@ class OrderPage extends Component {
 
   enter_verification() {
     return (
-      <form onSubmit={this.handle_verification_submit}>
+      <form>
         <label>
-          Verification Code
-          <input
-            type="text"
-            value={this.state.input_verification}
-            onChange={this.handle_enter_verification}
-          />
+          Please enter the verification code:
         </label>
-        <input type="submit" value="Submit" />
+        <input
+          id='orderPageInput'
+          value={this.state.input_verification}
+          onChange={this.handle_enter_verification}
+        />
+        <p />
+        <Button type="submit" onClick={this.handle_verification_submit} sx={{ marginTop: 1, height: 40 }} variant="contained">Submit</Button>
       </form>
     );
   }
@@ -140,20 +135,18 @@ class OrderPage extends Component {
 
   handle_verification_submit(event) {
     if (this.state.code === this.state.input_verification) {
-      alert("You have entered the correct varification code");
+      alert("You have entered the correct verification code.");
       this.setState({ verified: true });
+      const finish = {
+        _id: this.state.order,
+      };
+      axios
+        .post("http://localhost:4000/app/finished", finish)
+        .then((response) => console.log(response.data));
     } else {
-      alert("You have entered the wrong varification code");
+      alert("You have entered the wrong verification code.");
+      event.preventDefault();
     }
-    event.preventDefault();
-
-    const finish = {
-      _id: this.state.order,
-    };
-
-    axios
-      .post("http://localhost:4000/app/finished", finish)
-      .then((response) => console.log(response.data));
   }
 
   getOrderInfo() {
@@ -203,7 +196,7 @@ class OrderPage extends Component {
   render() {
     this.redirect();
     let verification;
-    if(this.state.order_status === "finished"){
+    if (this.state.order_status === "finished") {
       verification = null;
     }
     else if (
@@ -238,30 +231,34 @@ class OrderPage extends Component {
     }
 
     let cancel_button;
-    if(this.state.order_status === "onSale"){
+    if (this.state.order_status === "onSale") {
       cancel_button = this.cancel();
     }
-    else{
+    else {
       cancel_button = null;
     }
+
     return (
-      <div>
-        <label>seller: {this.state.seller}</label>
-        <p />
-        <label>buyer: {this.state.buyer}</label>
-        <p />
-        <label>location: {this.state.dinning_hall}</label>
-        <p />
-        <label>time: {this.state.time}</label>
-        <p />
-        <label>price: {this.state.price}</label>
-        <p />
-        <label>status: {this.state.order_status}</label>
-        <p />
-        {verification}
-        {rating}
-        {cancel_button}
-      </div>
+      <>
+        <NavigationBar />
+        <div className="container">
+          <label>Seller: {this.state.seller}</label>
+          <p />
+          <label>Buyer: {this.state.buyer}</label>
+          <p />
+          <label>Location: {this.state.dinning_hall}</label>
+          <p />
+          <label>Time: {this.state.time}</label>
+          <p />
+          <label>Price: {this.state.price}</label>
+          <p />
+          <label>Status: {(this.state.order_status === "onSale") ? "On Sale" : ((this.state.order_status === "inprogress") ? "In Progress" : "Completed")}</label>
+          <p />
+          {verification}
+          {rating}
+          {cancel_button}
+        </div>
+      </>
     );
   }
 }
