@@ -145,7 +145,7 @@ class BuyPage extends Component {
             temp.push({
               id: i + 1,
               seller: data[i].seller,
-              rating: rating,
+              rating: rating.toFixed(1),
               diningHall: data[i].location,
               price: data[i].price,
               time: time_str,
