@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import "bootstrap/dist/css/bootstrap.min.css"
+import Notification from "./components/Notification";
 import axios from 'axios'
 
 class SignupPage extends Component {
@@ -13,7 +14,11 @@ class SignupPage extends Component {
             is_signup: true,
             is_login: false,
             login_success: false,
+            alert : false,
+            alertMessage : null,
+            alertType : null,
         }
+        this.closeAlert = this.closeAlert.bind(this);
     }
 
     changeUserName = (event) => {
@@ -55,7 +60,9 @@ class SignupPage extends Component {
             (this.state.is_signup && (this.state.userName === '' || this.state.phoneNumber === '' || this.state.password === ''))
             || (this.state.is_login && (this.state.userName === '' || this.state.password === ''))
         ) {
-            this.setState({ message: "Please fill out all fields." })
+            this.setState({ alert : true });
+            this.setState({ alertMessage : "Please fill out all fields."  });
+            this.setState({ alertType : "error" });
             return
         }
         const registered = {
@@ -69,12 +76,16 @@ class SignupPage extends Component {
                     console.log("response.data: ", response.data)
                     if (response.data && response.data.userName === registered.userName) {
                         if (this.state.is_signup) {
-                            this.setState({ message: "Username exists. Please log in." })
+                            this.setState({ alert : true });
+                            this.setState({ alertMessage : "Username exists. Please log in."  });
+                            this.setState({ alertType : "error" });
                         }
                         else if (this.state.is_login) {
                             if (response.data.password === registered.password) {
+                                this.setState({ alert : true });
+                                this.setState({ alertMessage : "Log in successful."  });
+                                this.setState({ alertType : "success" });
                                 this.setState({ login_success: true })
-                                this.setState({ message: "Log in successful." })
                                 sessionStorage.setItem("username", this.state.userName)
                                 window.location.href = "home"
                             }
@@ -94,10 +105,14 @@ class SignupPage extends Component {
                             }
                             axios.post("http://localhost:4000/app/signup", new_user)
                                 .then(response => console.log(response.data))
-                            this.setState({ message: "Sign up successful. Please log in." })
+                            this.setState({ alert : true });
+                            this.setState({ alertMessage : "Sign up successful. Please log in." });
+                            this.setState({ alertType : "success" });
                         }
                         else if (this.state.is_login) {
-                            this.setState({ message: "Username not registered." })
+                            this.setState({ alert : true });
+                            this.setState({ alertMessage : "Username not registered." });
+                            this.setState({ alertType : "error" });
                         }
                     }
                 }
@@ -109,10 +124,18 @@ class SignupPage extends Component {
             })
     }
 
+    closeAlert() {
+        this.setState({ alert : false });
+    }
+
     render() {
         var heading = this.state.is_signup ? 'Sign up' : 'Log in'
         return (
             <div>
+                <Notification alert={this.state.alert} 
+                    alertMessage={this.state.alertMessage} 
+                    alertType={this.state.alertType} 
+                    closeAlert={this.closeAlert} />
                 <div className="heading">
                     <p className='h1 text-center'> Bruin Trade </p>
                     <p className='h5 text-center'> Make the most out of your meal plan! </p>
@@ -160,6 +183,7 @@ class SignupPage extends Component {
                         </small>
                     </p>
                 </div>
+
             </div>
         );
     }

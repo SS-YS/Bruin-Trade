@@ -210,4 +210,19 @@ router.post('/sellerUpdateRating', (request, response) =>{
     });
 })
 
+router.post('/postComment', (request, response) => {
+    const user= request.body.user;
+    const user_rating = Number(request.body.rating);
+    const user_comment = request.body.comment;
+    const query = {userName:user};
+    comment_obj = {rating: user_rating, content: user_comment}
+    signUpTemplateCopy.findOneAndUpdate(query, {$push:{"comment": comment_obj}})
+    .then(data => {
+        response.json(data)
+    })
+    .catch(error => {
+        response.json(error)
+    })
+});
+
 module.exports = router

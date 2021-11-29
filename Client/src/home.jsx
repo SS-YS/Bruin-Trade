@@ -7,6 +7,7 @@ import { DataGrid } from '@mui/x-data-grid';
 
 const columns = [
   { field: 'id', headerName: "No.", hide: true, disableColumnMenu: true },
+  { field: 'buysell', headerName: "Buyer/Seller", width: 120, disableColumnMenu: true },
   { field: 'diningHall', headerName: 'Dining Hall', width: 140, disableColumnMenu: true },
   { field: 'time', headerName: 'Time', width: 100, disableColumnMenu: true },
   { field: 'price', headerName: 'Price', width: 80, disableColumnMenu: true },
@@ -47,6 +48,7 @@ class HomePage extends Component {
     this.state = {
       username: sessionStorage.getItem("username"),
       rows : [],
+      buyer_or_seller: ""
     }
     this.getInfo()
   }
@@ -69,15 +71,16 @@ class HomePage extends Component {
     var temp = this.state.rows;
     temp = Object.assign([], temp);
     temp = [];
+
     for (let i = 0; i < data.length; i++){
       console.log(data[i])
       let time_str = "";
-            if(data[i].time>=1000){
-              time_str = String(data[i].time).slice(0,2) + ":"+ String(data[i].time).slice(2,4)
-            }
-            else{
-              time_str = "0"+String(data[i].time).slice(0,1) + ":"+ String(data[i].time).slice(1,3)
-            }
+      if(data[i].time>=1000){
+        time_str = String(data[i].time).slice(0,2) + ":"+ String(data[i].time).slice(2,4)
+      } else {
+        time_str = "0"+String(data[i].time).slice(0,1) + ":"+ String(data[i].time).slice(1,3)
+      }
+      
       var status = "On Sale"
       if (data[i].inProgress){
         status = "In Progress";
@@ -85,10 +88,18 @@ class HomePage extends Component {
       if (data[i].finished){
         status = "Completed";
       }
+
+      var buyer_or_seller;
+      if (data[i].buyer && data[i].buyer === this.state.username)
+        buyer_or_seller = "Buyer";
+      else
+        buyer_or_seller = "Seller";
+
       temp = Object.assign([], temp);
       temp.push(
         {
           id : i + 1,
+          buysell: buyer_or_seller,
           diningHall: data[i].location,
           price : data[i].price,
           time : time_str,
