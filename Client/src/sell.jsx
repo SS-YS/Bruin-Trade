@@ -2,9 +2,10 @@ import axios from "axios";
 import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css"
 
-import BasicTimePicker from "./components/BasicTimePicker"
-import SelectDiningHall from "./components/SelectDiningHall"
-import NavigationBar from "./components/NavigationBar"
+import BasicTimePicker from "./components/BasicTimePicker";
+import SelectDiningHall from "./components/SelectDiningHall";
+import Notification from "./components/Notification";
+import NavigationBar from "./components/NavigationBar";
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 
@@ -17,13 +18,17 @@ class Selling_form extends Component {
       time: null,
       hour: null,
       minute: null,
-      price: null
+      price: null,
+      alert : false,
+      alertMessage : null,
+      alertType : null,
     };
     this.handleDinningChange = this.handleDinningChange.bind(this);
     this.handleTimeChange = this.handleTimeChange.bind(this);
     this.handlePriceChange = this.handlePriceChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onClick = this.onClick.bind(this);
+    this.closeAlert = this.closeAlert.bind(this);
   }
 
   redirect() {
@@ -87,19 +92,29 @@ class Selling_form extends Component {
 
   handleSubmit(event) {
     if (this.state.dinningHall === null) {
-      alert("Please select a dinning hall.");
+      this.setState({ alert : true });
+      this.setState({ alertMessage : "Please select a dinning hall." });
+      this.setState({ alertType : "error" });
       event.preventDefault();
     } else if (this.state.time === null) {
-      alert("Please choose a time.");
+      this.setState({ alert : true });
+      this.setState({ alertMessage : "Please choose a time." });
+      this.setState({ alertType : "error" });
       event.preventDefault();
     } else if (this.state.price === null || isNaN(this.state.price)) {
-      alert("Please enter a valid price.");
+      this.setState({ alert : true });
+      this.setState({ alertMessage : "Please enter a valid price." });
+      this.setState({ alertType : "error" });
       event.preventDefault();
     } else if (this.checkTimeConflict()) {
-      alert(this.state.dinningHall + " is not open at " + this.state.hour + ":" + this.state.minute + ". Please change your chosen time.");
+      this.setState({ alert : true });
+      this.setState({ alertMessage : this.state.dinningHall + " is not open at " + this.state.hour + ":" + this.state.minute + ". Please change your chosen time." });
+      this.setState({ alertType : "error" });
       event.preventDefault();
     } else {
-      alert("You have successfully posted a request to sell a swipe at the dinning hall " + this.state.dinningHall + " at time " + this.state.hour + ":" + this.state.minute + " for " + this.state.price + " dollars.");
+      this.setState({ alert : true });
+      this.setState({ alertMessage : "You have successfully posted a request to sell a swipe at the dinning hall " + this.state.dinningHall + " at time " + this.state.hour + ":" + this.state.minute + " for " + this.state.price + " dollars."});
+      this.setState({ alertType : "success" });
       const orderInfo = {
         seller: this.state.seller,
         location: this.state.dinningHall,
@@ -114,10 +129,20 @@ class Selling_form extends Component {
     }
   }
 
+
+
+  closeAlert() {
+    this.setState({ alert : false });
+  }
+
   render() {
     this.redirect();
     return (
-      <div>
+      <>
+        <Notification alert={this.state.alert} 
+          alertMessage={this.state.alertMessage} 
+          alertType={this.state.alertType} 
+          closeAlert={this.closeAlert} />
         <NavigationBar />
         <div className="container">
           <form>
@@ -139,7 +164,7 @@ class Selling_form extends Component {
           <p />
             <Button type="submit" onClick={this.handleSubmit} sx={{ marginTop: 1, height: 40 }} variant="contained">Submit</Button>
         </div>
-      </div>
+      </>
     );
   }
 }
