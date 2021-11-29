@@ -9,6 +9,7 @@ import NavigationBar from "./components/NavigationBar"
 import SelectDiningHall from "./components/SelectDiningHall"
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import Notification from "./components/Notification";
 import "./index.css"
 
 const columns = [
@@ -101,7 +102,10 @@ class BuyPage extends Component {
       end_minute: null,
       start_price: null,
       end_price: null,
-      rows: []
+      rows: [],
+      alert : false,
+      alertMessage : null,
+      alertType : null,
     };
 
     this.handleDinningChange = this.handleDinningChange.bind(this);
@@ -110,6 +114,7 @@ class BuyPage extends Component {
     this.handleStartPriceChange = this.handleStartPriceChange.bind(this);
     this.handleEndPriceChange = this.handleEndPriceChange.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+    this.closeAlert = this.closeAlert.bind(this);
   }
 
   generateRows = function (data) {
@@ -223,25 +228,39 @@ class BuyPage extends Component {
 
   handleSearch(event) {
     if (this.state.dinningHall === null) {
-      alert("Please select a dinning hall.");
+      this.setState({ alert : true });
+      this.setState({ alertMessage : "Please select a dinning hall." });
+      this.setState({ alertType : "error" });
       event.preventDefault();
     } else if (this.state.start_time === null) {
-      alert("Please choose a start time.");
+      this.setState({ alert : true });
+      this.setState({ alertMessage : "Please choose a start time." });
+      this.setState({ alertType : "error" });
       event.preventDefault();
     } else if (this.state.end_time === null) {
-      alert("Please choose an end time.");
+      this.setState({ alert : true });
+      this.setState({ alertMessage : "Please choose an end time." });
+      this.setState({ alertType : "error" });
       event.preventDefault();
     } else if (this.state.start_price === null || isNaN(this.state.start_price)) {
-      alert("Please enter a valid start price.");
+      this.setState({ alert : true });
+      this.setState({ alertMessage : "Please enter a valid start price." });
+      this.setState({ alertType : "error" });
       event.preventDefault();
     } else if (this.state.end_price === null || isNaN(this.state.end_price)) {
-      alert("Please enter a valid end price.");
+      this.setState({ alert : true });
+      this.setState({ alertMessage : "Please enter a valid end price."});
+      this.setState({ alertType : "error" });
       event.preventDefault();
     } else if (this.checkStartBeforeEnd()) {
-      alert("Please enter a valid time interval.");
+      this.setState({ alert : true });
+      this.setState({ alertMessage : "Please enter a valid time interval." });
+      this.setState({ alertType : "error" });
       event.preventDefault();
     } else if (this.checkPrice()) {
-      alert("Please enter a valid price interval.");
+      this.setState({ alert : true });
+      this.setState({ alertMessage : "Please enter a valid price interval." });
+      this.setState({ alertType : "error" });
       event.preventDefault();
     } else {
       event.preventDefault();
@@ -261,11 +280,19 @@ class BuyPage extends Component {
     }
   }
 
+  closeAlert() {
+    this.setState({ alert : false });
+  }
+
   render() {
     this.redirect();
 
     return (
       <div>
+        <Notification alert={this.state.alert} 
+          alertMessage={this.state.alertMessage} 
+          alertType={this.state.alertType} 
+          closeAlert={this.closeAlert} />
         <NavigationBar />
 
         <div className="buyPageSearchContainer">
