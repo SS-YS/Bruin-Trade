@@ -14,15 +14,16 @@ import "./index.css"
 
 const columns = [
   { field: 'id', headerName: "No.", width: 60, hide: true, disableColumnMenu: true },
-  { field: 'seller', 
-    headerName: 'Seller', 
-    width: 120, 
+  {
+    field: 'seller',
+    headerName: 'Seller',
+    width: 120,
     disableColumnMenu: true,
-    renderCell(params){
+    renderCell(params) {
       const findSeller = () => {
         sessionStorage.setItem("userDisplayed", params.getValue(params.id, "seller"));
       }
-      return(
+      return (
         <Link to="/user_info" onClick={findSeller} style={{ textDecoration: 'none' }}>
           {params.getValue(params.id, "seller")}
         </Link>
@@ -54,30 +55,12 @@ const columns = [
         window.location.href = "home"
       }
 
-      const styles = {
-        "&.MuiButton-root": {
-          border: "2px #8a8169 solid"
-        },
-        "&.MuiButton-text": {
-          color: "white",
-        },
-        "&.MuiButton-contained": {
-          backgroundColor: "#8a8169",
-          color: "white"
-        },
-        "&.MuiButton-outlined": {
-          color: "white"
-        }
-      }
-
       return (
         <Button
-          className="buy_but"
           variant="contained"
           color="primary"
           size="small"
-          sx={styles}
-          style={{ margin: 16, width: 100, height: 40, borderRadius: 5 }}
+          style={{ marginRight: 32, width: 100, height: 40, borderRadius: 5 }}
           onClick={handleBuy}
         >
           Buy
@@ -103,9 +86,9 @@ class BuyPage extends Component {
       start_price: null,
       end_price: null,
       rows: [],
-      alert : false,
-      alertMessage : null,
-      alertType : null,
+      alert: false,
+      alertMessage: null,
+      alertType: null,
     };
 
     this.handleDinningChange = this.handleDinningChange.bind(this);
@@ -135,13 +118,13 @@ class BuyPage extends Component {
             temp = Object.assign([], temp);
 
             let time_str = "";
-            if(data[i].time>=1000){
-              time_str = String(data[i].time).slice(0,2) + ":"+ String(data[i].time).slice(2,4)
+            if (data[i].time >= 1000) {
+              time_str = String(data[i].time).slice(0, 2) + ":" + String(data[i].time).slice(2, 4)
             }
-            else{
-              time_str = "0"+String(data[i].time).slice(0,1) + ":"+ String(data[i].time).slice(1,3)
+            else {
+              time_str = "0" + String(data[i].time).slice(0, 1) + ":" + String(data[i].time).slice(1, 3)
             }
-  
+
             temp.push({
               id: i + 1,
               seller: data[i].seller,
@@ -228,39 +211,39 @@ class BuyPage extends Component {
 
   handleSearch(event) {
     if (this.state.dinningHall === null) {
-      this.setState({ alert : true });
-      this.setState({ alertMessage : "Please select a dinning hall." });
-      this.setState({ alertType : "error" });
+      this.setState({ alert: true });
+      this.setState({ alertMessage: "Please select a dinning hall." });
+      this.setState({ alertType: "error" });
       event.preventDefault();
     } else if (this.state.start_time === null) {
-      this.setState({ alert : true });
-      this.setState({ alertMessage : "Please choose a start time." });
-      this.setState({ alertType : "error" });
+      this.setState({ alert: true });
+      this.setState({ alertMessage: "Please choose a start time." });
+      this.setState({ alertType: "error" });
       event.preventDefault();
     } else if (this.state.end_time === null) {
-      this.setState({ alert : true });
-      this.setState({ alertMessage : "Please choose an end time." });
-      this.setState({ alertType : "error" });
+      this.setState({ alert: true });
+      this.setState({ alertMessage: "Please choose an end time." });
+      this.setState({ alertType: "error" });
       event.preventDefault();
     } else if (this.state.start_price === null || isNaN(this.state.start_price)) {
-      this.setState({ alert : true });
-      this.setState({ alertMessage : "Please enter a valid start price." });
-      this.setState({ alertType : "error" });
+      this.setState({ alert: true });
+      this.setState({ alertMessage: "Please enter a valid start price." });
+      this.setState({ alertType: "error" });
       event.preventDefault();
     } else if (this.state.end_price === null || isNaN(this.state.end_price)) {
-      this.setState({ alert : true });
-      this.setState({ alertMessage : "Please enter a valid end price."});
-      this.setState({ alertType : "error" });
+      this.setState({ alert: true });
+      this.setState({ alertMessage: "Please enter a valid end price." });
+      this.setState({ alertType: "error" });
       event.preventDefault();
     } else if (this.checkStartBeforeEnd()) {
-      this.setState({ alert : true });
-      this.setState({ alertMessage : "Please enter a valid time interval." });
-      this.setState({ alertType : "error" });
+      this.setState({ alert: true });
+      this.setState({ alertMessage: "Please enter a valid time interval." });
+      this.setState({ alertType: "error" });
       event.preventDefault();
     } else if (this.checkPrice()) {
-      this.setState({ alert : true });
-      this.setState({ alertMessage : "Please enter a valid price interval." });
-      this.setState({ alertType : "error" });
+      this.setState({ alert: true });
+      this.setState({ alertMessage: "Please enter a valid price interval." });
+      this.setState({ alertType: "error" });
       event.preventDefault();
     } else {
       event.preventDefault();
@@ -276,12 +259,12 @@ class BuyPage extends Component {
       axios
         .post("http://localhost:4000/app/searchOrder", interval)
         .then((response) => this.generateRows(response.data));
-      
+
     }
   }
 
   closeAlert() {
-    this.setState({ alert : false });
+    this.setState({ alert: false });
   }
 
   render() {
@@ -289,9 +272,9 @@ class BuyPage extends Component {
 
     return (
       <div>
-        <Notification alert={this.state.alert} 
-          alertMessage={this.state.alertMessage} 
-          alertType={this.state.alertType} 
+        <Notification alert={this.state.alert}
+          alertMessage={this.state.alertMessage}
+          alertType={this.state.alertType}
           closeAlert={this.closeAlert} />
         <NavigationBar />
 

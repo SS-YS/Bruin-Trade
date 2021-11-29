@@ -65,8 +65,11 @@ h1,h2,h3,h4,h5,h6,label,span {
   background-color: white;
   box-sizing: border-box;
   border-radius: 10px;
-  min-width: 660px;
+  min-width: 400px;
+  max-width: 675px;
   margin-top: 30px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 @font-face {
@@ -86,9 +89,10 @@ h1,h2,h3,h4,h5,h6,label,span {
   margin-top: 25px;
 }
 
-.buyPageTitle {
+.homePageTitle {
   font-family: Customized-Font;
   margin-top: 20px;
+  margin-left: 73px;
 }
 
 .marginForm {
