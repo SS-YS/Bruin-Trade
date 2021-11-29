@@ -3,6 +3,7 @@ import axios from "axios";
 import Button from '@mui/material/Button';
 import NavigationBar from "./components/NavigationBar"
 import Rating from '@mui/material/Rating';
+import Notification from "./components/Notification";
 
 class OrderPage extends Component {
   constructor() {
@@ -22,6 +23,9 @@ class OrderPage extends Component {
       rating: 0,
       sellerHasRated: false,
       buyerHasRated: false,
+      alert : false,
+      alertMessage : null,
+      alertType : null,
     };
 
     this.getOrderInfo();
@@ -33,6 +37,7 @@ class OrderPage extends Component {
     this.enter_rating = this.enter_rating.bind(this);
     this.cancel = this.cancel.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
+    this.closeAlert = this.closeAlert.bind(this);
   }
 
   redirect() {
@@ -48,7 +53,11 @@ class OrderPage extends Component {
   }
 
   handleCancel() {
-    alert("This order has been cancelled.");
+    this.setState({ 
+      alert : true,
+      alertMessage : "This order has been cancelled.",
+      alertType : "success"
+    });
     const cancel = {
       _id: this.state.order,
     }
@@ -86,8 +95,11 @@ class OrderPage extends Component {
     } else {
       name = this.state.buyer;
     }
-
-    alert("You have entered the rating for " + name);
+    this.setState({ 
+      alert : true,
+      alertMessage : "You have entered the rating for " + name,
+      alertType : "success"
+    });
     const updateRating = {
       rating: this.state.rating,
       user: name,
@@ -135,7 +147,11 @@ class OrderPage extends Component {
 
   handle_verification_submit(event) {
     if (this.state.code === this.state.input_verification) {
-      alert("You have entered the correct verification code.");
+      this.setState({ 
+        alert : true,
+        alertMessage : "You have entered the correct verification code.",
+        alertType : "success"
+      });
       this.setState({ verified: true });
       const finish = {
         _id: this.state.order,
@@ -144,7 +160,11 @@ class OrderPage extends Component {
         .post("http://localhost:4000/app/finished", finish)
         .then((response) => console.log(response.data));
     } else {
-      alert("You have entered the wrong verification code.");
+      this.setState({ 
+        alert : true,
+        alertMessage : "You have entered the wrong verification code.",
+        alertType : "error"
+      });
       event.preventDefault();
     }
   }
@@ -191,6 +211,10 @@ class OrderPage extends Component {
           buyerHasRated: response.data.buyerHasRated,
         });
       });
+  }
+
+  closeAlert() {
+    this.setState({ alert : false });
   }
 
   render() {
@@ -240,6 +264,10 @@ class OrderPage extends Component {
 
     return (
       <>
+        <Notification alert={this.state.alert} 
+          alertMessage={this.state.alertMessage} 
+          alertType={this.state.alertType} 
+          closeAlert={this.closeAlert} />
         <NavigationBar />
         <div className="container">
           <label>Seller: {this.state.seller}</label>
