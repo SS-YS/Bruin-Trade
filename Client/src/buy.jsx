@@ -107,6 +107,12 @@ class BuyPage extends Component {
     if (data.length === 0) {
       temp = [];
       this.setState({ rows: temp });
+      this.setState({ 
+        alert : true,
+        alertMessage : "No match found.",
+        alertType : "warning"
+      });
+
     } else {
       for (let i = 0; i < data.length; i++) {
         const getRating = { userName: data[i].seller };
@@ -140,7 +146,7 @@ class BuyPage extends Component {
     }
   };
 
-  checkStartBeforeEnd() {
+  checkStartBeforeEnd(search_start_time, search_end_time) {
     const startTime = Number(this.state.start_hour + this.state.start_minute);
     const endTime = Number(this.state.end_hour + this.state.end_minute);
 
@@ -150,12 +156,6 @@ class BuyPage extends Component {
     return false;
   }
 
-  checkPrice() {
-    if (this.state.end_price < this.state.start_price) {
-      return true;
-    }
-    return false;
-  }
 
   redirect() {
     if (sessionStorage.getItem("username") === null) {
@@ -210,51 +210,78 @@ class BuyPage extends Component {
   }
 
   handleSearch(event) {
+    var search_dinningHall;
+    var search_start_time;
+    var search_end_time;
+    var search_start_price;
+    var search_end_price;
     if (this.state.dinningHall === null) {
-      this.setState({ alert: true });
-      this.setState({ alertMessage: "Please select a dinning hall." });
-      this.setState({ alertType: "error" });
-      event.preventDefault();
-    } else if (this.state.start_time === null) {
-      this.setState({ alert: true });
-      this.setState({ alertMessage: "Please choose a start time." });
-      this.setState({ alertType: "error" });
-      event.preventDefault();
-    } else if (this.state.end_time === null) {
-      this.setState({ alert: true });
-      this.setState({ alertMessage: "Please choose an end time." });
-      this.setState({ alertType: "error" });
-      event.preventDefault();
-    } else if (this.state.start_price === null || isNaN(this.state.start_price)) {
-      this.setState({ alert: true });
-      this.setState({ alertMessage: "Please enter a valid start price." });
-      this.setState({ alertType: "error" });
-      event.preventDefault();
-    } else if (this.state.end_price === null || isNaN(this.state.end_price)) {
-      this.setState({ alert: true });
-      this.setState({ alertMessage: "Please enter a valid end price." });
-      this.setState({ alertType: "error" });
-      event.preventDefault();
-    } else if (this.checkStartBeforeEnd()) {
+      search_dinningHall = ''
+    }
+    else 
+    {
+      search_dinningHall = this.state.dinningHall
+    }
+    if (this.state.start_time ===null) {
+      search_start_time = 0
+    }
+    else {
+      search_start_time = Number(this.state.start_hour + this.state.start_minute)
+    }
+    if (this.state.end_time ===null){
+      search_end_time = 2400
+    }
+    else {
+      search_end_time = Number(this.state.end_hour + this.state.end_minute)
+    }
+    if (this.state.start_price === null || this.state.start_price ===''){
+      search_start_price = Number.MIN_VALUE
+    }
+    else 
+    {
+      if (isNaN(this.state.start_price)) {
+        this.setState({ alert: true });
+        this.setState({ alertMessage: "Please enter a valid start price." });
+        this.setState({ alertType: "error" });
+        event.preventDefault();
+        return;
+      } 
+      search_start_price = Number(this.state.start_price)
+    }
+    if (this.state.end_price === null || this.state.end_price === ''){
+      search_end_price = Number.MAX_VALUE
+    }
+    else {
+      if (isNaN(this.state.end_price)) {
+        this.setState({ alert: true });
+        this.setState({ alertMessage: "Please enter a valid end price." });
+        this.setState({ alertType: "error" });
+        event.preventDefault();
+        return;
+      }
+      search_end_price = Number(this.state.end_price)
+
+    }
+  
+    if (search_start_time > search_end_time) {
       this.setState({ alert: true });
       this.setState({ alertMessage: "Please enter a valid time interval." });
       this.setState({ alertType: "error" });
       event.preventDefault();
-    } else if (this.checkPrice()) {
+    } else if (search_start_price > search_end_price) {
       this.setState({ alert: true });
       this.setState({ alertMessage: "Please enter a valid price interval." });
       this.setState({ alertType: "error" });
       event.preventDefault();
     } else {
       event.preventDefault();
-
       const interval = {
         seller: this.state.buyer,
-        dinningHall: this.state.dinningHall,
-        startTime: Number(this.state.start_hour + this.state.start_minute),
-        endTime: Number(this.state.end_hour + this.state.end_minute),
-        startPrice: this.state.start_price,
-        endPrice: this.state.end_price,
+        dinningHall: search_dinningHall,
+        startTime: search_start_time,
+        endTime: search_end_time,
+        startPrice: search_start_price,
+        endPrice: search_end_price,
       };
       axios
         .post("http://localhost:4000/app/searchOrder", interval)

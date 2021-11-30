@@ -72,13 +72,90 @@ router.post('/searchOrder', (request, response) => {
     const endPrice = request.body.endPrice;
     const order_seller = request.body.seller;
 
-    orderTemplateCopy.find({ location: dinningHall, time: { $gte: startTime, $lte: endTime }, price: {$gte: startPrice, $lte: endPrice}, seller: {$ne: order_seller}, inProgress: {$ne: true}})
-    .then(data => {
-        response.json(data)
-    })
-    .catch(error => {
-        response.json(error)
-    })
+    if (dinningHall === ''){
+        if (startPrice === -Infinity){
+            if(endPrice === Infinity){
+                orderTemplateCopy.find({time: { $gte: startTime, $lte: endTime }, seller: {$ne: order_seller}, inProgress: {$ne: true}})
+                .then(data => {
+                    response.json(data)
+                })
+                .catch(error => {
+                    response.json(error)
+                })            
+            }
+            else{
+                orderTemplateCopy.find({  time: { $gte: startTime, $lte: endTime }, price: {$lte: endPrice}, seller: {$ne: order_seller}, inProgress: {$ne: true}})
+                .then(data => {
+                    response.json(data)
+                })
+                .catch(error => {
+                    response.json(error)
+                })            
+            }
+        }
+        else{
+            if(endPrice === Infinity){
+                orderTemplateCopy.find({  time: { $gte: startTime, $lte: endTime }, price: {$gte: startPrice}, seller: {$ne: order_seller}, inProgress: {$ne: true}})
+                .then(data => {
+                    response.json(data)
+                })
+                .catch(error => {
+                    response.json(error)
+                })            
+            }
+            else{
+                orderTemplateCopy.find({ time: { $gte: startTime, $lte: endTime }, price: {$gte: startPrice, $lte: endPrice}, seller: {$ne: order_seller}, inProgress: {$ne: true}})
+                .then(data => {
+                    response.json(data)
+                })
+                .catch(error => {
+                    response.json(error)
+                })                          
+            }
+        }
+    }
+    else{
+        if (startPrice === -Infinity){
+            if(endPrice === Infinity){
+                orderTemplateCopy.find({ location: dinningHall, time: { $gte: startTime, $lte: endTime },  seller: {$ne: order_seller}, inProgress: {$ne: true}})
+                .then(data => {
+                    response.json(data)
+                })
+                .catch(error => {
+                    response.json(error)
+                })            
+            }
+            else{
+                orderTemplateCopy.find({ location: dinningHall, time: { $gte: startTime, $lte: endTime }, price: {$lte: endPrice}, seller: {$ne: order_seller}, inProgress: {$ne: true}})
+                .then(data => {
+                    response.json(data)
+                })
+                .catch(error => {
+                    response.json(error)
+                })            
+            }
+        }
+        else{
+            if(endPrice === Infinity){
+                orderTemplateCopy.find({ location: dinningHall, time: { $gte: startTime, $lte: endTime }, price: {$gte: startPrice}, seller: {$ne: order_seller}, inProgress: {$ne: true}})
+                .then(data => {
+                    response.json(data)
+                })
+                .catch(error => {
+                    response.json(error)
+                })            
+            }
+            else{
+                orderTemplateCopy.find({ location: dinningHall, time: { $gte: startTime, $lte: endTime }, price: {$gte: startPrice, $lte: endPrice}, seller: {$ne: order_seller}, inProgress: {$ne: true}})
+                .then(data => {
+                    response.json(data)
+                })
+                .catch(error => {
+                    response.json(error)
+                })                            
+            }
+        }
+    }
 });
 
 router.post('/update', (request, response) => {
