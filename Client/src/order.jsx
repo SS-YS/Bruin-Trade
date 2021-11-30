@@ -18,6 +18,7 @@ class OrderPage extends Component {
       time: "",
       price: "",
       code: "",
+      comment: "",
       input_verification: "",
       verified: false,
       rating: 0,
@@ -82,11 +83,17 @@ class OrderPage extends Component {
         <div>
           <Rating sx={{ marginTop: 1, marginLeft: -0.3 }} size="medium" value={this.state.rating} onChange={(event, newValue) => { this.setState({ rating: newValue }); }} />
         </div>
+        <textarea 
+                placeholder='Input any comments here.'
+                onChange={(event)=>{this.setState({comment:event.target.value})}}
+                value={this.state.comment}
+                            />
         <p />
         <Button type="submit" onClick={this.handle_rating_submit} sx={{ marginTop: -1, height: 40 }} variant="contained">Submit</Button>
       </form>
     );
   }
+
 
   handle_rating_submit(event) {
     let name = "";
@@ -105,15 +112,26 @@ class OrderPage extends Component {
       user: name,
       _id: this.state.order,
     };
+    const updateComment = {
+      rating: this.state.rating,
+      user: name,
+      _id: this.state.order,
+      comment: this.state.comment,
+    };
+
     if (this.state.username === this.state.seller) {
       this.setState({ sellerHasRated: true });
       axios
         .post("http://localhost:4000/app/sellerUpdateRating", updateRating)
         .then((response) => console.log(response.data));
+      axios.post("http://localhost:4000/app/postComment", updateComment)
+      .then((response) => console.log(response.data));
     } else if (this.state.username === this.state.buyer) {
       this.setState({ buyerHasRated: true });
       axios
         .post("http://localhost:4000/app/buyerUpdateRating", updateRating)
+        .then((response) => console.log(response.data));
+      axios.post("http://localhost:4000/app/postComment", updateComment)
         .then((response) => console.log(response.data));
     }
 
