@@ -21,7 +21,7 @@ class UserInfo extends Component {
         this.redirect();
         return(
             <div>
-                {this.state.userDisplayed}
+                {"User: "+this.state.userDisplayed}
                 <label></label>
             </div>
         );

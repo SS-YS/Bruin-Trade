@@ -235,7 +235,7 @@ class BuyPage extends Component {
       search_end_time = Number(this.state.end_hour + this.state.end_minute)
     }
     if (this.state.start_price === null || this.state.start_price ===''){
-      search_start_price = Number.MIN_VALUE
+      search_start_price = -Number.MAX_VALUE
     }
     else 
     {
