@@ -107,6 +107,12 @@ class BuyPage extends Component {
     if (data.length === 0) {
       temp = [];
       this.setState({ rows: temp });
+      this.setState({ 
+        alert : true,
+        alertMessage : "No match found.",
+        alertType : "warning"
+      });
+
     } else {
       for (let i = 0; i < data.length; i++) {
         const getRating = { userName: data[i].seller };
