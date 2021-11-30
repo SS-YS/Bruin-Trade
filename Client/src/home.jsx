@@ -31,7 +31,7 @@ const columns = [
           variant="contained"
           color="primary"
           size="small"
-          style={{ margin: 16, width: 100, height: 40, borderRadius: 5 }}
+          style={{ marginRight: 32, width: 100, height: 40, borderRadius: 5 }}
           onClick={handleDetail}
         >
           Details
@@ -116,11 +116,9 @@ class HomePage extends Component {
     return (
       <div>
         <NavigationBar />
-        <div>
-          <h5 className="buyPageTitle">
+          <h5 className="homePageTitle">
             My Orders
           </h5>
-        </div>
         <div className="homePageOrdersContainer">
           <div style={{ height: 425 }}>
             <DataGrid
