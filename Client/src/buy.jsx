@@ -228,8 +228,8 @@ class BuyPage extends Component {
     else {
       search_end_time = Number(this.state.end_hour + this.state.end_minute)
     }
-    if (this.state.start_price === null){
-      search_start_price = -Infinity
+    if (this.state.start_price === null || this.state.start_price ===''){
+      search_start_price = Number.MIN_VALUE
     }
     else 
     {
@@ -242,8 +242,8 @@ class BuyPage extends Component {
       } 
       search_start_price = Number(this.state.start_price)
     }
-    if (this.state.end_price === null){
-      search_end_price = Infinity
+    if (this.state.end_price === null || this.state.end_price === ''){
+      search_end_price = Number.MAX_VALUE
     }
     else {
       if (isNaN(this.state.end_price)) {
