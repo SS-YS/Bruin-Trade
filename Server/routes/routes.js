@@ -303,4 +303,15 @@ router.post('/postComment', (request, response) => {
     })
 });
 
+router.post('/getComment', (request, response) => {
+    const user= request.body.user;
+    signUpTemplateCopy.findOne({userName: user})
+    .then(data => {
+        response.json(data)
+    })
+    .catch(error => {
+        response.json(error)
+    })
+})
+
 module.exports = router

@@ -72,6 +72,18 @@ h1,h2,h3,h4,h5,h6,label,span {
   margin-right: auto;
 }
 
+.homePageCommentsContainer {
+  background-color: transparent;
+  box-sizing: border-box;
+  border-radius: 10px;
+  min-width: 400px;
+  max-width: 675px;
+  margin-top: 30px;
+  margin-bottom: 100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 @font-face {
   font-family: 'Customized-Font';
   src: URL('CustomizedFont.ttf') format('truetype')

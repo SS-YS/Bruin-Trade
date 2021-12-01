@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css"
-
+import Rating from "@mui/material/Rating";
 import { DataGrid } from '@mui/x-data-grid';
 import BasicTimePicker from "./components/BasicTimePicker"
 import NavigationBar from "./components/NavigationBar"
@@ -30,7 +30,21 @@ const columns = [
       )
     }
   },
-  { field: 'rating', headerName: 'Rating', width: 100, disableColumnMenu: true },
+  {
+     field: 'rating', headerName: 'Rating', width: 100, disableColumnMenu: true, 
+      renderCell(params){
+        const rating = params.getValue(params.id, "rating");
+        return (
+          <Rating
+          sx={{ marginTop: 0, marginLeft: -0.3 }}
+          size="small"
+          value={rating}
+          precision = {0.5}
+          readOnly
+        />
+        )
+      }
+  },
   { field: 'diningHall', headerName: 'Dining Hall', width: 140, disableColumnMenu: true },
   { field: 'time', headerName: 'Time', width: 100, disableColumnMenu: true },
   { field: 'price', headerName: 'Price', width: 80, disableColumnMenu: true },
