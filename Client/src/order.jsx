@@ -27,6 +27,7 @@ class OrderPage extends Component {
       alert : false,
       alertMessage : null,
       alertType : null,
+      anonymous: true,
     };
 
     this.getOrderInfo();
@@ -39,6 +40,7 @@ class OrderPage extends Component {
     this.cancel = this.cancel.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
     this.closeAlert = this.closeAlert.bind(this);
+    this.handle_anonymous = this.handle_anonymous.bind(this);
   }
 
   redirect() {
@@ -87,13 +89,30 @@ class OrderPage extends Component {
                 placeholder='Input any comments here.'
                 onChange={(event)=>{this.setState({comment:event.target.value})}}
                 value={this.state.comment}
-                            />
+        />
+        <label>
+          Post as anonymous: &nbsp;
+          <input
+            name="anonymous"
+            type="checkbox"
+            checked={this.state.anonymous}
+            onChange={this.handle_anonymous} />
+        </label>
         <p />
+        <br/>  
         <Button type="submit" onClick={this.handle_rating_submit} sx={{ marginTop: -1, height: 40 }} variant="contained">Submit</Button>
       </form>
     );
   }
 
+  handle_anonymous(event){
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+    this.setState({
+      [name]: value
+    });
+  }
 
   handle_rating_submit(event) {
     let name = "";
@@ -107,6 +126,20 @@ class OrderPage extends Component {
       alertMessage : "You have entered the rating for " + name,
       alertType : "success"
     });
+
+    var comment_name;
+    if(!this.state.anonymous){
+      comment_name = name;
+    }
+    else{
+      comment_name = "anonymous user";
+    }
+
+    var comment_content = "The user doesn't pose any comment"
+    if(this.state.comment !== ""){
+      comment_content = this.state.comment;
+    }
+    
     const updateRating = {
       rating: this.state.rating,
       user: name,
@@ -116,7 +149,8 @@ class OrderPage extends Component {
       rating: this.state.rating,
       user: name,
       _id: this.state.order,
-      comment: this.state.comment,
+      comment: comment_content,
+      anonymous: comment_name,
     };
 
     if (this.state.username === this.state.seller) {

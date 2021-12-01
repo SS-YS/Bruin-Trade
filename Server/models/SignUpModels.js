@@ -28,6 +28,7 @@ const signUpTemplate = new mongoose.Schema({
     type: [
       {
         rating: Number,
+        anonymous: String,
         content: { type: String, default: "That user didn't post a comment" },
       },
     ],
