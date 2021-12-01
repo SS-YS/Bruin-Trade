@@ -129,7 +129,7 @@ class OrderPage extends Component {
 
     var comment_name;
     if(!this.state.anonymous){
-      comment_name = name;
+      comment_name = this.state.username;
     }
     else{
       comment_name = "anonymous user";
