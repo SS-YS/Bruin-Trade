@@ -66,6 +66,7 @@ class HomePage extends Component {
       rows: [],
       buyer_or_seller: "",
       comments: [],
+      rating: 0,
     };
     this.getInfo();
     this.getComment();
@@ -170,6 +171,11 @@ class HomePage extends Component {
             comments: user_comment,
           });
         }
+        
+        let user_rating = response.data.rating;
+        this.setState({
+          rating: user_rating,
+        });
       });
   }
 
@@ -193,6 +199,7 @@ class HomePage extends Component {
         <div className="homePageCommentsContainer">
           {(() => {
             const comments = [];
+            comments.push(<h5>Overall rating:&nbsp;{this.state.rating}</h5>)
             if (this.state.comments === "NONE")
             {
               comments.push(<h5>No comments have been posted yet.</h5>)
