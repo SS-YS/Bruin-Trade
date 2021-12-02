@@ -43,7 +43,6 @@ class OrderPage extends Component {
     this.closeAlert = this.closeAlert.bind(this);
     this.handle_anonymous = this.handle_anonymous.bind(this);  }
 
-
   redirect() {
     if (sessionStorage.getItem("username") === null) {
       window.location.href = "/";

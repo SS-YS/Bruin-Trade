@@ -178,7 +178,7 @@ class HomePage extends Component {
     return (
       <div>
         <NavigationBar />
-        <h5 className="homePageTitle">My Orders</h5>
+        <h5 className="homePageTitle">{this.state.username}'s orders</h5>
         <div className="homePageOrdersContainer">
           <div style={{ height: 425 }}>
             <DataGrid 
@@ -189,7 +189,7 @@ class HomePage extends Component {
             />
           </div>
         </div>
-        <h5 className="homePageTitle">Comments by other user</h5>
+        <h5 className="homePageTitle">Comments by other users</h5>
         <div className="homePageCommentsContainer">
           {(() => {
             const comments = [];
