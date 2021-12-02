@@ -34,18 +34,25 @@ class UserInfo extends Component {
       .post("http://localhost:4000/app/getComment", userInfo)
       .then((response) => {
         let comments = response.data.comment;
-        for (let i = 0; i < comments.length; i++) {
-          let user_rating = comments[i].rating;
-          let user_contents = comments[i].content;
-          let user_name = comments[i].anonymous;
+        if (response.data.comment.length === 0)
+        {
+          user_comment = "NONE"
+        }
+        else
+        {
+          for (let i = 0; i < comments.length; i++) {
+            let user_rating = comments[i].rating;
+            let user_contents = comments[i].content;
+            let user_name = comments[i].anonymous;
 
-          user_comment = Object.assign([], user_comment);
-          user_comment.push({
-            name: user_name,
-            rating: user_rating,
-            content: user_contents,
-          });
-          console.log(user_comment);
+            user_comment = Object.assign([], user_comment);
+            user_comment.push({
+              name: user_name,
+              rating: user_rating,
+              content: user_contents,
+            });
+            console.log(user_comment);
+          }
         }
         this.setState({
           comments: user_comment,
@@ -63,14 +70,21 @@ class UserInfo extends Component {
         <div className="homePageCommentsContainer">
         {(() => {
           const comments = [];
-          for (let i = 0; i < this.state.comments.length; i++) {
-            comments.push(
-              <Comment
-                user={this.state.comments[i].name}
-                content={this.state.comments[i].content}
-                rating={this.state.comments[i].rating}
-              />
-            );
+          if (this.state.comments === "NONE")
+          {
+            comments.push(<h5>No comments have been posted to this user yet.</h5>);
+          }
+          else
+          {
+            for (let i = 0; i < this.state.comments.length; i++) {
+              comments.push(
+                <Comment
+                  user={this.state.comments[i].name}
+                  content={this.state.comments[i].content}
+                  rating={this.state.comments[i].rating}
+                />
+              );
+            }
           }
           return comments;
         })()}
