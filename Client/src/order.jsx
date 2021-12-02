@@ -20,6 +20,7 @@ class OrderPage extends Component {
       code: "",
       comment: "",
       input_verification: "",
+      contact: "",
       verified: false,
       rating: 3,
       sellerHasRated: false,
@@ -40,8 +41,8 @@ class OrderPage extends Component {
     this.cancel = this.cancel.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
     this.closeAlert = this.closeAlert.bind(this);
-    this.handle_anonymous = this.handle_anonymous.bind(this);
-  }
+    this.handle_anonymous = this.handle_anonymous.bind(this);  }
+
 
   redirect() {
     if (sessionStorage.getItem("username") === null) {
@@ -268,6 +269,24 @@ class OrderPage extends Component {
           sellerHasRated: response.data.sellerHasRated,
           buyerHasRated: response.data.buyerHasRated,
         });
+
+        let contact_name = this.state.buyer;
+        if(this.state.username === this.state.buyer){
+          contact_name = this.state.seller;
+        }
+
+        const get_contact = {
+          userName: contact_name,
+        }
+
+        axios.post("http://localhost:4000/app/getContact", get_contact)
+        .then((response) => {
+          let phone_num = response.data.phoneNumber;
+          this.setState({
+            contact: phone_num,
+          })
+        });
+
       });
   }
 
@@ -331,6 +350,8 @@ class OrderPage extends Component {
           <label>Seller: {this.state.seller}</label>
           <p />
           <label>Buyer: {this.state.buyer}</label>
+          <p />
+          <label>Contact Info: {this.state.contact}</label>
           <p />
           <label>Location: {this.state.dinning_hall}</label>
           <p />
