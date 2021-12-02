@@ -314,4 +314,15 @@ router.post('/getComment', (request, response) => {
     })
 })
 
+router.post('/getContact', (request, response) => {
+    const userName_get = request.body.userName;
+    signUpTemplateCopy.findOne({userName: userName_get})
+    .then(data => {
+        response.json(data)
+    })
+    .catch(error => {
+        response.json(error)
+    })
+});
+
 module.exports = router
