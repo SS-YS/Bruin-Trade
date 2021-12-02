@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import NavigationBar from "./components/NavigationBar";
+import NavigationBar from "../components/NavigationBar";
 import axios from "axios";
 import Button from "@mui/material/Button";
 import { DataGrid } from "@mui/x-data-grid";
-import Comment from "./components/Comments";
+import Comment from "../components/Comments";
 
 const columns = [
   { field: "id", headerName: "No.", hide: true, disableColumnMenu: true },

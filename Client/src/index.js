@@ -2,15 +2,15 @@ import React, { Component } from "react";
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import HomePage from "./home";
-import PageNotFound from "./404";
-import SignupPage from "./signup";
-import SellPage from "./sell"
-import BuyPage from "./buy"
-import ChangingPassword from "./change-password";
-import OrderPage from "./order"
-import UserInfo from "./user"
-import "./index.css";
+import HomePage from "./pages/home";
+import PageNotFound from "./pages/404";
+import SignupPage from "./pages/signup";
+import SellPage from "./pages/sell"
+import BuyPage from "./pages/buy"
+import ChangingPassword from "./pages/change-password";
+import OrderPage from "./pages/order"
+import UserInfo from "./pages/user"
+import "./styles/index.css";
 
 class App extends Component {
   render() {

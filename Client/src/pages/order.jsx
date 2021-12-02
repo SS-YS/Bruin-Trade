@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import axios from "axios";
 import Button from '@mui/material/Button';
-import NavigationBar from "./components/NavigationBar"
+import NavigationBar from "../components/NavigationBar"
 import Rating from '@mui/material/Rating';
-import Notification from "./components/Notification";
+import Notification from "../components/Notification";
 
 class OrderPage extends Component {
   constructor() {
