@@ -14,3 +14,11 @@ cd Bruin-Trade/client
 npm install
 npm start
 ```
+
+### Reference
+For database connection:
+https://www.youtube.com/watch?v=SQqSMDIzhaE&ab_channel=DevAndDesign
+
+For front-end design:
+https://mui.com/components/
+https://reactjs.org/docs/hello-world.html
