@@ -105,17 +105,24 @@ class SignupPage extends Component {
                     }
                     else {
                         if (this.state.is_signup) {
-                            if (this.state.phoneNumber.length !== 10) {
+                            if ((this.state.phoneNumber.replace(/[- ]/g,'')).length !== 10) {
                                 this.setState({
                                     alert : true,
                                     alertMessage : "Phone number must be 10-digit long.",
                                     alertType : "error",
                                 })
                             } 
+                            else if (isNaN((this.state.phoneNumber).replace(/[- ]/g,''))){
+                                this.setState({
+                                    alert : true,
+                                    alertMessage : "Phone number must be all numbers.",
+                                    alertType : "error",
+                                })
+                            }
                             else {
                                 const new_user = {
                                     userName: this.state.userName,
-                                    phoneNumber: this.state.phoneNumber,
+                                    phoneNumber: (this.state.phoneNumber).replace(/[- ]/g,''),
                                     password: this.state.password,
                                     rating: 5,
                                     finished_order_number: 0,
