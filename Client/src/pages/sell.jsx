@@ -159,8 +159,9 @@ class Selling_form extends Component {
             <TextField label="Enter a price" variant="outlined" value={this.state.price} onChange={this.handlePriceChange} />
 
             <p />
-            <Button type="submit" onClick={this.handleSubmit} sx={{ marginTop: 1, height: 40 }} variant="contained">Submit</Button>
+            
           </form>
+          <Button type="submit" onClick={this.handleSubmit} sx={{ marginTop: 1, height: 40 }} variant="contained">Submit</Button>
         </div>
       </>
     );
