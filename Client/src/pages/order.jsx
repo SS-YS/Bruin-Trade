@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
-import Button from '@mui/material/Button';
-import NavigationBar from "../components/NavigationBar"
-import Rating from '@mui/material/Rating';
+import Button from "@mui/material/Button";
+import NavigationBar from "../components/NavigationBar";
+import Rating from "@mui/material/Rating";
 import Notification from "../components/Notification";
 
 class OrderPage extends Component {
@@ -33,7 +33,8 @@ class OrderPage extends Component {
 
     this.getOrderInfo();
     this.handle_enter_verification = this.handle_enter_verification.bind(this);
-    this.handle_verification_submit = this.handle_verification_submit.bind(this);
+    this.handle_verification_submit =
+      this.handle_verification_submit.bind(this);
     this.enter_verification = this.enter_verification.bind(this);
     this.display_verification = this.display_verification.bind(this);
     this.handle_rating_submit = this.handle_rating_submit.bind(this);
@@ -41,7 +42,9 @@ class OrderPage extends Component {
     this.cancel = this.cancel.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
     this.closeAlert = this.closeAlert.bind(this);
-    this.handle_anonymous = this.handle_anonymous.bind(this);  }
+    this.handle_anonymous = this.handle_anonymous.bind(this);
+    this.contact_info = this.contact_info.bind(this);
+  }
 
   redirect() {
     if (sessionStorage.getItem("username") === null) {
@@ -51,7 +54,14 @@ class OrderPage extends Component {
 
   cancel() {
     return (
-      <Button type="submit" onClick={this.handleCancel} sx={{ height: 40 }} variant="contained">Cancel</Button>
+      <Button
+        type="submit"
+        onClick={this.handleCancel}
+        sx={{ height: 40 }}
+        variant="contained"
+      >
+        Cancel
+      </Button>
     );
   }
 
@@ -59,15 +69,15 @@ class OrderPage extends Component {
     this.setState({
       alert: true,
       alertMessage: "This order has been cancelled.",
-      alertType: "success"
+      alertType: "success",
     });
     const cancel = {
       _id: this.state.order,
-    }
+    };
     axios
       .post("http://localhost:4000/app/cancel", cancel)
       .then((response) => console.log(response.data));
-    window.location.href = "home"
+    window.location.href = "home";
   }
 
   enter_rating() {
@@ -79,19 +89,24 @@ class OrderPage extends Component {
     }
     return (
       <form>
-        <label>
-          Please rate the {name}: &nbsp;
-        </label>
+        <label>Please rate the {name}: &nbsp;</label>
         <div>
-          <Rating sx={{ marginTop: 1, marginLeft: -0.3 }} size="medium" value={this.state.rating} onChange={(event, newValue) => { this.setState({ rating: newValue }); }} />
+          <Rating
+            sx={{ marginTop: 1, marginLeft: -0.3 }}
+            size="medium"
+            value={this.state.rating}
+            onChange={(event, newValue) => {
+              this.setState({ rating: newValue });
+            }}
+          />
         </div>
-        <label>
-          Please post any comment for the {name}: &nbsp;
-        </label>
+        <label>Please post any comment for the {name}: &nbsp;</label>
         <div className="orderPageComment">
           <textarea
-            placeholder='Enter any comment here'
-            onChange={(event) => { this.setState({ comment: event.target.value }) }}
+            placeholder="Enter any comment here"
+            onChange={(event) => {
+              this.setState({ comment: event.target.value });
+            }}
             value={this.state.comment}
           />
         </div>
@@ -101,20 +116,28 @@ class OrderPage extends Component {
             name="anonymous"
             type="checkbox"
             checked={this.state.anonymous}
-            onChange={this.handle_anonymous} />
+            onChange={this.handle_anonymous}
+          />
         </label>
         <p />
-        <Button type="submit" onClick={this.handle_rating_submit} sx={{ marginTop: -1, height: 40 }} variant="contained">Submit</Button>
+        <Button
+          type="submit"
+          onClick={this.handle_rating_submit}
+          sx={{ marginTop: -1, height: 40 }}
+          variant="contained"
+        >
+          Submit
+        </Button>
       </form>
     );
   }
 
   handle_anonymous(event) {
     const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
     this.setState({
-      [name]: value
+      [name]: value,
     });
   }
 
@@ -128,18 +151,17 @@ class OrderPage extends Component {
     this.setState({
       alert: true,
       alertMessage: "You have entered the rating for " + name,
-      alertType: "success"
+      alertType: "success",
     });
 
     var comment_name;
     if (!this.state.anonymous) {
       comment_name = this.state.username;
-    }
-    else {
+    } else {
       comment_name = "anonymous user";
     }
 
-    var comment_content = "The user didn't post any comment."
+    var comment_content = "The user didn't post any comment.";
     if (this.state.comment !== "") {
       comment_content = this.state.comment;
     }
@@ -162,14 +184,16 @@ class OrderPage extends Component {
       axios
         .post("http://localhost:4000/app/sellerUpdateRating", updateRating)
         .then((response) => console.log(response.data));
-      axios.post("http://localhost:4000/app/postComment", updateComment)
+      axios
+        .post("http://localhost:4000/app/postComment", updateComment)
         .then((response) => console.log(response.data));
     } else if (this.state.username === this.state.buyer) {
       this.setState({ buyerHasRated: true });
       axios
         .post("http://localhost:4000/app/buyerUpdateRating", updateRating)
         .then((response) => console.log(response.data));
-      axios.post("http://localhost:4000/app/postComment", updateComment)
+      axios
+        .post("http://localhost:4000/app/postComment", updateComment)
         .then((response) => console.log(response.data));
     }
     event.preventDefault();
@@ -178,16 +202,21 @@ class OrderPage extends Component {
   enter_verification() {
     return (
       <form id="orderPageVerificationBlock">
-        <label>
-          Please enter the verification code:
-        </label>
+        <label>Please enter the verification code:</label>
         <input
-          id='orderPageVerificationBox'
+          id="orderPageVerificationBox"
           value={this.state.input_verification}
           onChange={this.handle_enter_verification}
         />
         <p />
-        <Button type="submit" onClick={this.handle_verification_submit} sx={{ marginTop: 1, height: 40 }} variant="contained">Submit</Button>
+        <Button
+          type="submit"
+          onClick={this.handle_verification_submit}
+          sx={{ marginTop: 1, height: 40 }}
+          variant="contained"
+        >
+          Submit
+        </Button>
       </form>
     );
   }
@@ -206,13 +235,15 @@ class OrderPage extends Component {
         alert: true,
         alertMessage: "You have entered the correct verification code.",
         alertType: "success",
-        order_status: "finished"
+        order_status: "finished",
       });
       this.setState({ verified: true });
       const finish = {
         _id: this.state.order,
       };
-      document.getElementById("orderPageVerificationBlock").classList.add("hidden");
+      document
+        .getElementById("orderPageVerificationBlock")
+        .classList.add("hidden");
       axios
         .post("http://localhost:4000/app/finished", finish)
         .then((response) => console.log(response.data));
@@ -268,24 +299,25 @@ class OrderPage extends Component {
           sellerHasRated: response.data.sellerHasRated,
           buyerHasRated: response.data.buyerHasRated,
         });
+        if (this.state.order_status !== "onSale") {
+          let contact_name = this.state.buyer;
+          if (this.state.username === this.state.buyer) {
+            contact_name = this.state.seller;
+          }
 
-        let contact_name = this.state.buyer;
-        if(this.state.username === this.state.buyer){
-          contact_name = this.state.seller;
+          const get_contact = {
+            userName: contact_name,
+          };
+
+          axios
+            .post("http://localhost:4000/app/getContact", get_contact)
+            .then((response) => {
+              let phone_num = response.data.phoneNumber;
+              this.setState({
+                contact: phone_num,
+              });
+            });
         }
-
-        const get_contact = {
-          userName: contact_name,
-        }
-
-        axios.post("http://localhost:4000/app/getContact", get_contact)
-        .then((response) => {
-          let phone_num = response.data.phoneNumber;
-          this.setState({
-            contact: phone_num,
-          })
-        });
-
       });
   }
 
@@ -293,13 +325,22 @@ class OrderPage extends Component {
     this.setState({ alert: false });
   }
 
+  contact_info() {
+    return (
+      <div>
+        <p />
+        <label>Contact Info: {this.state.contact}</label>
+        <p />
+      </div>
+    );
+  }
+
   render() {
     this.redirect();
     let verification;
     if (this.state.order_status === "finished") {
       verification = null;
-    }
-    else if (
+    } else if (
       this.state.order_status === "inprogress" &&
       this.state.username === this.state.buyer
     ) {
@@ -333,32 +374,47 @@ class OrderPage extends Component {
     let cancel_button;
     if (this.state.order_status === "onSale") {
       cancel_button = this.cancel();
-    }
-    else {
+    } else {
       cancel_button = null;
+    }
+
+    let contact_info;
+    if(this.state.order_status !== "onSale"){
+      contact_info =this.contact_info();
+    }
+    else{
+      contact_info = null;
     }
 
     return (
       <>
-        <Notification alert={this.state.alert}
+        <Notification
+          alert={this.state.alert}
           alertMessage={this.state.alertMessage}
           alertType={this.state.alertType}
-          closeAlert={this.closeAlert} />
+          closeAlert={this.closeAlert}
+        />
         <NavigationBar />
         <div className="container">
           <label>Seller: {this.state.seller}</label>
           <p />
           <label>Buyer: {this.state.buyer}</label>
           <p />
-          <label>Contact Info: {this.state.contact}</label>
-          <p />
+          {contact_info}
           <label>Location: {this.state.dinning_hall}</label>
           <p />
           <label>Time: {this.state.time}</label>
           <p />
           <label>Price: {this.state.price}</label>
           <p />
-          <label>Status: {(this.state.order_status === "onSale") ? "On Sale" : ((this.state.order_status === "inprogress") ? "In Progress" : "Completed")}</label>
+          <label>
+            Status:{" "}
+            {this.state.order_status === "onSale"
+              ? "On Sale"
+              : this.state.order_status === "inprogress"
+              ? "In Progress"
+              : "Completed"}
+          </label>
           <p />
           {verification}
           {rating}
