@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import NavigationBar from "./components/NavigationBar";
+import NavigationBar from "../components/NavigationBar";
 import axios from "axios";
 import Button from "@mui/material/Button";
 import { DataGrid } from "@mui/x-data-grid";
-import Comment from "./components/Comments";
+import Comment from "../components/Comments";
 
 const columns = [
   { field: "id", headerName: "No.", hide: true, disableColumnMenu: true },
@@ -184,7 +184,7 @@ class HomePage extends Component {
     return (
       <div>
         <NavigationBar />
-        <h5 className="homePageTitle">My Orders</h5>
+        <h5 className="homePageTitle">{this.state.username}'s orders</h5>
         <div className="homePageOrdersContainer">
           <div style={{ height: 425 }}>
             <DataGrid 
@@ -195,7 +195,7 @@ class HomePage extends Component {
             />
           </div>
         </div>
-        <h5 className="homePageTitle">Comments by other user</h5>
+        <h5 className="homePageTitle">Comments by other users</h5>
         <div className="homePageCommentsContainer">
           {(() => {
             const comments = [];
