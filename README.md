@@ -16,9 +16,9 @@ npm start
 ```
 
 ### Reference
-For database connection:
+For database connection:<br />
 https://www.youtube.com/watch?v=SQqSMDIzhaE&ab_channel=DevAndDesign
 
-For front-end design:
-https://mui.com/components/
+For front-end design:<br />
+https://mui.com/components/<br />
 https://reactjs.org/docs/hello-world.html
