@@ -108,7 +108,7 @@ class SignupPage extends Component {
                             if (this.state.phoneNumber.length !== 10) {
                                 this.setState({
                                     alert : true,
-                                    alertMessage : "Phone number needs to be 10 digits.",
+                                    alertMessage : "Phone number must be 10-digit long.",
                                     alertType : "error",
                                 })
                             } 
