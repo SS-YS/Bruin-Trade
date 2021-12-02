@@ -195,11 +195,11 @@ class HomePage extends Component {
             />
           </div>
         </div>
+        <h5 className="homePageTitle">Overall rating:&nbsp;{this.state.rating.toFixed(1)}</h5>
         <h5 className="homePageTitle">Comments by other users</h5>
         <div className="homePageCommentsContainer">
           {(() => {
             const comments = [];
-            comments.push(<h5>Overall rating:&nbsp;{this.state.rating}</h5>)
             if (this.state.comments === "NONE")
             {
               comments.push(<h5>No comments have been posted yet.</h5>)
