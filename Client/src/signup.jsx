@@ -105,20 +105,29 @@ class SignupPage extends Component {
                     }
                     else {
                         if (this.state.is_signup) {
-                            const new_user = {
-                                userName: this.state.userName,
-                                phoneNumber: this.state.phoneNumber,
-                                password: this.state.password,
-                                rating: 5,
-                                finished_order_number: 0,
+                            if (this.state.phoneNumber.length !== 10) {
+                                this.setState({
+                                    alert : true,
+                                    alertMessage : "Phone number needs to be 10 digits.",
+                                    alertType : "error",
+                                })
+                            } 
+                            else {
+                                const new_user = {
+                                    userName: this.state.userName,
+                                    phoneNumber: this.state.phoneNumber,
+                                    password: this.state.password,
+                                    rating: 5,
+                                    finished_order_number: 0,
+                                }
+                                axios.post("http://localhost:4000/app/signup", new_user)
+                                    .then(response => console.log(response.data))
+                                this.setState({ 
+                                    alert : true,
+                                    alertMessage : "Sign up successful. Please log in.",
+                                    alertType : "success"
+                                });
                             }
-                            axios.post("http://localhost:4000/app/signup", new_user)
-                                .then(response => console.log(response.data))
-                            this.setState({ 
-                                alert : true,
-                                alertMessage : "Sign up successful. Please log in.",
-                                alertType : "success"
-                            });
                         }
                         else if (this.state.is_login) {
                             this.setState({ 
