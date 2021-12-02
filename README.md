@@ -4,6 +4,9 @@ An online platform where students with extra BruinCard swipes can trade their sw
 ### Set Up
 ```
 git clone https://github.com/SparkShen02/Bruin-Trade.git
+```
+
+```
 cd Bruin-Trade/server
 npm install
 npm start

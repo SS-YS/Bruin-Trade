@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import NavigationBar from "./components/NavigationBar";
+import NavigationBar from "../components/NavigationBar";
 import axios from "axios";
 import Button from "@mui/material/Button";
 import { DataGrid } from "@mui/x-data-grid";
-import Comment from "./components/Comments";
+import Comment from "../components/Comments";
 
 const columns = [
   { field: "id", headerName: "No.", hide: true, disableColumnMenu: true },
@@ -66,6 +66,7 @@ class HomePage extends Component {
       rows: [],
       buyer_or_seller: "",
       comments: [],
+      rating: 0,
     };
     this.getInfo();
     this.getComment();
@@ -170,6 +171,11 @@ class HomePage extends Component {
             comments: user_comment,
           });
         }
+        
+        let user_rating = response.data.rating;
+        this.setState({
+          rating: user_rating,
+        });
       });
   }
 
@@ -193,6 +199,7 @@ class HomePage extends Component {
         <div className="homePageCommentsContainer">
           {(() => {
             const comments = [];
+            comments.push(<h5>Overall rating:&nbsp;{this.state.rating}</h5>)
             if (this.state.comments === "NONE")
             {
               comments.push(<h5>No comments have been posted yet.</h5>)

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import "bootstrap/dist/css/bootstrap.min.css"
-import Notification from "./components/Notification";
+import Notification from "../components/Notification";
 import axios from 'axios'
 
 class SignupPage extends Component {

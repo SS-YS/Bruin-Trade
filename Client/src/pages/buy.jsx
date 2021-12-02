@@ -4,13 +4,12 @@ import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css"
 import Rating from "@mui/material/Rating";
 import { DataGrid } from '@mui/x-data-grid';
-import BasicTimePicker from "./components/BasicTimePicker"
-import NavigationBar from "./components/NavigationBar"
-import SelectDiningHall from "./components/SelectDiningHall"
+import BasicTimePicker from "../components/BasicTimePicker"
+import NavigationBar from "../components/NavigationBar"
+import SelectDiningHall from "../components/SelectDiningHall"
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import Notification from "./components/Notification";
-import "./index.css"
+import Notification from "../components/Notification";
 
 const columns = [
   { field: 'id', headerName: "No.", width: 60, hide: true, disableColumnMenu: true },

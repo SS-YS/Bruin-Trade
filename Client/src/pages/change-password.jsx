@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import "bootstrap/dist/css/bootstrap.min.css"
 import axios from 'axios'
-import Notification from "./components/Notification";
+import Notification from "../components/Notification";
 
 class ChangingPassword extends Component {
     constructor() {

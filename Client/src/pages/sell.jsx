@@ -2,10 +2,10 @@ import axios from "axios";
 import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css"
 
-import BasicTimePicker from "./components/BasicTimePicker";
-import SelectDiningHall from "./components/SelectDiningHall";
-import Notification from "./components/Notification";
-import NavigationBar from "./components/NavigationBar";
+import BasicTimePicker from "../components/BasicTimePicker";
+import SelectDiningHall from "../components/SelectDiningHall";
+import Notification from "../components/Notification";
+import NavigationBar from "../components/NavigationBar";
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 

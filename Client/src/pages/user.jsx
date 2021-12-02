@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { Component } from "react";
-import Comment from "./components/Comments";
-import NavigationBar from "./components/NavigationBar";
+import Comment from "../components/Comments";
+import NavigationBar from "../components/NavigationBar";
 
 class UserInfo extends Component {
   constructor() {
