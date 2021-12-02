@@ -129,8 +129,6 @@ class Selling_form extends Component {
     }
   }
 
-
-
   closeAlert() {
     this.setState({ alert : false });
   }

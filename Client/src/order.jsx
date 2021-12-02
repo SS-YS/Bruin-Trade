@@ -21,12 +21,12 @@ class OrderPage extends Component {
       comment: "",
       input_verification: "",
       verified: false,
-      rating: 0,
+      rating: 3,
       sellerHasRated: false,
       buyerHasRated: false,
-      alert : false,
-      alertMessage : null,
-      alertType : null,
+      alert: false,
+      alertMessage: null,
+      alertType: null,
       anonymous: true,
     };
 
@@ -56,10 +56,10 @@ class OrderPage extends Component {
   }
 
   handleCancel() {
-    this.setState({ 
-      alert : true,
-      alertMessage : "This order has been cancelled.",
-      alertType : "success"
+    this.setState({
+      alert: true,
+      alertMessage: "This order has been cancelled.",
+      alertType: "success"
     });
     const cancel = {
       _id: this.state.order,
@@ -85,11 +85,16 @@ class OrderPage extends Component {
         <div>
           <Rating sx={{ marginTop: 1, marginLeft: -0.3 }} size="medium" value={this.state.rating} onChange={(event, newValue) => { this.setState({ rating: newValue }); }} />
         </div>
-        <textarea 
-                placeholder='Input any comments here.'
-                onChange={(event)=>{this.setState({comment:event.target.value})}}
-                value={this.state.comment}
-        />
+        <label>
+          Please post any comment for the {name}: &nbsp;
+        </label>
+        <div className="orderPageComment">
+          <textarea
+            placeholder='Enter any comment here'
+            onChange={(event) => { this.setState({ comment: event.target.value }) }}
+            value={this.state.comment}
+          />
+        </div>
         <label>
           Post as anonymous: &nbsp;
           <input
@@ -99,13 +104,12 @@ class OrderPage extends Component {
             onChange={this.handle_anonymous} />
         </label>
         <p />
-        <br/>  
         <Button type="submit" onClick={this.handle_rating_submit} sx={{ marginTop: -1, height: 40 }} variant="contained">Submit</Button>
       </form>
     );
   }
 
-  handle_anonymous(event){
+  handle_anonymous(event) {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
@@ -121,25 +125,25 @@ class OrderPage extends Component {
     } else {
       name = this.state.buyer;
     }
-    this.setState({ 
-      alert : true,
-      alertMessage : "You have entered the rating for " + name,
-      alertType : "success"
+    this.setState({
+      alert: true,
+      alertMessage: "You have entered the rating for " + name,
+      alertType: "success"
     });
 
     var comment_name;
-    if(!this.state.anonymous){
+    if (!this.state.anonymous) {
       comment_name = this.state.username;
     }
-    else{
+    else {
       comment_name = "anonymous user";
     }
 
-    var comment_content = "The user doesn't pose any comment"
-    if(this.state.comment !== ""){
+    var comment_content = "The user didn't post any comment."
+    if (this.state.comment !== "") {
       comment_content = this.state.comment;
     }
-    
+
     const updateRating = {
       rating: this.state.rating,
       user: name,
@@ -159,7 +163,7 @@ class OrderPage extends Component {
         .post("http://localhost:4000/app/sellerUpdateRating", updateRating)
         .then((response) => console.log(response.data));
       axios.post("http://localhost:4000/app/postComment", updateComment)
-      .then((response) => console.log(response.data));
+        .then((response) => console.log(response.data));
     } else if (this.state.username === this.state.buyer) {
       this.setState({ buyerHasRated: true });
       axios
@@ -168,18 +172,17 @@ class OrderPage extends Component {
       axios.post("http://localhost:4000/app/postComment", updateComment)
         .then((response) => console.log(response.data));
     }
-
     event.preventDefault();
   }
 
   enter_verification() {
     return (
-      <form>
+      <form id="orderPageVerificationBlock">
         <label>
           Please enter the verification code:
         </label>
         <input
-          id='orderPageInput'
+          id='orderPageVerificationBox'
           value={this.state.input_verification}
           onChange={this.handle_enter_verification}
         />
@@ -199,23 +202,26 @@ class OrderPage extends Component {
 
   handle_verification_submit(event) {
     if (this.state.code === this.state.input_verification) {
-      this.setState({ 
-        alert : true,
-        alertMessage : "You have entered the correct verification code.",
-        alertType : "success"
+      this.setState({
+        alert: true,
+        alertMessage: "You have entered the correct verification code.",
+        alertType: "success",
+        order_status: "finished"
       });
       this.setState({ verified: true });
       const finish = {
         _id: this.state.order,
       };
+      document.getElementById("orderPageVerificationBlock").classList.add("hidden");
       axios
         .post("http://localhost:4000/app/finished", finish)
         .then((response) => console.log(response.data));
+      event.preventDefault();
     } else {
-      this.setState({ 
-        alert : true,
-        alertMessage : "You have entered the wrong verification code.",
-        alertType : "error"
+      this.setState({
+        alert: true,
+        alertMessage: "You have entered the wrong verification code.",
+        alertType: "error",
       });
       event.preventDefault();
     }
@@ -266,7 +272,7 @@ class OrderPage extends Component {
   }
 
   closeAlert() {
-    this.setState({ alert : false });
+    this.setState({ alert: false });
   }
 
   render() {
@@ -316,9 +322,9 @@ class OrderPage extends Component {
 
     return (
       <>
-        <Notification alert={this.state.alert} 
-          alertMessage={this.state.alertMessage} 
-          alertType={this.state.alertType} 
+        <Notification alert={this.state.alert}
+          alertMessage={this.state.alertMessage}
+          alertType={this.state.alertType}
           closeAlert={this.closeAlert} />
         <NavigationBar />
         <div className="container">

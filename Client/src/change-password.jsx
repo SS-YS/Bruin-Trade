@@ -124,6 +124,7 @@ class ChangingPassword extends Component {
                 </div>
                 <div className='container'>
                     <p className='h4 text-center'>{heading}</p>
+                    <p />
                     <div className='form-div'>
                         <form onSubmit={this.onSubmit}>
                             <div>

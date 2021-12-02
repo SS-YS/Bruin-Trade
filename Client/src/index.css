@@ -52,6 +52,11 @@ h1,h2,h3,h4,h5,h6,label,span {
   float: left;
 }
 
+.orderPageComment {
+  margin-top: 13px;
+  margin-bottom: 5px;
+}
+
 .buyPageOrdersContainer {
   background-color: white;
   box-sizing: border-box;
@@ -214,7 +219,7 @@ input[id=signup]:active {
   color: black;
 }
 
-input[id=orderPageInput] {
+input[id=orderPageVerificationBox] {
   margin-top: 10px;
 }
 
