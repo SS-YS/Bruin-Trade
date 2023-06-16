@@ -1,8 +1,0 @@
-POST http://localhost:4000/app/postComment
-Content-Type: application/json
-
-{
-    "user": "egg",
-    "rating": 4,
-    "comment": "second comment test"
-}

@@ -5,7 +5,7 @@ const orderTemplateCopy = require('../models/OrderModels')
 const mongoose = require('mongoose')
 const { response, request } = require("express")
 const SignUpModels = require("../models/SignUpModels")
-const mongoDB = "mongodb+srv://yqi_2002:Yuxuan02@cluster0.22647.mongodb.net/mytable?retryWrites=true&w=majority"
+const mongoDB = "mongodb+srv://BruinTrade:egg123456@bruintrade.jqkqea3.mongodb.net/?retryWrites=true&w=majority"
 mongoose.connect(mongoDB, { useNewUrlParser: true , useUnifiedTopology: true});
 const db = mongoose.connection
 db.on('error', console.error.bind(console, 'MongoDB connection error:'))
